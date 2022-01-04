@@ -14,7 +14,8 @@ final class FriendsTableVC: UITableViewController {
     "Alexandrov Alex",
     "Viktorov Viktor",
     "Zuckerberg Mark",
-    "Jobs Steven"]
+    "Jobs Steven",
+    "Zaharov Inokentiy"]
     
 
     // MARK: - Table view data source
