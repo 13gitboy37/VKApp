@@ -9,6 +9,8 @@ import UIKit
 
 final class FriendsTableVC: UITableViewController {
 
+    var friendsDictionary = [String: [String]]()
+    var friendsSectionTitles = [String]()
     var friends = [
     "Ivanov Ivan",
     "Alexandrov Alex",
@@ -17,7 +19,12 @@ final class FriendsTableVC: UITableViewController {
     "Jobs Steven",
     "Zaharov Inokentiy"]
     
-
+  func SortFriend() -> [String] {
+        var sortedFriends = [String]()
+        sortedFriends = self.friends.sorted{$0 < $1}
+        return sortedFriends
+    }
+ 
     // MARK: - Table view data source
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,13 +32,31 @@ final class FriendsTableVC: UITableViewController {
             nibName: "FriendsCell",
             bundle: nil),
                            forCellReuseIdentifier: "friendCell")
+        for friend in SortFriend() {
+            let friendKey = String(friend.prefix(1))
+            if var friendValues = friendsDictionary[friendKey] {
+                friendValues.append(friend)
+                friendsDictionary[friendKey] = friendValues
+            } else {
+                friendsDictionary[friendKey] = [friend]
+            }
+        }
+        
+        friendsSectionTitles = [String](friendsDictionary.keys)
+        self.friendsSectionTitles = self.friendsSectionTitles.sorted(by: {$0 < $1})
+
     }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        return friendsSectionTitles.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        friends.count
+        let friendKey = friendsSectionTitles[section]
+        if let friendValues = friendsDictionary[friendKey] {
+            return friendValues.count
+        }
+        return 0
     }
 
 
@@ -40,10 +65,13 @@ final class FriendsTableVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as? FriendsCell
         else { return UITableViewCell() }
         
-        let currentFriend = friends[indexPath.row]
+       let friendKey = friendsSectionTitles[indexPath.section]
+        if let friendValues = friendsDictionary[friendKey] {
+            cell.configure(
+                emblem: UIImage(named: "ava.jpg") ?? UIImage(), name: friendValues[indexPath.row])
+        }
+    
         
-        cell.configure(
-            emblem: UIImage(named: "ava.jpg") ?? UIImage(),name: currentFriend)
         return cell
     }
     
@@ -52,6 +80,14 @@ final class FriendsTableVC: UITableViewController {
             at: indexPath,
             animated: true) }
         performSegue(withIdentifier: "showPhotosFriend", sender: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return friendsSectionTitles[section]
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return friendsSectionTitles
     }
     /*
     // Override to support conditional editing of the table view.
