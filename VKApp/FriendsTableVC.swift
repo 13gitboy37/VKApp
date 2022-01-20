@@ -13,6 +13,7 @@ final class FriendsTableVC: UITableViewController {
     var friendsSectionTitles = [String]()
     var friends = [
     "Ivanov Ivan",
+    "Iskanderov Konstantin",
     "Alexandrov Alex",
     "Viktorov Viktor",
     "Zuckerberg Mark",
@@ -88,6 +89,11 @@ final class FriendsTableVC: UITableViewController {
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return friendsSectionTitles
+    }
+    
+  override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+      header.tintColor = UIColor.gray.withAlphaComponent(0.05)
     }
     /*
     // Override to support conditional editing of the table view.
