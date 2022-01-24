@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WZ4-PJ-mc8">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
@@ -9,10 +9,67 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Load ScreenVC-->
+        <scene sceneID="evu-ca-uCS">
+            <objects>
+                <viewController id="WZ4-PJ-mc8" customClass="LoadScreenVC" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FfU-rZ-bEV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oGh-cd-cnc">
+                                <rect key="frame" x="194.5" y="436" width="25" height="24"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="oGh-cd-cnc" secondAttribute="height" id="3ob-6x-oGX"/>
+                                    <constraint firstAttribute="width" constant="25" id="4cT-Rb-ipQ"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="rbz-hQ-U4S">
+                                <rect key="frame" x="134.5" y="436" width="25" height="24"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rbz-hQ-U4S" secondAttribute="height" id="9OM-TZ-pxw"/>
+                                    <constraint firstAttribute="width" constant="25" id="jAt-O9-xTw"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="arc-1D-5yQ">
+                                <rect key="frame" x="254.5" y="436" width="25" height="24"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="arc-1D-5yQ" secondAttribute="height" id="lVG-dR-UwE"/>
+                                    <constraint firstAttribute="width" constant="25" id="s1k-Wz-R1M"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Swx-03-3oJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rbz-hQ-U4S" firstAttribute="centerY" secondItem="FfU-rZ-bEV" secondAttribute="centerY" id="Fkz-cb-RAu"/>
+                            <constraint firstItem="oGh-cd-cnc" firstAttribute="leading" secondItem="rbz-hQ-U4S" secondAttribute="trailing" constant="35" id="IbO-dN-jyP"/>
+                            <constraint firstItem="arc-1D-5yQ" firstAttribute="width" secondItem="arc-1D-5yQ" secondAttribute="height" id="Lg6-9S-0ET"/>
+                            <constraint firstItem="arc-1D-5yQ" firstAttribute="leading" secondItem="oGh-cd-cnc" secondAttribute="trailing" constant="35" id="NrL-XK-r4s"/>
+                            <constraint firstItem="arc-1D-5yQ" firstAttribute="centerY" secondItem="FfU-rZ-bEV" secondAttribute="centerY" id="OKW-pP-m5I"/>
+                            <constraint firstItem="oGh-cd-cnc" firstAttribute="centerX" secondItem="FfU-rZ-bEV" secondAttribute="centerX" id="Px7-FC-1gg"/>
+                            <constraint firstItem="oGh-cd-cnc" firstAttribute="centerY" secondItem="FfU-rZ-bEV" secondAttribute="centerY" id="RcL-2J-Uhw"/>
+                            <constraint firstItem="rbz-hQ-U4S" firstAttribute="width" secondItem="rbz-hQ-U4S" secondAttribute="height" id="kVd-2J-jh9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="loadDot1" destination="rbz-hQ-U4S" id="2oG-dh-URM"/>
+                        <outlet property="loadDot2" destination="oGh-cd-cnc" id="KIE-fM-dod"/>
+                        <outlet property="loadDot3" destination="arc-1D-5yQ" id="TQg-6z-2af"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="goToLogon" modalPresentationStyle="fullScreen" id="WoI-dM-l9p"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kh0-PN-Ic5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="934.78260869565224" y="-313.39285714285711"/>
+        </scene>
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -326,6 +383,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="newspaper" catalog="system" width="128" height="111"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="plus.bubble" catalog="system" width="128" height="110"/>

@@ -15,11 +15,13 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
     @IBAction func pressedLike(_ sender: Any) {
         if buttonLike.titleLabel?.text == "0" {
         buttonLike.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            buttonLike.setTitle("1", for: .normal)
+ //           buttonLike.setTitle("1", for: .normal)
+            animateLikeButton()
         }
             else {
                 buttonLike.setImage(UIImage(systemName: "heart"), for: .normal)
-                buttonLike.setTitle("0", for: .normal)
+                animateDislikeButton()
+  //              buttonLike.setTitle("0", for: .normal)
             }
     }
     
@@ -28,6 +30,26 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
     func configure(photoFr: UIImage?) {
         self.photoFriend.image = photoFr
         
+    }
+    
+    func animateLikeButton() {
+        UIView.transition(
+            with: buttonLike,
+            duration: 0.5,
+            options: .transitionFlipFromLeft,
+            animations: {
+                self.buttonLike.setTitle("1", for: .normal)
+            })
+    }
+    
+    func animateDislikeButton() {
+        UIView.transition(
+            with: buttonLike,
+            duration: 0.5,
+            options: .transitionFlipFromRight,
+            animations: {
+                self.buttonLike.setTitle("0", for: .normal)
+            })
     }
     
 }

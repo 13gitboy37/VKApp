@@ -13,6 +13,7 @@
 		AF2E99512798833A00021F75 /* TextNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF2E994F2798833A00021F75 /* TextNewsCell.xib */; };
 		AF2E9954279885D600021F75 /* ImageNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E9952279885D600021F75 /* ImageNewsCell.swift */; };
 		AF2E9955279885D600021F75 /* ImageNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF2E9953279885D600021F75 /* ImageNewsCell.xib */; };
+		AF2FD392279C618D0059C2E8 /* LoadScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2FD391279C618D0059C2E8 /* LoadScreenVC.swift */; };
 		AF4277092773BCF6007C9E93 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4277082773BCF6007C9E93 /* FriendsTableVC.swift */; };
 		AF42770B2773BD35007C9E93 /* PersonalGroupsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF42770A2773BD35007C9E93 /* PersonalGroupsTableVC.swift */; };
 		AF42770D2773BD79007C9E93 /* GlobalGroupsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF42770C2773BD79007C9E93 /* GlobalGroupsTableVC.swift */; };
@@ -44,6 +45,7 @@
 		AF2E994F2798833A00021F75 /* TextNewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextNewsCell.xib; sourceTree = "<group>"; };
 		AF2E9952279885D600021F75 /* ImageNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNewsCell.swift; sourceTree = "<group>"; };
 		AF2E9953279885D600021F75 /* ImageNewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageNewsCell.xib; sourceTree = "<group>"; };
+		AF2FD391279C618D0059C2E8 /* LoadScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadScreenVC.swift; sourceTree = "<group>"; };
 		AF4277082773BCF6007C9E93 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendsTableVC.swift; path = ../FriendsTableVC.swift; sourceTree = "<group>"; };
 		AF42770A2773BD35007C9E93 /* PersonalGroupsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupsTableVC.swift; sourceTree = "<group>"; };
 		AF42770C2773BD79007C9E93 /* GlobalGroupsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalGroupsTableVC.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		AFE2614C2771BB17006994D1 /* VIewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AF2FD391279C618D0059C2E8 /* LoadScreenVC.swift */,
 				AFE2613C2771B6BA006994D1 /* LoginViewController.swift */,
 				AF5B67B62773B8E1008A52F2 /* PhotoFriendsCollectionVC.swift */,
 				AF4277082773BCF6007C9E93 /* FriendsTableVC.swift */,
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFE2613D2771B6BA006994D1 /* LoginViewController.swift in Sources */,
+				AF2FD392279C618D0059C2E8 /* LoadScreenVC.swift in Sources */,
 				AF42770D2773BD79007C9E93 /* GlobalGroupsTableVC.swift in Sources */,
 				AF42770B2773BD35007C9E93 /* PersonalGroupsTableVC.swift in Sources */,
 				AF9E538C2778A74C00A3851B /* Group.swift in Sources */,

@@ -22,6 +22,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lasso" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EzI-ak-dwU" customClass="AvatarImage" customModule="VKApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="1.5" width="50" height="49"/>
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
+                                <gestureRecognizers/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                         <color key="value" systemColor="systemPinkColor"/>

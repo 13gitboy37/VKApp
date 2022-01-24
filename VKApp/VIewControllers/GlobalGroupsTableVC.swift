@@ -53,7 +53,7 @@ final class GlobalGroupsTableVC: UITableViewController {
         defer { tableView.deselectRow(
             at: indexPath,
             animated: true) }
-        performSegue(
+            performSegue(
             withIdentifier: "addGroup",
             sender: nil)
     }

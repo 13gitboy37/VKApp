@@ -25,4 +25,22 @@ class FriendsCell: UITableViewCell {
             self.friendsEmblem.image = emblem
             self.friendsName.text = name
         }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        animateImage()
+        super.touchesBegan(touches, with: event)
+        }
+    
+    func animateImage() {
+        UIView.animate(
+            withDuration: 0.7,
+            delay: .zero,
+            usingSpringWithDamping: 0.1,
+            initialSpringVelocity: 1.0) {
+                self.friendsEmblem.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            } completion: { _ in
+                self.friendsEmblem.transform = .identity
+        }
+       
+    }
 }
