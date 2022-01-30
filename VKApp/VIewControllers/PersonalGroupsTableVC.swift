@@ -15,7 +15,7 @@ final class PersonalGroupsTableVC: UITableViewController {
             tableView.reloadData()
         }
     }*/
-    @IBAction func addGroup(segue: UIStoryboardSegue) {
+   @IBAction func addGroup(segue: UIStoryboardSegue) {
         guard
             segue.identifier == "addGroup",
             let allGroupsController = segue.source as? GlobalGroupsTableVC,

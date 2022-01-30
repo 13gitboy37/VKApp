@@ -26,7 +26,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yOZ-oZ-Jl5">
                                 <rect key="frame" x="94.5" y="100" width="31.5" height="27"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="0" image="heart" catalog="system"/>
+                                <state key="normal" title="0" image="heart" catalog="system">
+                                    <color key="titleColor" systemColor="linkColor"/>
+                                </state>
                                 <connections>
                                     <action selector="pressedLike:" destination="gTV-IL-0wX" eventType="touchUpInside" id="NBh-4g-TNS"/>
                                 </connections>
@@ -65,6 +67,9 @@
     </objects>
     <resources>
         <image name="heart" catalog="system" width="128" height="109"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

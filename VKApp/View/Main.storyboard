@@ -222,6 +222,69 @@
             </objects>
             <point key="canvasLocation" x="5749.275362318841" y="-689.0625"/>
         </scene>
+        <!--Full Screen PhotoVC-->
+        <scene sceneID="uFz-5b-cNq">
+            <objects>
+                <viewController storyboardIdentifier="FullScreenPhotoVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ru9-Bc-jOC" customClass="FullScreenPhotoVC" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="O03-Je-26u">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2To-1d-9gr">
+                                <rect key="frame" x="367" y="44" width="42" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system"/>
+                                <connections>
+                                    <action selector="backToPhotos:" destination="Ru9-Bc-jOC" eventType="touchUpInside" id="CBT-fV-O1e"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="twf-gy-9u5">
+                                <rect key="frame" x="-404" y="261" width="374" height="374"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="Cbo-pK-QIa"/>
+                                    <constraint firstAttribute="width" secondItem="twf-gy-9u5" secondAttribute="height" id="Es7-cg-N7Y"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cnv-Ea-jma">
+                                <rect key="frame" x="20" y="261" width="374" height="374"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cnv-Ea-jma" secondAttribute="height" id="Pcm-04-HXm"/>
+                                    <constraint firstAttribute="width" constant="374" id="yCt-Wk-3QI"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hnb-9r-28G">
+                                <rect key="frame" x="444" y="261" width="374" height="374"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="GD4-4q-leo"/>
+                                    <constraint firstAttribute="width" secondItem="hnb-9r-28G" secondAttribute="height" id="q0q-Xu-PHC"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="KHr-gK-oNF"/>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                        <constraints>
+                            <constraint firstItem="2To-1d-9gr" firstAttribute="top" secondItem="KHr-gK-oNF" secondAttribute="top" id="5aV-g8-Rpo"/>
+                            <constraint firstItem="KHr-gK-oNF" firstAttribute="leading" secondItem="twf-gy-9u5" secondAttribute="trailing" constant="30" id="8zi-Ph-dq4"/>
+                            <constraint firstItem="hnb-9r-28G" firstAttribute="width" secondItem="hnb-9r-28G" secondAttribute="height" id="Bd9-QE-L1u"/>
+                            <constraint firstItem="hnb-9r-28G" firstAttribute="leading" secondItem="KHr-gK-oNF" secondAttribute="trailing" constant="30" id="EER-SD-5l5"/>
+                            <constraint firstItem="KHr-gK-oNF" firstAttribute="trailing" secondItem="2To-1d-9gr" secondAttribute="trailing" constant="5" id="IUy-38-dkP"/>
+                            <constraint firstItem="twf-gy-9u5" firstAttribute="centerY" secondItem="O03-Je-26u" secondAttribute="centerY" id="Rmw-su-2sJ"/>
+                            <constraint firstItem="cnv-Ea-jma" firstAttribute="centerX" secondItem="O03-Je-26u" secondAttribute="centerX" id="Rp9-Dn-zL9"/>
+                            <constraint firstItem="cnv-Ea-jma" firstAttribute="centerY" secondItem="O03-Je-26u" secondAttribute="centerY" id="eaN-uh-Fh4"/>
+                            <constraint firstItem="hnb-9r-28G" firstAttribute="centerY" secondItem="O03-Je-26u" secondAttribute="centerY" id="wAw-Bx-hUx"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PLZ-js-gtN"/>
+                    <connections>
+                        <outlet property="centralImageView" destination="cnv-Ea-jma" id="XmJ-dy-aMO"/>
+                        <outlet property="leftImageView" destination="twf-gy-9u5" id="J6f-rC-eDv"/>
+                        <outlet property="rightImageView" destination="hnb-9r-28G" id="5QM-Wz-bfA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G0r-Yy-7jl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6824.6376811594209" y="-689.0625"/>
+        </scene>
         <!--GlobalGroups-->
         <scene sceneID="jgj-9R-pLp">
             <objects>
@@ -388,11 +451,15 @@
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="plus.bubble" catalog="system" width="128" height="110"/>
         <image name="rectangle.3.group.bubble.left.fill" catalog="system" width="128" height="110"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

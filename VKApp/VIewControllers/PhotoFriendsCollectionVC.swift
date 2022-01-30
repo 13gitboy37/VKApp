@@ -8,6 +8,11 @@
 import UIKit
 
 class PhotoFriendsCollectionVC: UICollectionViewController {
+    var photo = [
+    "Avatar1.jpg",
+    "Avatar2.jpg",
+    "ava.jpg",
+    "pictures1.jpg"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +38,7 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 10
+      return photo.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -46,10 +51,27 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             return UICollectionViewCell()
         }
         
-            cell.configure(photoFr: UIImage(named: "Avatar1.jpg")) //systemName: "person.fill"
+        cell.configure(photoFr: UIImage(named: photo[indexPath.row] )) //systemName: "person.fill"
         return cell
     }
 
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let fullScreenPhotoVC = storyboard.instantiateViewController(withIdentifier: "FullScreenPhotoVC") as! FullScreenPhotoVC
+        fullScreenPhotoVC.indexPath = indexPath.row
+        fullScreenPhotoVC.photo = photo
+        fullScreenPhotoVC.namePhoto = photo[indexPath.row]
+        fullScreenPhotoVC.centralImage = UIImage(named: photo[indexPath.row]) ?? UIImage()
+        fullScreenPhotoVC.modalPresentationStyle = .fullScreen
+        self.present(fullScreenPhotoVC, animated: true, completion: nil)
+        
+        
+     /*   defer { collectionView.deselectItem(
+            at: indexPath,
+            animated: true)}
+             self.performSegue(withIdentifier: "goToFullPhoto", sender: nil)*/
+         }
     // MARK: UICollectionViewDelegate
 
     /*

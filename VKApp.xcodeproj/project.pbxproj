@@ -29,6 +29,7 @@
 		AF9E53872778956400A3851B /* PhotoFriendsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF9E53852778956400A3851B /* PhotoFriendsCollectionCell.xib */; };
 		AF9E538A2778A74000A3851B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E53892778A74000A3851B /* User.swift */; };
 		AF9E538C2778A74C00A3851B /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E538B2778A74C00A3851B /* Group.swift */; };
+		AFB6527527A1B69D0007B248 /* FullScreenPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB6527427A1B69D0007B248 /* FullScreenPhotoVC.swift */; };
 		AFE261392771B6BA006994D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE261382771B6BA006994D1 /* AppDelegate.swift */; };
 		AFE2613B2771B6BA006994D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE2613A2771B6BA006994D1 /* SceneDelegate.swift */; };
 		AFE2613D2771B6BA006994D1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE2613C2771B6BA006994D1 /* LoginViewController.swift */; };
@@ -61,6 +62,7 @@
 		AF9E53852778956400A3851B /* PhotoFriendsCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFriendsCollectionCell.xib; sourceTree = "<group>"; };
 		AF9E53892778A74000A3851B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AF9E538B2778A74C00A3851B /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		AFB6527427A1B69D0007B248 /* FullScreenPhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPhotoVC.swift; sourceTree = "<group>"; };
 		AFE261352771B6BA006994D1 /* VKApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFE261382771B6BA006994D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFE2613A2771B6BA006994D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				AF42770A2773BD35007C9E93 /* PersonalGroupsTableVC.swift */,
 				AF42770C2773BD79007C9E93 /* GlobalGroupsTableVC.swift */,
 				AF5FC58B27988ECF00FEED89 /* NewsTableVC.swift */,
+				AFB6527427A1B69D0007B248 /* FullScreenPhotoVC.swift */,
 			);
 			path = VIewControllers;
 			sourceTree = "<group>";
@@ -199,8 +202,8 @@
 		AFE2614D2771BB2E006994D1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AF574BB727986EBB00173AB9 /* ReusebleHeaderFooter */,
 				AF574BB52798635000173AB9 /* Main.storyboard */,
+				AF574BB727986EBB00173AB9 /* ReusebleHeaderFooter */,
 				AF1F8E7C27763C950054DB80 /* Reusable Cells */,
 			);
 			path = View;
@@ -294,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFB6527527A1B69D0007B248 /* FullScreenPhotoVC.swift in Sources */,
 				AFE2613D2771B6BA006994D1 /* LoginViewController.swift in Sources */,
 				AF2FD392279C618D0059C2E8 /* LoadScreenVC.swift in Sources */,
 				AF42770D2773BD79007C9E93 /* GlobalGroupsTableVC.swift in Sources */,
