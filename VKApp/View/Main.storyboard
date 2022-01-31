@@ -283,7 +283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G0r-Yy-7jl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6824.6376811594209" y="-689.0625"/>
+            <point key="canvasLocation" x="6693" y="-689"/>
         </scene>
         <!--GlobalGroups-->
         <scene sceneID="jgj-9R-pLp">
@@ -369,7 +369,7 @@
         <!--Friends-->
         <scene sceneID="Pqe-KZ-T5h">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8yc-0d-DOf" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8yc-0d-DOf" customClass="CustomNavigationController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Friends" image="person" catalog="system" id="wos-nW-nqV"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KZA-O2-kYm">

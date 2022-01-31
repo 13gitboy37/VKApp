@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF0185A727A6D638004B7593 /* CustomNavigationConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0185A627A6D638004B7593 /* CustomNavigationConroller.swift */; };
+		AF0185A927A6D8A7004B7593 /* NavigationAnimators.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0185A827A6D8A7004B7593 /* NavigationAnimators.swift */; };
 		AF1F8E8027763CDD0054DB80 /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1F8E7E27763CDD0054DB80 /* FriendsCell.swift */; };
 		AF1F8E8127763CDD0054DB80 /* FriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF1F8E7F27763CDD0054DB80 /* FriendsCell.xib */; };
 		AF2E99502798833A00021F75 /* TextNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E994E2798833A00021F75 /* TextNewsCell.swift */; };
@@ -24,6 +26,7 @@
 		AF574BC027987B0800173AB9 /* FooterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF574BBE27987B0800173AB9 /* FooterCell.xib */; };
 		AF5B67B82773B8E1008A52F2 /* PhotoFriendsCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5B67B62773B8E1008A52F2 /* PhotoFriendsCollectionVC.swift */; };
 		AF5FC58C27988ECF00FEED89 /* NewsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5FC58B27988ECF00FEED89 /* NewsTableVC.swift */; };
+		AF81627827A82C43000881E5 /* SetAnchorPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF81627727A82C43000881E5 /* SetAnchorPoint.swift */; };
 		AF929667277C71A80097A708 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF929666277C71A80097A708 /* AvatarView.swift */; };
 		AF9E53862778956400A3851B /* PhotoFriendsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E53842778956400A3851B /* PhotoFriendsCollectionCell.swift */; };
 		AF9E53872778956400A3851B /* PhotoFriendsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF9E53852778956400A3851B /* PhotoFriendsCollectionCell.xib */; };
@@ -40,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF0185A627A6D638004B7593 /* CustomNavigationConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationConroller.swift; sourceTree = "<group>"; };
+		AF0185A827A6D8A7004B7593 /* NavigationAnimators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAnimators.swift; sourceTree = "<group>"; };
 		AF1F8E7E27763CDD0054DB80 /* FriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
 		AF1F8E7F27763CDD0054DB80 /* FriendsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FriendsCell.xib; sourceTree = "<group>"; };
 		AF2E994E2798833A00021F75 /* TextNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNewsCell.swift; sourceTree = "<group>"; };
@@ -57,6 +62,7 @@
 		AF574BBE27987B0800173AB9 /* FooterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterCell.xib; sourceTree = "<group>"; };
 		AF5B67B62773B8E1008A52F2 /* PhotoFriendsCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFriendsCollectionVC.swift; sourceTree = "<group>"; };
 		AF5FC58B27988ECF00FEED89 /* NewsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableVC.swift; sourceTree = "<group>"; };
+		AF81627727A82C43000881E5 /* SetAnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAnchorPoint.swift; sourceTree = "<group>"; };
 		AF929666277C71A80097A708 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		AF9E53842778956400A3851B /* PhotoFriendsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFriendsCollectionCell.swift; sourceTree = "<group>"; };
 		AF9E53852778956400A3851B /* PhotoFriendsCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoFriendsCollectionCell.xib; sourceTree = "<group>"; };
@@ -85,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF0185A527A6D615004B7593 /* UIHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				AF0185A627A6D638004B7593 /* CustomNavigationConroller.swift */,
+				AF0185A827A6D8A7004B7593 /* NavigationAnimators.swift */,
+			);
+			path = UIHelpers;
+			sourceTree = "<group>";
+		};
 		AF1F8E7C27763C950054DB80 /* Reusable Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +141,14 @@
 				AF2E9953279885D600021F75 /* ImageNewsCell.xib */,
 			);
 			path = NewsCells;
+			sourceTree = "<group>";
+		};
+		AF81627627A82C17000881E5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AF81627727A82C43000881E5 /* SetAnchorPoint.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		AF929665277C71810097A708 /* Hacks */ = {
@@ -173,6 +196,8 @@
 		AFE261372771B6BA006994D1 /* VKApp */ = {
 			isa = PBXGroup;
 			children = (
+				AF81627627A82C17000881E5 /* Extensions */,
+				AF0185A527A6D615004B7593 /* UIHelpers */,
 				AF929665277C71810097A708 /* Hacks */,
 				AFE2614D2771BB2E006994D1 /* View */,
 				AFE2614C2771BB17006994D1 /* VIewControllers */,
@@ -299,6 +324,8 @@
 			files = (
 				AFB6527527A1B69D0007B248 /* FullScreenPhotoVC.swift in Sources */,
 				AFE2613D2771B6BA006994D1 /* LoginViewController.swift in Sources */,
+				AF0185A927A6D8A7004B7593 /* NavigationAnimators.swift in Sources */,
+				AF0185A727A6D638004B7593 /* CustomNavigationConroller.swift in Sources */,
 				AF2FD392279C618D0059C2E8 /* LoadScreenVC.swift in Sources */,
 				AF42770D2773BD79007C9E93 /* GlobalGroupsTableVC.swift in Sources */,
 				AF42770B2773BD35007C9E93 /* PersonalGroupsTableVC.swift in Sources */,
@@ -306,6 +333,7 @@
 				AF574BBB279876A700173AB9 /* HeaderCell.swift in Sources */,
 				AF929667277C71A80097A708 /* AvatarView.swift in Sources */,
 				AFF319B52777619300DCBEB6 /* GroupsCell.swift in Sources */,
+				AF81627827A82C43000881E5 /* SetAnchorPoint.swift in Sources */,
 				AF2E9954279885D600021F75 /* ImageNewsCell.swift in Sources */,
 				AF5FC58C27988ECF00FEED89 /* NewsTableVC.swift in Sources */,
 				AF574BBF27987B0800173AB9 /* FooterCell.swift in Sources */,

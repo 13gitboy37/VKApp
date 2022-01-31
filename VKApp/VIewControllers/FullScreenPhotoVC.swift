@@ -160,7 +160,6 @@ class FullScreenPhotoVC: UIViewController {
                         self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
                         self.centralImageView.transform = .identity
                     }
-                   print(" ")
                 } )
             
             
@@ -216,7 +215,7 @@ class FullScreenPhotoVC: UIViewController {
                         self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
                         self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
                         self.centralImageView.transform = .identity
-                   //     self.rightImageView.image = UIImage(named: self.photo[self.indexPath + 1])
+                        
                     } else if self.rightIndex > self.photo.endIndex - 1 {
                         self.rightIndex = 0
                         self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
