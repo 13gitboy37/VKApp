@@ -19,6 +19,7 @@
 		AF4277092773BCF6007C9E93 /* FriendsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4277082773BCF6007C9E93 /* FriendsTableVC.swift */; };
 		AF42770B2773BD35007C9E93 /* PersonalGroupsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF42770A2773BD35007C9E93 /* PersonalGroupsTableVC.swift */; };
 		AF42770D2773BD79007C9E93 /* GlobalGroupsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF42770C2773BD79007C9E93 /* GlobalGroupsTableVC.swift */; };
+		AF45CF6627B3DC09002EF5D7 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF45CF6527B3DC09002EF5D7 /* Singleton.swift */; };
 		AF574BB62798635000173AB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF574BB52798635000173AB9 /* Main.storyboard */; };
 		AF574BBB279876A700173AB9 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF574BB9279876A700173AB9 /* HeaderCell.swift */; };
 		AF574BBC279876A700173AB9 /* HeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF574BBA279876A700173AB9 /* HeaderCell.xib */; };
@@ -55,6 +56,7 @@
 		AF4277082773BCF6007C9E93 /* FriendsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendsTableVC.swift; path = ../FriendsTableVC.swift; sourceTree = "<group>"; };
 		AF42770A2773BD35007C9E93 /* PersonalGroupsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalGroupsTableVC.swift; sourceTree = "<group>"; };
 		AF42770C2773BD79007C9E93 /* GlobalGroupsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalGroupsTableVC.swift; sourceTree = "<group>"; };
+		AF45CF6527B3DC09002EF5D7 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
 		AF574BB52798635000173AB9 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		AF574BB9279876A700173AB9 /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		AF574BBA279876A700173AB9 /* HeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderCell.xib; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				AF9E53892778A74000A3851B /* User.swift */,
 				AF9E538B2778A74C00A3851B /* Group.swift */,
+				AF45CF6527B3DC09002EF5D7 /* Singleton.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				AFF319B52777619300DCBEB6 /* GroupsCell.swift in Sources */,
 				AF81627827A82C43000881E5 /* SetAnchorPoint.swift in Sources */,
 				AF2E9954279885D600021F75 /* ImageNewsCell.swift in Sources */,
+				AF45CF6627B3DC09002EF5D7 /* Singleton.swift in Sources */,
 				AF5FC58C27988ECF00FEED89 /* NewsTableVC.swift in Sources */,
 				AF574BBF27987B0800173AB9 /* FooterCell.swift in Sources */,
 				AFE261392771B6BA006994D1 /* AppDelegate.swift in Sources */,

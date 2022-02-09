@@ -72,8 +72,6 @@ extension GlobalGroupsTableVC: UISearchBarDelegate {
            for searchTextIndex in groups {
                if searchTextIndex.lowercased().contains(searchText.lowercased()){
                     searchGroups.append(searchTextIndex)
-                   print(searchGroups! as Any )
-                    
                     }
                 }
             
