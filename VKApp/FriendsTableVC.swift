@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 final class FriendsTableVC: UITableViewController {
 
@@ -26,6 +27,8 @@ final class FriendsTableVC: UITableViewController {
         return sortedFriends
     }
  
+    private let networkService = NetworkService()
+    
     // MARK: - Table view data source
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +48,7 @@ final class FriendsTableVC: UITableViewController {
         
         friendsSectionTitles = [String](friendsDictionary.keys)
         self.friendsSectionTitles = self.friendsSectionTitles.sorted(by: {$0 < $1})
-
+        networkService.getFriends()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

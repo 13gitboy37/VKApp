@@ -19,6 +19,7 @@ final class GlobalGroupsTableVC: UITableViewController {
     
     var searchGroups:[String]!
    
+    private let networkService = NetworkService()
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ final class GlobalGroupsTableVC: UITableViewController {
             nibName: "GroupsCell",
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
+        networkService.getSearchGroups()
     }
     // MARK: - Table view data source
 

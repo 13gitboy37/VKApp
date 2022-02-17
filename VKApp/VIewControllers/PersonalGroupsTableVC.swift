@@ -26,12 +26,15 @@ final class PersonalGroupsTableVC: UITableViewController {
         tableView.reloadData()
     }
     
+    private let networkService = NetworkService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(
             nibName: "GroupsCell",
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
+        networkService.getGroups()
     }
     
     // MARK: - Table view data source

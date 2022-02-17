@@ -59,7 +59,7 @@
                         <outlet property="loadDot1" destination="rbz-hQ-U4S" id="2oG-dh-URM"/>
                         <outlet property="loadDot2" destination="oGh-cd-cnc" id="KIE-fM-dod"/>
                         <outlet property="loadDot3" destination="arc-1D-5yQ" id="TQg-6z-2af"/>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="goToLogon" modalPresentationStyle="fullScreen" id="WoI-dM-l9p"/>
+                        <segue destination="ag5-8J-9Kf" kind="presentation" identifier="goToLogon" modalPresentationStyle="fullScreen" id="4ms-Xf-UvB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kh0-PN-Ic5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -69,7 +69,7 @@
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -131,7 +131,6 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Login"/>
                                         <connections>
                                             <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GCa-3J-lEB"/>
-                                            <segue destination="ENY-VT-KMy" kind="presentation" identifier="goToMain" modalPresentationStyle="fullScreen" id="I9m-bk-2vu"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -171,7 +170,42 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1851" y="-313"/>
+            <point key="canvasLocation" x="935" y="504"/>
+        </scene>
+        <!--LoginVC-->
+        <scene sceneID="yRs-fb-zEf">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ag5-8J-9Kf" customClass="VKLoginVC" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="twL-Ea-K6v">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gcL-mO-R4p">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nfQ-wB-mYN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gcL-mO-R4p" firstAttribute="top" secondItem="nfQ-wB-mYN" secondAttribute="top" id="BIg-zd-vfE"/>
+                            <constraint firstItem="nfQ-wB-mYN" firstAttribute="bottom" secondItem="gcL-mO-R4p" secondAttribute="bottom" id="WZM-g7-uZd"/>
+                            <constraint firstItem="nfQ-wB-mYN" firstAttribute="trailing" secondItem="gcL-mO-R4p" secondAttribute="trailing" id="aXa-cp-XyW"/>
+                            <constraint firstItem="gcL-mO-R4p" firstAttribute="leading" secondItem="nfQ-wB-mYN" secondAttribute="leading" id="vVP-9v-ZIw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="gcL-mO-R4p" id="mn9-qO-KEC"/>
+                        <segue destination="ENY-VT-KMy" kind="presentation" identifier="goToMain" modalPresentationStyle="fullScreen" id="kQi-Fi-Cfo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NzU-1N-TdE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1881" y="-313"/>
         </scene>
         <!--Friends-->
         <scene sceneID="jQW-vG-jYA">
@@ -388,7 +422,7 @@
         <!--Groups-->
         <scene sceneID="Y7p-SN-k3Z">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ikF-Ma-hhQ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ikF-Ma-hhQ" customClass="CustomNavigationController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Groups" image="rectangle.3.group.bubble.left.fill" catalog="system" id="PsZ-uy-B9E"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Sup-0K-iTH">

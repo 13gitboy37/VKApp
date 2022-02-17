@@ -5,12 +5,12 @@
 //  Created by Никита Мошенцев on 09.02.2022.
 //
 
-class Singleton {
+class UserSession {
     
     var token: String = ""
     var userID: Int = 0
     
-   static let instance = Singleton()
+   static let instance = UserSession()
     
     private init() {
         

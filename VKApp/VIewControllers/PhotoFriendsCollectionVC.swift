@@ -14,12 +14,16 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
     "ava.jpg",
     "pictures1.jpg"]
     
+    private let networkService = NetworkService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.register(UINib(
             nibName: "PhotoFriendsCollectionCell",
             bundle: nil),
             forCellWithReuseIdentifier: "photoFriendsCollectionCell")
+        networkService.getPhotos()
+        
         // Do any additional setup after loading the view.
     }
 
