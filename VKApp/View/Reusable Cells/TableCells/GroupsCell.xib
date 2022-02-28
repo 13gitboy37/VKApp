@@ -22,7 +22,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lasso" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ecw-nF-Lra">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lasso" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ecw-nF-Lra" customClass="AvatarImage" customModule="VKApp" customModuleProvider="target">
                         <rect key="frame" x="4" y="5.5" width="51" height="50"/>
                         <color key="tintColor" systemColor="systemOrangeColor"/>
                         <constraints>

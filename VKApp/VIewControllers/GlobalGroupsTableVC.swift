@@ -9,13 +9,16 @@ import UIKit
 
 final class GlobalGroupsTableVC: UITableViewController {
     @IBOutlet var searchBar: UISearchBar!
-    var groups = [
-        "News",
-        "New Rap",
-        "Fast Food Music",
-        "Trasher Magazine",
-        "CS: GO"
-    ]
+   
+     var groups = [GroupsItems](){
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    private var timer = Timer()
     
     var searchGroups:[String]!
    
@@ -23,18 +26,21 @@ final class GlobalGroupsTableVC: UITableViewController {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
-        searchGroups = groups
+     //   searchGroups = groups
         super.viewDidLoad()
         tableView.register(UINib(
             nibName: "GroupsCell",
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
-        networkService.getSearchGroups()
+        
+        
     }
     // MARK: - Table view data source
-
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        searchGroups.count
+        //searchGroups.count
+      groups.count
     }
     
     
@@ -44,13 +50,17 @@ final class GlobalGroupsTableVC: UITableViewController {
          let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
      
-    let currentGroup = searchGroups[indexPath.row]
-     
-     cell.configure(
+    //let currentGroup = searchGroups[indexPath.row]
+    //    var currentGroup = groups[indexPath.row]
+    //    currentGroup.append(groups["name"])
+    /* cell.configure(
          emblem: UIImage(systemName: "\(indexPath.row).circle") ?? UIImage(),name: currentGroup)
         return cell
+    }*/
+                cell.configure(model: groups[indexPath.item])
+        return cell
     }
-        
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defer { tableView.deselectRow(
             at: indexPath,
@@ -63,11 +73,27 @@ final class GlobalGroupsTableVC: UITableViewController {
 }
 
 //MARK: Realese UISearchBar
-extension GlobalGroupsTableVC: UISearchBarDelegate {
+ extension GlobalGroupsTableVC: UISearchBarDelegate {
    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-       
-        if searchText == "" {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+      timer.invalidate()
+      timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+          self.networkService.getSearchGroups(searchText: searchText.lowercased())
+          {[weak self] result in
+              switch result {
+              case .success(let groups):
+                  self?.groups = groups
+              case .failure(let error):
+                  print(error)
+              }
+          }
+      }
+
+    )
+  }
+            
+      
+/*        if searchText == "" {
             searchGroups = groups
         } else {
             searchGroups = []
@@ -77,7 +103,7 @@ extension GlobalGroupsTableVC: UISearchBarDelegate {
                     }
                 }
             
-            }
-        tableView.reloadData()
+            } */
+    //    tableView.reloadData()
     }
-}
+//}

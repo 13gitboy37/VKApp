@@ -9,8 +9,15 @@ import UIKit
 
 final class PersonalGroupsTableVC: UITableViewController {
     
-    var groups = [String]()
-    /*{
+   private  var groups = [GroupsItems](){
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+   /* var groups = [String]()
+    {
         didSet {
             tableView.reloadData()
         }
@@ -19,8 +26,8 @@ final class PersonalGroupsTableVC: UITableViewController {
         guard
             segue.identifier == "addGroup",
             let allGroupsController = segue.source as? GlobalGroupsTableVC,
-            let groupIndexPath = allGroupsController.tableView.indexPathForSelectedRow,
-            !self.groups.contains(allGroupsController.groups[groupIndexPath.row])
+            let groupIndexPath = allGroupsController.tableView.indexPathForSelectedRow//,
+ //           !self.groups.contains(allGroupsController.groups[groupIndexPath.row])
         else { return }
         self.groups.append(allGroupsController.groups[groupIndexPath.row])
         tableView.reloadData()
@@ -34,11 +41,20 @@ final class PersonalGroupsTableVC: UITableViewController {
             nibName: "GroupsCell",
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
-        networkService.getGroups()
+        
+        networkService.getGroups() { [weak self] result in
+            switch result {
+            case .success(let groups):
+                self?.groups = groups
+            case .failure(let error):
+                print(error)
+            }
+        }
+ //       networkService.getGroups()
     }
     
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         groups.count
     }
@@ -50,11 +66,14 @@ final class PersonalGroupsTableVC: UITableViewController {
          let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
      
-    let currentGroup = groups[indexPath.row]
+  //  let currentGroup = groups[indexPath.row]
      
-     cell.configure(
-         emblem: UIImage(systemName: "\(indexPath.row).circle") ?? UIImage(),name: currentGroup)
+        cell.configure(model: groups[indexPath.item])
         return cell
+        
+    /* cell.configure(
+         emblem: UIImage(systemName: "\(indexPath.row).circle") ?? UIImage(),name: currentGroup)
+        return cell */
     }
 
 
@@ -68,7 +87,7 @@ final class PersonalGroupsTableVC: UITableViewController {
             tableView.deleteRows(
                 at: [indexPath],
                 with: .fade)
-        }  
+        }
     }
 
     /*

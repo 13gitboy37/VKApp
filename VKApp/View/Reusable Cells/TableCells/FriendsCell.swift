@@ -20,9 +20,12 @@ class FriendsCell: UITableViewCell {
     }
     
     func configure (
-        emblem: UIImage,
+        emblem: String,
         name: String) {
-            self.friendsEmblem.image = emblem
+            let url = URL(string: emblem)
+            if let data = try? Data(contentsOf: url!) {
+                self.friendsEmblem.image = UIImage(data: data) ?? UIImage()
+            }
             self.friendsName.text = name
         }
     
@@ -43,4 +46,14 @@ class FriendsCell: UITableViewCell {
         }
        
     }
+    
+ //config wit model
+    func configure(model: UserItems) {
+        self.friendsName.text = model.lastName + " " + model.firstName
+        let url = URL(string: model.userPhoto)
+        if let data = try? Data(contentsOf: url!) {
+            self.friendsEmblem.image = UIImage(data: data) ?? UIImage()
+        }
+    }
 }
+

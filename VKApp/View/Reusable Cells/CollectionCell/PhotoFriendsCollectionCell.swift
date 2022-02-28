@@ -32,6 +32,15 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
         
     }
     
+    // config with model
+    func configure(model: PhotosItems) {
+        let url = URL(string: model.sizes.last!.urlPhoto)
+        if let data = try? Data(contentsOf: url!) {
+            self.photoFriend.image = UIImage(data: data) ?? UIImage()
+        }
+    }
+    
+    
     func animateLikeButton() {
         UIView.transition(
             with: buttonLike,

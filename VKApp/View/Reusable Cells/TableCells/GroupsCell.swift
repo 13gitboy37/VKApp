@@ -10,6 +10,12 @@ import UIKit
 final class GroupsCell: UITableViewCell {
     @IBOutlet var groupsEmblem: UIImageView!
     @IBOutlet var groupsName: UILabel!
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+        didSet {
+            setNeedsLayout()
+            layoutIfNeeded()
+        }
+    }
     
     func configure(
         emblem: UIImage,
@@ -34,5 +40,14 @@ final class GroupsCell: UITableViewCell {
         }
         
     }
+    
+    func configure(model: GroupsItems) {
+        self.groupsName.text = model.name
+        let url = URL(string: model.groupsPhoto)
+        if let data = try? Data(contentsOf: url!) {
+            self.groupsEmblem.image = UIImage(data: data) ?? UIImage()
+        }
+    }
 }
+
 

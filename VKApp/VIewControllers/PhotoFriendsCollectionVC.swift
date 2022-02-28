@@ -8,12 +8,18 @@
 import UIKit
 
 class PhotoFriendsCollectionVC: UICollectionViewController {
-    var photo = [
-    "Avatar1.jpg",
-    "Avatar2.jpg",
-    "ava.jpg",
-    "pictures1.jpg"]
+    var friendPhotos = [String]()
     
+    var photos = [PhotosItems](){
+        didSet{
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+        }
+    }
+    }
+    
+    var photoFriends: UserItems?
     private let networkService = NetworkService()
     
     override func viewDidLoad() {
@@ -22,19 +28,20 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             nibName: "PhotoFriendsCollectionCell",
             bundle: nil),
             forCellWithReuseIdentifier: "photoFriendsCollectionCell")
-        networkService.getPhotos()
         
-        // Do any additional setup after loading the view.
+        
+        networkService.getPhotos(ownerID: photoFriends?.id) { [weak self] result in
+        switch result {
+            case .success(let photos):
+            self?.photos = photos
+            case .failure(let error):
+                print(error)
+        }
+    }
     }
 
     /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
     */
 
     // MARK: UICollectionViewDataSource
@@ -42,11 +49,11 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-      return photo.count
+      return photos.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard
+       guard
             let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "photoFriendsCollectionCell",
             for: indexPath)
@@ -55,12 +62,18 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             return UICollectionViewCell()
         }
         
-        cell.configure(photoFr: UIImage(named: photo[indexPath.row] )) //systemName: "person.fill"
+   //    cell.configure(photoFr: UIImage(named: photo[indexPath.row] )) //systemName: "person.fill"
+    //    for i in photos {
+  //      cell.configure(model: "\(i.sizes[indexPath.item])")
+  //      }
+        
+        cell.configure(model: photos[indexPath.item])
         return cell
     }
 
+
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+ /*   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let fullScreenPhotoVC = storyboard.instantiateViewController(withIdentifier: "FullScreenPhotoVC") as! FullScreenPhotoVC
         fullScreenPhotoVC.indexPath = indexPath.row
@@ -75,7 +88,8 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             at: indexPath,
             animated: true)}
              self.performSegue(withIdentifier: "goToFullPhoto", sender: nil)*/
-         }
+         }*/
+}
     // MARK: UICollectionViewDelegate
 
     /*
@@ -107,4 +121,5 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
     }
     */
     
-}
+//}
+

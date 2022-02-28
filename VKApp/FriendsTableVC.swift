@@ -10,21 +10,35 @@ import Alamofire
 
 final class FriendsTableVC: UITableViewController {
 
-    var friendsDictionary = [String: [String]]()
+    var friendsDictionary = [String: [UserItems]]()
     var friendsSectionTitles = [String]()
-    var friends = [
-    "Ivanov Ivan",
-    "Iskanderov Konstantin",
-    "Alexandrov Alex",
-    "Viktorov Viktor",
-    "Zuckerberg Mark",
-    "Jobs Steven",
-    "Zaharov Inokentiy"]
-    
-  func SortFriend() -> [String] {
-        var sortedFriends = [String]()
-        sortedFriends = self.friends.sorted{$0 < $1}
-        return sortedFriends
+    var friendsSortedDictionary = [String: [UserItems]]()
+    private var users = [UserItems]() {
+        didSet {
+            
+                
+                for user in self.users where user.firstName != "DELETED" {
+                    self.friendsDictionary.removeAll()
+                    self.users.sort()
+
+                for friend in self.users.indices  {
+                    let friendKey = String(self.users[friend].lastName.prefix(1))
+                    if var friendValues = self.friendsDictionary[friendKey] {
+                        friendValues.append(self.users[friend])
+                        self.friendsDictionary[friendKey] = friendValues
+                    } else {
+                        self.friendsDictionary[friendKey] = [self.users[friend]]
+                    }
+                }
+                
+                self.friendsSectionTitles = [String](self.friendsDictionary.keys).sorted{ $0 < $1 }
+                }
+            
+            DispatchQueue.main.async {
+                self.friendsSortedDictionary = self.friendsDictionary
+                self.tableView.reloadData()
+            }
+        }
     }
  
     private let networkService = NetworkService()
@@ -32,35 +46,32 @@ final class FriendsTableVC: UITableViewController {
     // MARK: - Table view data source
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        networkService.getFriends() { [weak self] result in
+        switch result {
+            case .success(let users):
+                self?.users = users
+       //         self?.friendPhoto = users
+            case .failure(let error):
+                print(error)
+        }
+    }
+        
         tableView.register(UINib(
             nibName: "FriendsCell",
             bundle: nil),
                            forCellReuseIdentifier: "friendCell")
-        for friend in SortFriend() {
-            let friendKey = String(friend.prefix(1))
-            if var friendValues = friendsDictionary[friendKey] {
-                friendValues.append(friend)
-                friendsDictionary[friendKey] = friendValues
-            } else {
-                friendsDictionary[friendKey] = [friend]
-            }
-        }
-        
-        friendsSectionTitles = [String](friendsDictionary.keys)
-        self.friendsSectionTitles = self.friendsSectionTitles.sorted(by: {$0 < $1})
-        networkService.getFriends()
     }
     
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return friendsSectionTitles.count
+        friendsSectionTitles = [String](friendsDictionary.keys)
+        self.friendsSectionTitles = self.friendsSectionTitles.sorted(by: {$0 < $1})
+       return friendsSectionTitles.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let friendKey = friendsSectionTitles[section]
-        if let friendValues = friendsDictionary[friendKey] {
-            return friendValues.count
-        }
-        return 0
+        friendsSortedDictionary[friendsSectionTitles[section]]!.count
     }
 
 
@@ -68,24 +79,35 @@ final class FriendsTableVC: UITableViewController {
         guard
            let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as? FriendsCell
         else { return UITableViewCell() }
-       let friendKey = friendsSectionTitles[indexPath.section]
-        if let friendValues = friendsDictionary[friendKey] {
-            cell.configure(
-                emblem: UIImage(named: "ava.jpg") ?? UIImage(), name: friendValues[indexPath.row])
-        }
-     //   cell.addGestureRecognizer(UITapGestureRecognizer)
-      //  cell.animateImage()
         
+        let friendKey = friendsSectionTitles[indexPath.section]
+        if let friendValues = friendsDictionary[friendKey] {
+            let friendsInCell = friendValues[indexPath.row]
+            cell.configure(emblem:friendsInCell.userPhoto,
+                           name: friendsInCell.fullName)
+        }
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "showPhotosFriend", let indexPath = tableView.indexPathForSelectedRow
+        else { return }
+        
+        guard let destination = segue.destination as? PhotoFriendsCollectionVC else { return }
+        
+        let friendKey = friendsSectionTitles[indexPath.section]
+        if let friendValues = friendsSortedDictionary[friendKey] {
+            destination.photoFriends = friendValues[indexPath.row]
+        }
     }
     
      override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defer { tableView.deselectRow(
             at: indexPath,
             animated: true) }
-         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+//         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
              self.performSegue(withIdentifier: "showPhotosFriend", sender: nil)
-         }
+  //       }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -93,8 +115,9 @@ final class FriendsTableVC: UITableViewController {
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return friendsSectionTitles
+       return friendsSectionTitles
     }
+    
     
   override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView

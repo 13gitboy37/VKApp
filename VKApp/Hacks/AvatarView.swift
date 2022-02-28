@@ -8,7 +8,7 @@
 import UIKit
 
 class AvatarImage: UIImageView {
-    @IBInspectable var borderColor: UIColor = .gray
+    @IBInspectable var borderColor: UIColor = .systemPurple
     @IBInspectable var borderWidth: CGFloat = 1.5
     
     override func awakeFromNib() {
