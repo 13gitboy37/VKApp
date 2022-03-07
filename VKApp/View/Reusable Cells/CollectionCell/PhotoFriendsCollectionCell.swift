@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class PhotoFriendsCollectionCell: UICollectionViewCell {
     
@@ -34,10 +35,7 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
     
     // config with model
     func configure(model: PhotosItems) {
-        let url = URL(string: model.sizes.last!.urlPhoto)
-        if let data = try? Data(contentsOf: url!) {
-            self.photoFriend.image = UIImage(data: data) ?? UIImage()
-        }
+        self.photoFriend.kf.setImage(with: URL(string: model.sizes.last!.urlPhoto), placeholder: UIImage(systemName: "person.fill"))
     }
     
     

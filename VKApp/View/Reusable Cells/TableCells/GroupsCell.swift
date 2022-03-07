@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class GroupsCell: UITableViewCell {
     @IBOutlet var groupsEmblem: UIImageView!
@@ -43,10 +44,7 @@ final class GroupsCell: UITableViewCell {
     
     func configure(model: GroupsItems) {
         self.groupsName.text = model.name
-        let url = URL(string: model.groupsPhoto)
-        if let data = try? Data(contentsOf: url!) {
-            self.groupsEmblem.image = UIImage(data: data) ?? UIImage()
-        }
+        self.groupsEmblem.kf.setImage(with: URL(string: model.groupsPhoto), placeholder: UIImage(systemName: "rectangle.3.group.bubble.left"))
     }
 }
 

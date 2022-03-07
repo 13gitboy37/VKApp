@@ -251,6 +251,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Photo" id="d7v-oz-Xz9"/>
+                    <connections>
+                        <segue destination="Ru9-Bc-jOC" kind="presentation" identifier="goToFullPhoto" modalPresentationStyle="fullScreen" id="EOg-Fs-5hr"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIB-ZO-sab" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

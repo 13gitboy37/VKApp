@@ -22,8 +22,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lasso" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ecw-nF-Lra" customClass="AvatarImage" customModule="VKApp" customModuleProvider="target">
-                        <rect key="frame" x="4" y="5.5" width="51" height="50"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rectangle.3.group.bubble.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ecw-nF-Lra" customClass="AvatarImage" customModule="VKApp" customModuleProvider="target">
+                        <rect key="frame" x="4" y="4.5" width="51" height="50.5"/>
                         <color key="tintColor" systemColor="systemOrangeColor"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="ecw-nF-Lra" secondAttribute="height" id="aSO-Px-4ZZ"/>
@@ -47,7 +47,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="lasso" catalog="system" width="128" height="118"/>
+        <image name="rectangle.3.group.bubble.left" catalog="system" width="128" height="110"/>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

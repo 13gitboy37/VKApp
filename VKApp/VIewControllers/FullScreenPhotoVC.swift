@@ -6,15 +6,53 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FullScreenPhotoVC: UIViewController {
    
     var leftImage = UIImage()
     var centralImage = UIImage()
     var rightImage = UIImage()
-    var namePhoto = String()
-    var photo = [String]()
+    var photo = [PhotosItems](){
+        didSet {
+            DispatchQueue.main.async{
+                self.photo.forEach { fullScreenPhoto in
+                    self.fullScreenPhotos.append("\(fullScreenPhoto.sizes.last!.urlPhoto)")
+            }
+                if self.indexPath == 0 {
+                    self.leftIndex = self.fullScreenPhotos.endIndex - 1
+                /*    leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
+                    centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
+                    rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
+                    
+                    self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    
+                } else if self.indexPath == self.fullScreenPhotos.endIndex - 1{
+                    self.rightIndex = 0
+                  /*  leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
+                    centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
+                    rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
+                    
+                    self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    
+                } else if self.indexPath != 0 && self.indexPath != self.fullScreenPhotos.endIndex - 1 {
+                 /*   leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
+                    centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
+                    rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
+                    
+                    self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                    self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                }
+        }
+    }
+    }
     var indexPath = Int()
+    var fullScreenPhotos = [String]()
     
     var leftIndex = Int()
     var centralIndex = Int()
@@ -39,8 +77,6 @@ class FullScreenPhotoVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
      //   centralImageView.isUserInteractionEnabled = true
         
         
@@ -61,23 +97,38 @@ class FullScreenPhotoVC: UIViewController {
         self.centralIndex = self.indexPath
         self.rightIndex = self.indexPath + 1
         
+        /*
         if indexPath == 0 {
-            leftIndex = photo.endIndex - 1
-            leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
+            leftIndex = fullScreenPhotos.endIndex - 1
+        /*    leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
             centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage()
-        } else if indexPath == photo.endIndex - 1{
+            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
+            
+            leftImageView.kf.setImage(with: URL(string: fullScreenPhotos[leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            rightImageView.kf.setImage(with: URL(string: fullScreenPhotos[rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            
+        } else if indexPath == fullScreenPhotos.endIndex - 1{
             rightIndex = 0
-            leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
+          /*  leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
             centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage()
-        } else if indexPath != 0 && indexPath != photo.endIndex - 1 {
-            leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
+            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
+            
+            leftImageView.kf.setImage(with: URL(string: fullScreenPhotos[leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            rightImageView.kf.setImage(with: URL(string: fullScreenPhotos[rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            
+        } else if indexPath != 0 && indexPath != fullScreenPhotos.endIndex - 1 {
+         /*   leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
             centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage()
+            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
+            
+            leftImageView.kf.setImage(with: URL(string: fullScreenPhotos[leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+            rightImageView.kf.setImage(with: URL(string: fullScreenPhotos[rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
         }
-        
-        
+        */
+      //  centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
         
         
         //MARK: Animation transition
@@ -135,29 +186,29 @@ class FullScreenPhotoVC: UIViewController {
                     self.rightIndex -= 1
                     
                     if self.leftIndex < 0 {
-                        self.leftIndex = self.photo.endIndex - 1
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
+                        self.leftIndex = self.fullScreenPhotos.endIndex - 1
+                        self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                         self.centralImageView.transform = .identity
                         
                     } else if self.centralIndex < 0  {
-                        self.centralIndex = self.photo.endIndex - 1
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
+                        self.centralIndex = self.fullScreenPhotos.endIndex - 1
+                        self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                         self.centralImageView.transform = .identity
                    //     self.rightImageView.image = UIImage(named: self.photo[self.indexPath + 1])
                     } else if self.rightIndex < 0 {
-                        self.rightIndex = self.photo.endIndex - 1
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
+                        self.rightIndex = self.fullScreenPhotos.endIndex - 1
+                        self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                         self.centralImageView.transform = .identity
                     } else {
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
+                        self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                         self.centralImageView.transform = .identity
                     }
                 } )
@@ -202,30 +253,32 @@ class FullScreenPhotoVC: UIViewController {
                     self.centralIndex += 1
                     self.rightIndex += 1
                     
-                    if self.leftIndex > self.photo.endIndex - 1 {
-                        self.leftIndex = 0
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
-                        self.centralImageView.transform = .identity
+                    
+                        if self.rightIndex > self.fullScreenPhotos.endIndex - 1 {
+                            self.rightIndex = 0
+                            self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                            self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                            self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                            self.centralImageView.transform = .identity
                         
-                    } else if self.centralIndex > self.photo.endIndex - 1 {
+                    } else if self.centralIndex > self.fullScreenPhotos.endIndex - 1 {
                         self.centralIndex = 0
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
+                        self.leftIndex = self.fullScreenPhotos.endIndex - 1
+                        self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                         self.centralImageView.transform = .identity
                         
-                    } else if self.rightIndex > self.photo.endIndex - 1 {
-                        self.rightIndex = 0
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
+                    } else if self.leftIndex > self.fullScreenPhotos.endIndex - 1 {
+                        self.leftIndex = 0
+                        self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                         self.centralImageView.transform = .identity
                     } else {
-                        self.leftImageView.image = UIImage(named: self.photo[self.leftIndex])
-                        self.centralImageView.image = UIImage(named: self.photo[self.centralIndex])
-                        self.rightImageView.image = UIImage(named: self.photo[self.rightIndex])
+                        self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
+                        self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                         self.centralImageView.transform = .identity
                     }
 
@@ -237,3 +290,4 @@ class FullScreenPhotoVC: UIViewController {
         }
     }
 }
+

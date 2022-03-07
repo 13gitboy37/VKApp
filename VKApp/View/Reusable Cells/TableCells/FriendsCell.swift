@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FriendsCell: UITableViewCell {
     
@@ -50,10 +51,7 @@ class FriendsCell: UITableViewCell {
  //config wit model
     func configure(model: UserItems) {
         self.friendsName.text = model.lastName + " " + model.firstName
-        let url = URL(string: model.userPhoto)
-        if let data = try? Data(contentsOf: url!) {
-            self.friendsEmblem.image = UIImage(data: data) ?? UIImage()
-        }
+        self.friendsEmblem.kf.setImage(with: URL(string: model.userPhoto))
     }
 }
 

@@ -21,7 +21,7 @@ final class FriendsTableVC: UITableViewController {
                     self.friendsDictionary.removeAll()
                     self.users.sort()
 
-                for friend in self.users.indices  {
+                    for friend in self.users.indices {
                     let friendKey = String(self.users[friend].lastName.prefix(1))
                     if var friendValues = self.friendsDictionary[friendKey] {
                         friendValues.append(self.users[friend])

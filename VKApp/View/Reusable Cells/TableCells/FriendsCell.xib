@@ -19,8 +19,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="015-Rc-G4F" customClass="AvatarBackShadow" customModule="VKApp" customModuleProvider="target">
                         <rect key="frame" x="10" y="20" width="50" height="50"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lasso" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EzI-ak-dwU" customClass="AvatarImage" customModule="VKApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="1.5" width="50" height="49"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EzI-ak-dwU" customClass="AvatarImage" customModule="VKApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="1.5" width="50" height="47.5"/>
                                 <color key="tintColor" systemColor="systemPurpleColor"/>
                                 <gestureRecognizers/>
                                 <userDefinedRuntimeAttributes>
@@ -88,7 +88,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="lasso" catalog="system" width="128" height="118"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PhotoFriendsCollectionVC: UICollectionViewController {
     var friendPhotos = [String]()
@@ -14,7 +15,9 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         didSet{
             
             DispatchQueue.main.async {
+                
                 self.collectionView.reloadData()
+                
         }
     }
     }
@@ -73,22 +76,22 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
 
 
     
- /*   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let fullScreenPhotoVC = storyboard.instantiateViewController(withIdentifier: "FullScreenPhotoVC") as! FullScreenPhotoVC
         fullScreenPhotoVC.indexPath = indexPath.row
-        fullScreenPhotoVC.photo = photo
-        fullScreenPhotoVC.namePhoto = photo[indexPath.row]
-        fullScreenPhotoVC.centralImage = UIImage(named: photo[indexPath.row]) ?? UIImage()
+        fullScreenPhotoVC.photo = photos
+     //   fullScreenPhotoVC.centralImageView.kf.setImage(with: URL(string: "\(photos[indexPath.item])"), placeholder: UIImage(systemName: "person.fill"))
+    //    fullScreenPhotoVC.centralImage = UIImage(named: photo[indexPath.row]) ?? UIImage()
         fullScreenPhotoVC.modalPresentationStyle = .fullScreen
         self.present(fullScreenPhotoVC, animated: true, completion: nil)
         
         
-     /*   defer { collectionView.deselectItem(
+       defer { collectionView.deselectItem(
             at: indexPath,
             animated: true)}
-             self.performSegue(withIdentifier: "goToFullPhoto", sender: nil)*/
-         }*/
+             self.performSegue(withIdentifier: "goToFullPhoto", sender: nil)
+         }
 }
     // MARK: UICollectionViewDelegate
 
