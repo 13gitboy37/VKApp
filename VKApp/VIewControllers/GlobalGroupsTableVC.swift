@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class GlobalGroupsTableVC: UITableViewController {
     @IBOutlet var searchBar: UISearchBar!
    
-     var groups = [GroupsItems](){
+    var groups: Results<RealmSearchGroup>? = try? RealmService.load(typeOf: RealmSearchGroup.self){
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -26,7 +27,6 @@ final class GlobalGroupsTableVC: UITableViewController {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
-     //   searchGroups = groups
         super.viewDidLoad()
         tableView.register(UINib(
             nibName: "GroupsCell",
@@ -39,25 +39,18 @@ final class GlobalGroupsTableVC: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //searchGroups.count
-      groups.count
+      groups?.count ?? 0
     }
     
     
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard
+         let currentGroup = groups?[indexPath.row],
          let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
      
-    //let currentGroup = searchGroups[indexPath.row]
-    //    var currentGroup = groups[indexPath.row]
-    //    currentGroup.append(groups["name"])
-    /* cell.configure(
-         emblem: UIImage(systemName: "\(indexPath.row).circle") ?? UIImage(),name: currentGroup)
-        return cell
-    }*/
-                cell.configure(model: groups[indexPath.item])
+        cell.configure(model: currentGroup)
         return cell
     }
     
@@ -76,34 +69,39 @@ final class GlobalGroupsTableVC: UITableViewController {
  extension GlobalGroupsTableVC: UISearchBarDelegate {
    
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-      timer.invalidate()
-      timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
-          self.networkService.getSearchGroups(searchText: searchText.lowercased())
-          {[weak self] result in
-              switch result {
-              case .success(let groups):
-                  self?.groups = groups
-              case .failure(let error):
-                  print(error)
-              }
-          }
-      }
-
-    )
-  }
-            
       
-/*        if searchText == "" {
-            searchGroups = groups
-        } else {
-            searchGroups = []
-           for searchTextIndex in groups {
-               if searchTextIndex.lowercased().contains(searchText.lowercased()){
-                    searchGroups.append(searchTextIndex)
+            groups?.forEach({ deleteGroup in
+                do {
+                    let realm = try Realm()
+                    let currentDeleteGroup = try realm.objects(RealmSearchGroup.self).filter("id == %@", deleteGroup.id)
+                    try RealmService.delete(object: currentDeleteGroup)
+                    tableView.reloadData()
+                } catch {
+                    print(error)
+                }
+            })
+            timer.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+                self.networkService.getSearchGroups(searchText: searchText.lowercased())
+                {[weak self] result in
+                    switch result {
+                    case .success(let groups):
+                        let realmGroup = groups.map { RealmSearchGroup(seatchGroupName: searchText, groups: $0)}
+                        DispatchQueue.main.async {
+                            do {
+                            try RealmService.save(items: realmGroup)
+                            self?.groups = try RealmService.load(typeOf: RealmSearchGroup.self)
+                            self?.tableView.reloadData()
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    case .failure(let error):
+                        print(error)
+                      
                     }
                 }
-            
-            } */
-    //    tableView.reloadData()
-    }
-//}
+            }
+          )
+  }
+ }

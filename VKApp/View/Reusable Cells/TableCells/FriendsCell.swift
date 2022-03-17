@@ -53,5 +53,11 @@ class FriendsCell: UITableViewCell {
         self.friendsName.text = model.lastName + " " + model.firstName
         self.friendsEmblem.kf.setImage(with: URL(string: model.userPhoto))
     }
+
+
+    func configure(model: RealmUser) {
+        self.friendsName.text = model.lastName + " " + model.firstName
+        self.friendsEmblem.kf.setImage(with: URL(string: model.userPhoto))
+    }
 }
 

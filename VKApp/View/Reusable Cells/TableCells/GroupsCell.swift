@@ -46,6 +46,18 @@ final class GroupsCell: UITableViewCell {
         self.groupsName.text = model.name
         self.groupsEmblem.kf.setImage(with: URL(string: model.groupsPhoto), placeholder: UIImage(systemName: "rectangle.3.group.bubble.left"))
     }
+    // Configure for personal groups
+    func configure(model: RealmGroup) {
+        self.groupsName.text = model.name
+        self.groupsEmblem.kf.setImage(with: URL(string: model.groupsPhoto))
+    }
+    
+    // Configure for search groups
+    func configure(model: RealmSearchGroup) {
+        self.groupsName.text = model.name
+        self.groupsEmblem.kf.setImage(with: URL(string: model.groupsPhoto))
+    }
+
 }
 
 

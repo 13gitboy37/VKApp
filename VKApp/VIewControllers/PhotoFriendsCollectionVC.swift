@@ -7,22 +7,33 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
+import CoreMedia
 
 class PhotoFriendsCollectionVC: UICollectionViewController {
     var friendPhotos = [String]()
     
-    var photos = [PhotosItems](){
-        didSet{
-            
+    var ownerID: Int = Int()
+    
+    var photoFriends: RealmUser? {
+        didSet {
             DispatchQueue.main.async {
-                
+                self.ownerID = self.photoFriends!.id
                 self.collectionView.reloadData()
-                
+            }
+        }
+    }
+    
+    var photos: Results<RealmPhoto>? {
+        didSet{
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
         }
     }
     }
     
-    var photoFriends: UserItems?
+    
+    
     private let networkService = NetworkService()
     
     override func viewDidLoad() {
@@ -32,15 +43,26 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             bundle: nil),
             forCellWithReuseIdentifier: "photoFriendsCollectionCell")
         
+        photos = try? RealmService.load(typeOf: RealmPhoto.self).filter("ownerID == %@", ownerID )
         
         networkService.getPhotos(ownerID: photoFriends?.id) { [weak self] result in
         switch result {
             case .success(let photos):
-            self?.photos = photos
+            DispatchQueue.main.async {
+            let realmPhoto = photos.map { RealmPhoto(ownerID: self?.photoFriends?.id ?? 0, photos: $0) }
+                do {
+                try RealmService.save(items: realmPhoto)
+                    self?.photos = try RealmService.load(typeOf: RealmPhoto.self).filter("ownerID == %@", self?.photoFriends?.id)
+                self?.collectionView.reloadData()
+                } catch {
+                    print(error)
+                }
+            }
             case .failure(let error):
                 print(error)
         }
     }
+        
     }
 
     /*
@@ -52,11 +74,12 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-      return photos.count
+      return photos?.count ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        guard
+        let currentPhoto = photos?[indexPath.row],
             let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "photoFriendsCollectionCell",
             for: indexPath)
@@ -65,12 +88,7 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             return UICollectionViewCell()
         }
         
-   //    cell.configure(photoFr: UIImage(named: photo[indexPath.row] )) //systemName: "person.fill"
-    //    for i in photos {
-  //      cell.configure(model: "\(i.sizes[indexPath.item])")
-  //      }
-        
-        cell.configure(model: photos[indexPath.item])
+        cell.configure(model: currentPhoto)
         return cell
     }
 
@@ -81,8 +99,6 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         let fullScreenPhotoVC = storyboard.instantiateViewController(withIdentifier: "FullScreenPhotoVC") as! FullScreenPhotoVC
         fullScreenPhotoVC.indexPath = indexPath.row
         fullScreenPhotoVC.photo = photos
-     //   fullScreenPhotoVC.centralImageView.kf.setImage(with: URL(string: "\(photos[indexPath.item])"), placeholder: UIImage(systemName: "person.fill"))
-    //    fullScreenPhotoVC.centralImage = UIImage(named: photo[indexPath.row]) ?? UIImage()
         fullScreenPhotoVC.modalPresentationStyle = .fullScreen
         self.present(fullScreenPhotoVC, animated: true, completion: nil)
         
@@ -91,38 +107,6 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             at: indexPath,
             animated: true)}
              self.performSegue(withIdentifier: "goToFullPhoto", sender: nil)
-         }
+         } 
 }
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
-    }
-    */
-    
-//}
-

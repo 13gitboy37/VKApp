@@ -6,22 +6,18 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class PersonalGroupsTableVC: UITableViewController {
     
-   private  var groups = [GroupsItems](){
+    private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self){
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
-   /* var groups = [String]()
-    {
-        didSet {
-            tableView.reloadData()
-        }
-    }*/
+
    @IBAction func addGroup(segue: UIStoryboardSegue) {
         guard
             segue.identifier == "addGroup",
@@ -29,8 +25,22 @@ final class PersonalGroupsTableVC: UITableViewController {
             let groupIndexPath = allGroupsController.tableView.indexPathForSelectedRow//,
  //           !self.groups.contains(allGroupsController.groups[groupIndexPath.row])
         else { return }
-        self.groups.append(allGroupsController.groups[groupIndexPath.row])
-        tableView.reloadData()
+       do {
+           let currentGroup = allGroupsController.groups![groupIndexPath.row]
+           let realm = try Realm()
+           realm.beginWrite()
+               let currentAddGroup = RealmGroup()
+               currentAddGroup.id = currentGroup.id
+               currentAddGroup.name = currentGroup.name
+               currentAddGroup.groupsPhoto = currentGroup.groupsPhoto
+               realm.add(currentAddGroup)
+           try realm.commitWrite()
+           DispatchQueue.main.async {
+               self.tableView.reloadData()
+           }
+       } catch {
+           print(error)
+       }
     }
     
     private let networkService = NetworkService()
@@ -45,35 +55,38 @@ final class PersonalGroupsTableVC: UITableViewController {
         networkService.getGroups() { [weak self] result in
             switch result {
             case .success(let groups):
-                self?.groups = groups
+                let realmGroup = groups.map { RealmGroup(groups: $0)}
+                DispatchQueue.main.async {
+                    do {
+                    try RealmService.save(items: realmGroup)
+                    self?.groups = try RealmService.load(typeOf: RealmGroup.self)
+                    self?.tableView.reloadData()
+                    } catch {
+                        print(error)
+                    }
+                }
             case .failure(let error):
                 print(error)
             }
         }
- //       networkService.getGroups()
     }
     
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        groups?.count ?? 0
     }
-    
     
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard
+            let currentGroup = groups?[indexPath.item],
          let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
      
-  //  let currentGroup = groups[indexPath.row]
-     
-        cell.configure(model: groups[indexPath.item])
+        cell.configure(model: currentGroup)
         return cell
         
-    /* cell.configure(
-         emblem: UIImage(systemName: "\(indexPath.row).circle") ?? UIImage(),name: currentGroup)
-        return cell */
     }
 
 
@@ -83,36 +96,19 @@ final class PersonalGroupsTableVC: UITableViewController {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            groups.remove(at: indexPath.row)
-            tableView.deleteRows(
-                at: [indexPath],
-                with: .fade)
+            let deleteGroup = self.groups![indexPath.row]
+        do {
+            let realm = try Realm()
+            let currentDeleteGroup = try realm.objects(RealmGroup.self).filter("id == %@", deleteGroup.id)
+            DispatchQueue.main.async {
+                try? RealmService.delete(object: currentDeleteGroup)
+                tableView.deleteRows(
+                    at: [indexPath],
+                    with: .fade)
+            }
+        } catch {
+            print(error)
+                }
+            }
         }
-    }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

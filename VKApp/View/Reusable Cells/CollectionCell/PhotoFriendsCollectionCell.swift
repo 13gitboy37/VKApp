@@ -38,6 +38,10 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
         self.photoFriend.kf.setImage(with: URL(string: model.sizes.last!.urlPhoto), placeholder: UIImage(systemName: "person.fill"))
     }
     
+    func configure(model: RealmPhoto) {
+        self.photoFriend.kf.setImage(with: URL(string: model.urlPhoto), placeholder: UIImage(systemName: "person.fill"))
+    }
+    
     
     func animateLikeButton() {
         UIView.transition(

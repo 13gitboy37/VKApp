@@ -46,7 +46,7 @@ final class NetworkService {
             do {
                 let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
                 completion(.success(userResponse.users.items))
-   //             print(userResponse)
+                print(userResponse)
             } catch {
                 completion(.failure(error))
             }
@@ -146,10 +146,6 @@ else { return }
             do {
                 let groupsResponse = try JSONDecoder().decode(GroupsResponse.self, from: data)
                 completion(.success(groupsResponse.groups.items))
-          /*      let userResponse = try JSONDecoder().decode(
-                    UserResponse.self,
-                    from: data) */
-    
                 print(groupsResponse)
             } catch {
                 completion(.failure(error))
@@ -157,39 +153,4 @@ else { return }
         }
             task.resume()
         }
-    
-
-   /* guard let host = urlConstructor.url else { return }
-    let paramaters : Parameters = [
-        "access_token": UserSession.instance.token,
- //       "user_id": UserSession.instance.userID,
-        "v": "5.131",
-        "album_id" : "profile",
-        "rev" : 0
-    ]
-    AF.request(host,
-               method: .get,
-               parameters: paramaters)
-        .responseJSON(completionHandler: { json in
-            print(json)
-        })
-}*/
-/*
-    func getSearchGroups() {
-        urlConstructor.path = "/method/groups.search"
-        guard let host = urlConstructor.url else { return }
-        let parameters: Parameters = [
-            "access_token": UserSession.instance.token,
-            "v": "5.131",
-            "q": "News",
-            "sort": 6,
-            "count": 10
-        ]
-        AF.request(host,
-                   method: .get,
-                   parameters: parameters)
-            .responseJSON(completionHandler: { json in
-                print(json)
-            })
-    }*/
 }

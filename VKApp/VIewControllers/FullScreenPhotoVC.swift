@@ -7,23 +7,21 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class FullScreenPhotoVC: UIViewController {
    
     var leftImage = UIImage()
     var centralImage = UIImage()
     var rightImage = UIImage()
-    var photo = [PhotosItems](){
+    var photo: Results<RealmPhoto>? {
         didSet {
             DispatchQueue.main.async{
-                self.photo.forEach { fullScreenPhoto in
-                    self.fullScreenPhotos.append("\(fullScreenPhoto.sizes.last!.urlPhoto)")
+                self.photo!.forEach { fullScreenPhoto in
+                    self.fullScreenPhotos.append("\(fullScreenPhoto.urlPhoto)")
             }
                 if self.indexPath == 0 {
                     self.leftIndex = self.fullScreenPhotos.endIndex - 1
-                /*    leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
-                    centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-                    rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
                     
                     self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                     self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
@@ -31,18 +29,12 @@ class FullScreenPhotoVC: UIViewController {
                     
                 } else if self.indexPath == self.fullScreenPhotos.endIndex - 1{
                     self.rightIndex = 0
-                  /*  leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
-                    centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-                    rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
                     
                     self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                     self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                     self.rightImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                     
                 } else if self.indexPath != 0 && self.indexPath != self.fullScreenPhotos.endIndex - 1 {
-                 /*   leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
-                    centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-                    rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
                     
                     self.leftImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
                     self.centralImageView.kf.setImage(with: URL(string: self.fullScreenPhotos[self.centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
@@ -96,47 +88,12 @@ class FullScreenPhotoVC: UIViewController {
         self.leftIndex = self.indexPath - 1
         self.centralIndex = self.indexPath
         self.rightIndex = self.indexPath + 1
-        
-        /*
-        if indexPath == 0 {
-            leftIndex = fullScreenPhotos.endIndex - 1
-        /*    leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
-            centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
-            
-            leftImageView.kf.setImage(with: URL(string: fullScreenPhotos[leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            rightImageView.kf.setImage(with: URL(string: fullScreenPhotos[rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            
-        } else if indexPath == fullScreenPhotos.endIndex - 1{
-            rightIndex = 0
-          /*  leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
-            centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
-            
-            leftImageView.kf.setImage(with: URL(string: fullScreenPhotos[leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            rightImageView.kf.setImage(with: URL(string: fullScreenPhotos[rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            
-        } else if indexPath != 0 && indexPath != fullScreenPhotos.endIndex - 1 {
-         /*   leftImageView.image = UIImage(named: photo[leftIndex]) ?? UIImage()
-            centralImageView.image = UIImage(named: photo[centralIndex]) ?? UIImage()
-            rightImageView.image = UIImage(named: photo[rightIndex]) ?? UIImage() */
-            
-            leftImageView.kf.setImage(with: URL(string: fullScreenPhotos[leftIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-            rightImageView.kf.setImage(with: URL(string: fullScreenPhotos[rightIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-        }
-        */
-      //  centralImageView.kf.setImage(with: URL(string: fullScreenPhotos[centralIndex]), placeholder: UIImage(systemName: "person.fill") ?? UIImage())
-        
-        
+    
         //MARK: Animation transition
         
         
         
     }
-    
     
     //respond Swipe Direction
     

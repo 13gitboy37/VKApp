@@ -7,34 +7,38 @@
 
 import UIKit
 import Alamofire
+import RealmSwift
 
 final class FriendsTableVC: UITableViewController {
 
-    var friendsDictionary = [String: [UserItems]]()
+    var friendsDictionary = [String: [RealmUser?]]()
     var friendsSectionTitles = [String]()
-    var friendsSortedDictionary = [String: [UserItems]]()
-    private var users = [UserItems]() {
+    var friendsSortedDictionary = [String: [RealmUser?]]()
+    var sortedUsers = [RealmUser?]()
+    
+    private var users: Results<RealmUser>? = try? RealmService.load(typeOf: RealmUser.self) {
+ 
         didSet {
-            
-                
-                for user in self.users where user.firstName != "DELETED" {
+                DispatchQueue.main.async {
+                for user in self.users! where user.lastName != "" {
                     self.friendsDictionary.removeAll()
-                    self.users.sort()
+                    self.sortedUsers = self.users!.sorted()
 
-                    for friend in self.users.indices {
-                    let friendKey = String(self.users[friend].lastName.prefix(1))
+                    for friend in self.sortedUsers.indices {
+                    let friendKey = String(self.sortedUsers[friend]!.lastName.prefix(1))
                     if var friendValues = self.friendsDictionary[friendKey] {
-                        friendValues.append(self.users[friend])
+                        if self.sortedUsers[friend]!.firstName != "DELETED" {
+                        friendValues.append(self.sortedUsers[friend]!)
                         self.friendsDictionary[friendKey] = friendValues
+                        }
                     } else {
-                        self.friendsDictionary[friendKey] = [self.users[friend]]
+                        self.friendsDictionary[friendKey] = [self.sortedUsers[friend]]
                     }
                 }
-                
+
                 self.friendsSectionTitles = [String](self.friendsDictionary.keys).sorted{ $0 < $1 }
                 }
             
-            DispatchQueue.main.async {
                 self.friendsSortedDictionary = self.friendsDictionary
                 self.tableView.reloadData()
             }
@@ -50,8 +54,16 @@ final class FriendsTableVC: UITableViewController {
         networkService.getFriends() { [weak self] result in
         switch result {
             case .success(let users):
-                self?.users = users
-       //         self?.friendPhoto = users
+            let realmUser = users.map { RealmUser(users: $0) }
+            DispatchQueue.main.async {
+                do {
+                   try RealmService.save(items: realmUser)
+                    self?.users = try RealmService.load(typeOf: RealmUser.self)
+                    self?.tableView.reloadData()
+                } catch {
+                    print(error)
+                }
+            }
             case .failure(let error):
                 print(error)
         }
@@ -65,13 +77,15 @@ final class FriendsTableVC: UITableViewController {
     
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        friendsSectionTitles = [String](friendsDictionary.keys)
+       friendsSectionTitles = [String](friendsDictionary.keys)
         self.friendsSectionTitles = self.friendsSectionTitles.sorted(by: {$0 < $1})
        return friendsSectionTitles.count
+    
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         friendsSortedDictionary[friendsSectionTitles[section]]!.count
+        
     }
 
 
@@ -80,11 +94,12 @@ final class FriendsTableVC: UITableViewController {
            let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as? FriendsCell
         else { return UITableViewCell() }
         
+    
         let friendKey = friendsSectionTitles[indexPath.section]
         if let friendValues = friendsDictionary[friendKey] {
             let friendsInCell = friendValues[indexPath.row]
-            cell.configure(emblem:friendsInCell.userPhoto,
-                           name: friendsInCell.fullName)
+            cell.configure(emblem:friendsInCell!.userPhoto,
+                           name: friendsInCell!.fullName)
         }
         return cell
     }
@@ -94,20 +109,21 @@ final class FriendsTableVC: UITableViewController {
         else { return }
         
         guard let destination = segue.destination as? PhotoFriendsCollectionVC else { return }
-        
+     
+
         let friendKey = friendsSectionTitles[indexPath.section]
         if let friendValues = friendsSortedDictionary[friendKey] {
             destination.photoFriends = friendValues[indexPath.row]
-        }
+        } 
     }
     
      override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defer { tableView.deselectRow(
             at: indexPath,
             animated: true) }
-//         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+
              self.performSegue(withIdentifier: "showPhotosFriend", sender: nil)
-  //       }
+
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -125,9 +141,3 @@ final class FriendsTableVC: UITableViewController {
     }
 }
 
-extension FriendsTableVC: UIGestureRecognizerDelegate {
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}
