@@ -16,34 +16,32 @@ final class FriendsTableVC: UITableViewController {
     var friendsSortedDictionary = [String: [RealmUser?]]()
     var sortedUsers = [RealmUser?]()
     
-    private var users: Results<RealmUser>? = try? RealmService.load(typeOf: RealmUser.self) {
- 
-        didSet {
-                DispatchQueue.main.async {
-                for user in self.users! where user.lastName != "" {
-                    self.friendsDictionary.removeAll()
-                    self.sortedUsers = self.users!.sorted()
+    func SortFriend() {
+        for user in self.users! where user.lastName != "" {
+            self.friendsDictionary.removeAll()
+            self.sortedUsers = self.users!.sorted()
 
-                    for friend in self.sortedUsers.indices {
-                    let friendKey = String(self.sortedUsers[friend]!.lastName.prefix(1))
-                    if var friendValues = self.friendsDictionary[friendKey] {
-                        if self.sortedUsers[friend]!.firstName != "DELETED" {
-                        friendValues.append(self.sortedUsers[friend]!)
-                        self.friendsDictionary[friendKey] = friendValues
-                        }
-                    } else {
-                        self.friendsDictionary[friendKey] = [self.sortedUsers[friend]]
-                    }
+            for friend in self.sortedUsers.indices {
+            let friendKey = String(self.sortedUsers[friend]!.lastName.prefix(1))
+            if var friendValues = self.friendsDictionary[friendKey] {
+                if self.sortedUsers[friend]!.firstName != "DELETED" {
+                friendValues.append(self.sortedUsers[friend]!)
+                self.friendsDictionary[friendKey] = friendValues
                 }
-
-                self.friendsSectionTitles = [String](self.friendsDictionary.keys).sorted{ $0 < $1 }
-                }
-            
-                self.friendsSortedDictionary = self.friendsDictionary
-                self.tableView.reloadData()
+            } else {
+                self.friendsDictionary[friendKey] = [self.sortedUsers[friend]]
             }
         }
+
+        self.friendsSectionTitles = [String](self.friendsDictionary.keys).sorted{ $0 < $1 }
+        }
+    
+        self.friendsSortedDictionary = self.friendsDictionary
     }
+    
+    private var users: Results<RealmUser>? = try? RealmService.load(typeOf: RealmUser.self)
+    
+    private var friendsToken: NotificationToken?
  
     private let networkService = NetworkService()
     
@@ -55,15 +53,13 @@ final class FriendsTableVC: UITableViewController {
         switch result {
             case .success(let users):
             let realmUser = users.map { RealmUser(users: $0) }
-            DispatchQueue.main.async {
                 do {
                    try RealmService.save(items: realmUser)
                     self?.users = try RealmService.load(typeOf: RealmUser.self)
-                    self?.tableView.reloadData()
                 } catch {
                     print(error)
                 }
-            }
+//            }
             case .failure(let error):
                 print(error)
         }
@@ -75,6 +71,29 @@ final class FriendsTableVC: UITableViewController {
                            forCellReuseIdentifier: "friendCell")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        friendsToken = users?.observe { [weak self] friendsChanges in
+            guard let self = self else { return }
+            switch friendsChanges {
+            case .initial(_),
+                    .update(
+                        _,
+                        deletions: _,
+                        insertions: _,
+                        modifications: _):
+                self.SortFriend()
+                self.tableView.reloadData()
+            case .error(let error):
+                print(error)
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        friendsToken?.invalidate()
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
        friendsSectionTitles = [String](friendsDictionary.keys)

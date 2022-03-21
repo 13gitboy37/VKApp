@@ -24,14 +24,9 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         }
     }
     
-    var photos: Results<RealmPhoto>? {
-        didSet{
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-        }
-    }
-    }
-    
+    var photos: Results<RealmPhoto>?
+    var photosToken: NotificationToken?
+
     
     
     private let networkService = NetworkService()
@@ -53,7 +48,6 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
                 do {
                 try RealmService.save(items: realmPhoto)
                     self?.photos = try RealmService.load(typeOf: RealmPhoto.self).filter("ownerID == %@", self?.photoFriends?.id)
-                self?.collectionView.reloadData()
                 } catch {
                     print(error)
                 }
@@ -63,6 +57,43 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         }
     }
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        photosToken = photos?.observe { [weak self] photosChanges in
+            guard let self = self else { return }
+            switch photosChanges {
+            case .initial(_):
+                self.collectionView.reloadData()
+            case let .update(
+                _,
+                deletions: deletions,
+                insertions: insertions,
+                modifications: modifications):
+                
+                let delRowsIndex = deletions.map { IndexPath(
+                    row: $0,
+                    section: 0) }
+                let insertRowsIndex = insertions.map { IndexPath(
+                    row: $0,
+                    section: 0)}
+                let modificationIndex = modifications.map { IndexPath(
+                    row: $0,
+                    section: 0)}
+                
+                self.collectionView.deleteItems(at: delRowsIndex)
+                self.collectionView.insertItems(at: insertRowsIndex)
+                self.collectionView.reloadItems(at: modificationIndex)
+            case .error(let error):
+                print(error)
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        photosToken?.invalidate()
     }
 
     /*

@@ -26,7 +26,7 @@
                         <rect key="frame" x="4" y="4.5" width="22" height="21.5"/>
                         <color key="tintColor" systemColor="systemOrangeColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="Q1f-EC-ccj"/>
+                            <constraint firstAttribute="width" priority="999" constant="50" id="Q1f-EC-ccj"/>
                             <constraint firstAttribute="width" secondItem="ecw-nF-Lra" secondAttribute="height" id="aSO-Px-4ZZ"/>
                         </constraints>
                     </imageView>

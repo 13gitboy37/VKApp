@@ -11,13 +11,14 @@ import RealmSwift
 final class GlobalGroupsTableVC: UITableViewController {
     @IBOutlet var searchBar: UISearchBar!
    
-    var groups: Results<RealmSearchGroup>? = try? RealmService.load(typeOf: RealmSearchGroup.self){
+    var groups: Results<RealmSearchGroup>? = try? RealmService.load(typeOf: RealmSearchGroup.self) {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
+       
     
     private var timer = Timer()
     
@@ -75,7 +76,7 @@ final class GlobalGroupsTableVC: UITableViewController {
                     let realm = try Realm()
                     let currentDeleteGroup = try realm.objects(RealmSearchGroup.self).filter("id == %@", deleteGroup.id)
                     try RealmService.delete(object: currentDeleteGroup)
-                    tableView.reloadData()
+//                    tableView.reloadData()
                 } catch {
                     print(error)
                 }

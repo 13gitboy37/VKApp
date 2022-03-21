@@ -10,13 +10,9 @@ import RealmSwift
 
 final class PersonalGroupsTableVC: UITableViewController {
     
-    private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self){
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
+    private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self)
+    private var groupsToken: NotificationToken?
+     
 
    @IBAction func addGroup(segue: UIStoryboardSegue) {
         guard
@@ -35,9 +31,6 @@ final class PersonalGroupsTableVC: UITableViewController {
                currentAddGroup.groupsPhoto = currentGroup.groupsPhoto
                realm.add(currentAddGroup)
            try realm.commitWrite()
-           DispatchQueue.main.async {
-               self.tableView.reloadData()
-           }
        } catch {
            print(error)
        }
@@ -56,7 +49,6 @@ final class PersonalGroupsTableVC: UITableViewController {
             switch result {
             case .success(let groups):
                 let realmGroup = groups.map { RealmGroup(groups: $0)}
-                DispatchQueue.main.async {
                     do {
                     try RealmService.save(items: realmGroup)
                     self?.groups = try RealmService.load(typeOf: RealmGroup.self)
@@ -64,11 +56,50 @@ final class PersonalGroupsTableVC: UITableViewController {
                     } catch {
                         print(error)
                     }
-                }
             case .failure(let error):
                 print(error)
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        groupsToken = groups?.observe { [weak self] groupsChanges in
+            guard let self = self else { return }
+            switch groupsChanges {
+            case .initial(_):
+                self.tableView.reloadData()
+            case let .update(
+                _,
+                deletions: deletions,
+                insertions: insertions,
+                modifications: modifications):
+                self.tableView.beginUpdates()
+                
+                let delRowsIndex = deletions.map { IndexPath(
+                    row: $0,
+                    section: 0) }
+                let insertRowsIndex = insertions.map { IndexPath(
+                    row: $0,
+                    section: 0)}
+                let modificationIndex = modifications.map { IndexPath(
+                    row: $0,
+                    section: 0)}
+                
+                self.tableView.deleteRows(at: delRowsIndex, with: .automatic)
+                self.tableView.insertRows(at: insertRowsIndex, with: .automatic)
+                self.tableView.reloadRows(at: modificationIndex, with: .automatic)
+                
+                self.tableView.endUpdates()
+            case .error(let error):
+                print(error)
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        groupsToken?.invalidate()
     }
     
     // MARK: - Table view data source
@@ -77,18 +108,16 @@ final class PersonalGroupsTableVC: UITableViewController {
         groups?.count ?? 0
     }
     
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard
             let currentGroup = groups?[indexPath.item],
-         let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
      
         cell.configure(model: currentGroup)
         return cell
         
     }
-
 
     // Override to support editing the table view.
     override func tableView(
@@ -100,12 +129,7 @@ final class PersonalGroupsTableVC: UITableViewController {
         do {
             let realm = try Realm()
             let currentDeleteGroup = try realm.objects(RealmGroup.self).filter("id == %@", deleteGroup.id)
-            DispatchQueue.main.async {
-                try? RealmService.delete(object: currentDeleteGroup)
-                tableView.deleteRows(
-                    at: [indexPath],
-                    with: .fade)
-            }
+            try? RealmService.delete(object: currentDeleteGroup)
         } catch {
             print(error)
                 }

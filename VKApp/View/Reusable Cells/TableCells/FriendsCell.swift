@@ -23,10 +23,7 @@ class FriendsCell: UITableViewCell {
     func configure (
         emblem: String,
         name: String) {
-            let url = URL(string: emblem)
-            if let data = try? Data(contentsOf: url!) {
-                self.friendsEmblem.image = UIImage(data: data) ?? UIImage()
-            }
+            self.friendsEmblem.kf.setImage(with: URL(string: emblem))
             self.friendsName.text = name
         }
     
