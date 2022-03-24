@@ -21,4 +21,12 @@ extension RealmGroup {
         self.name = groups.name
         self.groupsPhoto = groups.groupsPhoto
     }
+    
+    func toAnyObject() -> [String: Any] {
+        [
+            "groupName" : name,
+            "groupsPhoto" : groupsPhoto
+        ]
+    }
+
 }

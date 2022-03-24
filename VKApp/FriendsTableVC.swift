@@ -8,103 +8,88 @@
 import UIKit
 import Alamofire
 import RealmSwift
+import FirebaseDatabase
 
 final class FriendsTableVC: UITableViewController {
 
-    var friendsDictionary = [String: [RealmUser?]]()
-    var friendsSectionTitles = [String]()
-    var friendsSortedDictionary = [String: [RealmUser?]]()
-    var sortedUsers = [RealmUser?]()
     
-    func SortFriend() {
-        for user in self.users! where user.lastName != "" {
-            self.friendsDictionary.removeAll()
-            self.sortedUsers = self.users!.sorted()
-
-            for friend in self.sortedUsers.indices {
-            let friendKey = String(self.sortedUsers[friend]!.lastName.prefix(1))
-            if var friendValues = self.friendsDictionary[friendKey] {
-                if self.sortedUsers[friend]!.firstName != "DELETED" {
-                friendValues.append(self.sortedUsers[friend]!)
-                self.friendsDictionary[friendKey] = friendValues
-                }
-            } else {
-                self.friendsDictionary[friendKey] = [self.sortedUsers[friend]]
-            }
+    @IBAction func addFriend(_ sender: Any) {
+        let alertController = UIAlertController(
+            title: "Enter friend full name: ",
+            message: nil,
+            preferredStyle: .alert)
+        alertController.addTextField { _ in }
+        
+        let confirm = UIAlertAction(title: "Add", style: .default) { action in
+            guard let fullName = alertController.textFields?.first?.text else { return }
+            let fbFriend = FirebaseFriend(fullName: fullName)
+            self.reference.child(fullName.lowercased()).setValue((fbFriend.toAnyObject()))
         }
-
-        self.friendsSectionTitles = [String](self.friendsDictionary.keys).sorted{ $0 < $1 }
-        }
-    
-        self.friendsSortedDictionary = self.friendsDictionary
+        
+        let cancel = UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: nil)
+        alertController.addAction(confirm)
+        alertController.addAction(cancel)
+        
+        present(
+        alertController,
+        animated: true,
+        completion: nil)
     }
     
-    private var users: Results<RealmUser>? = try? RealmService.load(typeOf: RealmUser.self)
+    private var users = [FirebaseFriend]()
+    private let reference = Database.database().reference()
     
-    private var friendsToken: NotificationToken?
- 
-    private let networkService = NetworkService()
-    
+
     // MARK: - Table view data source
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        networkService.getFriends() { [weak self] result in
-        switch result {
-            case .success(let users):
-            let realmUser = users.map { RealmUser(users: $0) }
-                do {
-                   try RealmService.save(items: realmUser)
-                    self?.users = try RealmService.load(typeOf: RealmUser.self)
-                } catch {
-                    print(error)
-                }
-//            }
-            case .failure(let error):
-                print(error)
-        }
-    }
+
         
         tableView.register(UINib(
             nibName: "FriendsCell",
             bundle: nil),
                            forCellReuseIdentifier: "friendCell")
+        reference.observe(.value) { [weak self] snapshot in
+            guard let self = self else { return }
+            var friend = [FirebaseFriend]()
+            snapshot.children.forEach {
+                guard let childSnap = $0 as? DataSnapshot,
+                      let fullName = FirebaseFriend(snapshot: childSnap)
+                else { return }
+                friend.append(fullName)
+            }
+            self.users = friend
+            self.tableView.reloadData()
+        }
+
     }
     
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let friend = users[indexPath.row]
+            friend.reference?.removeValue()
+        }
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        friendsToken = users?.observe { [weak self] friendsChanges in
-            guard let self = self else { return }
-            switch friendsChanges {
-            case .initial(_),
-                    .update(
-                        _,
-                        deletions: _,
-                        insertions: _,
-                        modifications: _):
-                self.SortFriend()
-                self.tableView.reloadData()
-            case .error(let error):
-                print(error)
-            }
-        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        friendsToken?.invalidate()
+//        friendsToken?.invalidate()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-       friendsSectionTitles = [String](friendsDictionary.keys)
-        self.friendsSectionTitles = self.friendsSectionTitles.sorted(by: {$0 < $1})
-       return friendsSectionTitles.count
-    
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        friendsSortedDictionary[friendsSectionTitles[section]]!.count
-        
+
+        return users.count
     }
 
 
@@ -113,50 +98,11 @@ final class FriendsTableVC: UITableViewController {
            let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as? FriendsCell
         else { return UITableViewCell() }
         
-    
-        let friendKey = friendsSectionTitles[indexPath.section]
-        if let friendValues = friendsDictionary[friendKey] {
-            let friendsInCell = friendValues[indexPath.row]
-            cell.configure(emblem:friendsInCell!.userPhoto,
-                           name: friendsInCell!.fullName)
-        }
+        cell.configure(users[indexPath.row])
+
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "showPhotosFriend", let indexPath = tableView.indexPathForSelectedRow
-        else { return }
-        
-        guard let destination = segue.destination as? PhotoFriendsCollectionVC else { return }
-     
-
-        let friendKey = friendsSectionTitles[indexPath.section]
-        if let friendValues = friendsSortedDictionary[friendKey] {
-            destination.photoFriends = friendValues[indexPath.row]
-        } 
-    }
     
-     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defer { tableView.deselectRow(
-            at: indexPath,
-            animated: true) }
-
-             self.performSegue(withIdentifier: "showPhotosFriend", sender: nil)
-
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return friendsSectionTitles[section]
-    }
-    
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-       return friendsSectionTitles
-    }
-    
-    
-  override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as! UITableViewHeaderFooterView
-      header.tintColor = UIColor.gray.withAlphaComponent(0.05)
-    }
 }
 

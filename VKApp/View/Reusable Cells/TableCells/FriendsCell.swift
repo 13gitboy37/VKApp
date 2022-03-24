@@ -56,5 +56,9 @@ class FriendsCell: UITableViewCell {
         self.friendsName.text = model.lastName + " " + model.firstName
         self.friendsEmblem.kf.setImage(with: URL(string: model.userPhoto))
     }
+    
+    func configure(_ firebaseFriends: FirebaseFriend) {
+        self.friendsName.text = firebaseFriends.fullName
+    }
 }
 

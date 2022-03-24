@@ -12,4 +12,11 @@ pod 'Alamofire', '~> 5.5'
 pod 'Kingfisher', '~> 7.2.0'
 
 pod 'RealmSwift', '~> 10'
+
+pod 'Firebase'
+pod 'FirebaseCore'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
+pod 'FirebaseFirestore'
+
 end

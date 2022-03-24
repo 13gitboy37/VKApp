@@ -59,7 +59,7 @@
                         <outlet property="loadDot1" destination="rbz-hQ-U4S" id="2oG-dh-URM"/>
                         <outlet property="loadDot2" destination="oGh-cd-cnc" id="KIE-fM-dod"/>
                         <outlet property="loadDot3" destination="arc-1D-5yQ" id="TQg-6z-2af"/>
-                        <segue destination="ag5-8J-9Kf" kind="presentation" identifier="goToLogon" modalPresentationStyle="fullScreen" id="4ms-Xf-UvB"/>
+                        <segue destination="ag5-8J-9Kf" kind="presentation" identifier="goToLogon" modalPresentationStyle="fullScreen" id="XdQ-rr-uVu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kh0-PN-Ic5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -69,7 +69,7 @@
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController1" title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -166,11 +166,12 @@
                         <outlet property="passwordTextField" destination="tWo-cN-44e" id="51u-Ck-mxl"/>
                         <outlet property="scrollView" destination="nI8-RX-5v8" id="y6I-rR-Z1d"/>
                         <outlet property="usernameTextField" destination="Ct5-ih-knA" id="OQL-OZ-dmr"/>
+                        <segue destination="ENY-VT-KMy" kind="presentation" identifier="goToMain" modalPresentationStyle="fullScreen" id="f3W-5S-9zY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="935" y="504"/>
+            <point key="canvasLocation" x="1880" y="366"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="yRs-fb-zEf">
@@ -200,7 +201,7 @@
                     </view>
                     <connections>
                         <outlet property="webView" destination="gcL-mO-R4p" id="mn9-qO-KEC"/>
-                        <segue destination="ENY-VT-KMy" kind="presentation" identifier="goToMain" modalPresentationStyle="fullScreen" id="kQi-Fi-Cfo"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="goToSecondLogin" modalPresentationStyle="fullScreen" id="jY9-Ew-yuS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NzU-1N-TdE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -221,12 +222,25 @@
                             <outlet property="delegate" destination="Aam-ci-QQy" id="t0v-WA-lCb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Friends" id="uaB-lE-Sc6"/>
+                    <navigationItem key="navigationItem" title="Friends" id="uaB-lE-Sc6">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="arrowshape.turn.up.backward.circle" catalog="system" id="583-rc-ejN">
+                            <connections>
+                                <segue destination="kRA-lF-KWT" kind="unwind" unwindAction="unwindToMainWithUnwindSegue:" id="Fzr-MD-qCd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="JAL-40-W1i">
+                            <connections>
+                                <action selector="addFriend:" destination="Aam-ci-QQy" id="hZq-qx-NbV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="wMx-1O-YYO" kind="show" identifier="showPhotosFriend" id="ExO-pH-vWn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7OK-14-cyn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="kRA-lF-KWT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4655.072463768116" y="-689.0625"/>
         </scene>
@@ -370,13 +384,7 @@
                     <toolbarItems>
                         <barButtonItem id="fpp-0Z-iLy"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="My Groups" id="fn0-2x-9Qx">
-                        <barButtonItem key="rightBarButtonItem" image="plus.bubble" catalog="system" id="WEe-7E-N2R">
-                            <connections>
-                                <segue destination="ayQ-Ud-pXQ" kind="show" id="Xh6-KT-g6i"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="My Groups" id="fn0-2x-9Qx"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="InQ-RF-hcx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -483,10 +491,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.backward.circle" catalog="system" width="128" height="121"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="newspaper" catalog="system" width="128" height="111"/>
         <image name="person" catalog="system" width="128" height="117"/>
-        <image name="plus.bubble" catalog="system" width="128" height="110"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="rectangle.3.group.bubble.left.fill" catalog="system" width="128" height="110"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">

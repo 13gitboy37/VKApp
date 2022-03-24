@@ -93,7 +93,7 @@ extension VKLoginVC: WKNavigationDelegate{
             UserSession.instance.userID = userID
             
             performSegue(
-                withIdentifier: "goToMain",
+                withIdentifier: "goToSecondLogin",
                 sender: nil)
             decisionHandler(.cancel)
     }

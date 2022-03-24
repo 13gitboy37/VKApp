@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -20,11 +21,15 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonPressed(_ sender: Any) {
      //   print(usernameTextField.text)
      //   print(passwordTextField.text)
-        
+        Auth.auth().signInAnonymously()
         
     }
     
-    @IBAction func unwindToMain(unwindSegue: UIStoryboardSegue) { }
+    private var authNotification: AuthStateDidChangeListenerHandle?
+    
+    @IBAction func unwindToMain(unwindSegue: UIStoryboardSegue) {
+        try? Auth.auth().signOut()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +41,6 @@ class LoginViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -62,6 +59,14 @@ class LoginViewController: UIViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
         navigationController?.navigationBar.isHidden = true
+        
+        self.authNotification = Auth.auth().addStateDidChangeListener({ auth, user in
+            if user != nil {
+                self.performSegue(withIdentifier: "goToMain", sender: nil)
+                self.usernameTextField.text = ""
+                self.passwordTextField.text = ""
+            }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -75,6 +80,9 @@ class LoginViewController: UIViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
         navigationController?.navigationBar.isHidden = false
+        guard let authNotification = authNotification else { return }
+        
+        Auth.auth().removeStateDidChangeListener(authNotification)
     }
     
     
@@ -116,24 +124,24 @@ class LoginViewController: UIViewController {
         self.scrollView?.endEditing(true)
     }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        switch identifier {
-        case "goToMain":
-            if !checkUser() {
-                presentAlert()
-                return false
-            } else {
-                clearData()
-                return true
-            }
-        default:
-            return false
-    }
-    }
+//    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+//        switch identifier {
+//        case "goToMain":
+//            if !checkUser() {
+//                presentAlert()
+//                return false
+//            } else {
+//                clearData()
+//                return true
+//            }
+//        default:
+//            return false
+//    }
+//    }
     
-    private func checkUser() -> Bool {
-        usernameTextField.text == "1" && passwordTextField.text == "1"
-    }
+//    private func checkUser() -> Bool {
+//     usernameTextField.text == "1" && passwordTextField.text == "1"
+//    }
     
     private func presentAlert() {
         let alertController = UIAlertController(

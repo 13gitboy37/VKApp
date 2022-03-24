@@ -7,12 +7,13 @@
 
 import UIKit
 import RealmSwift
+import FirebaseFirestore
 
 final class PersonalGroupsTableVC: UITableViewController {
     
     private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self)
     private var groupsToken: NotificationToken?
-     
+    private let firestore = Firestore.firestore()
 
    @IBAction func addGroup(segue: UIStoryboardSegue) {
         guard
@@ -48,7 +49,11 @@ final class PersonalGroupsTableVC: UITableViewController {
         networkService.getGroups() { [weak self] result in
             switch result {
             case .success(let groups):
-                let realmGroup = groups.map { RealmGroup(groups: $0)}
+                let realmGroup = groups.map { [weak self] groups -> RealmGroup in
+                    let realmGroup = RealmGroup(groups: groups)
+                    self?.addDoc(groupID: "\(realmGroup.id)", groups: realmGroup.toAnyObject())
+                    return realmGroup
+                }
                     do {
                     try RealmService.save(items: realmGroup)
                     self?.groups = try RealmService.load(typeOf: RealmGroup.self)
@@ -64,6 +69,7 @@ final class PersonalGroupsTableVC: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         groupsToken = groups?.observe { [weak self] groupsChanges in
             guard let self = self else { return }
             switch groupsChanges {
@@ -95,12 +101,40 @@ final class PersonalGroupsTableVC: UITableViewController {
                 print(error)
             }
         }
+        getSnapshot()
+        subscribeCollection()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         groupsToken?.invalidate()
     }
+    
+    private func addDoc(groupID: String, groups: [String: Any]) {
+        firestore.collection("iOS_Collection").document("\(groupID)").setData(groups)
+    }
+    
+    private func getSnapshot() {
+        firestore
+            .collection("iOS_Collection").getDocuments { snapshot, error in
+                guard error == nil else { return }
+                snapshot?.documents.forEach {
+                    print($0.data())
+                }
+            }
+    }
+    
+    private func subscribeCollection() {
+        firestore
+            .collection("iOS_Collection").addSnapshotListener { snapshot, error in
+                guard error == nil else { return }
+                snapshot?.documents.forEach {
+                    print($0.data())
+                }
+            }
+    }
+    
+    
     
     // MARK: - Table view data source
     

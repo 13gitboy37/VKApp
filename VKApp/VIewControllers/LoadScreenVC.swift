@@ -51,7 +51,7 @@ class LoadScreenVC: UIViewController {
       
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! VKLoginVC
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as!             VKLoginVC
             nextViewController.modalPresentationStyle = .fullScreen
         self.present(nextViewController, animated: true, completion: nil)
             
