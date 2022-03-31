@@ -46,7 +46,7 @@ final class NetworkService {
             do {
                 let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
                 completion(.success(userResponse.users.items))
-                print(userResponse)
+//                print(userResponse)
             } catch {
                 completion(.failure(error))
             }

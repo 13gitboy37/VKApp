@@ -91,7 +91,7 @@ final class GlobalGroupsTableVC: UITableViewController {
                         DispatchQueue.main.async {
                             do {
                             try RealmService.save(items: realmGroup)
-                            self?.groups = try RealmService.load(typeOf: RealmSearchGroup.self)
+//                            self?.groups = try RealmService.load(typeOf: RealmSearchGroup.self)
                             self?.tableView.reloadData()
                             } catch {
                                 print(error)

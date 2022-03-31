@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,22 +16,22 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cFG-Q1-6Rf">
-                        <rect key="frame" x="5" y="3" width="44" height="44"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cFG-Q1-6Rf" customClass="AvatarImage" customModule="VKApp" customModuleProvider="target">
+                        <rect key="frame" x="10" y="3" width="44" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="cFG-Q1-6Rf" secondAttribute="height" multiplier="1:1" id="8xV-v6-7jC"/>
-                            <constraint firstAttribute="height" relation="lessThanOrEqual" priority="999" constant="44" id="U2c-GP-QVC"/>
+                            <constraint firstAttribute="height" priority="999" constant="50" id="U2c-GP-QVC"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2A-WG-mT8">
-                        <rect key="frame" x="54" y="14.5" width="42" height="21"/>
+                        <rect key="frame" x="59" y="14.5" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="cFG-Q1-6Rf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="IDv-iI-JST"/>
+                    <constraint firstItem="cFG-Q1-6Rf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="IDv-iI-JST"/>
                     <constraint firstItem="t2A-WG-mT8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ivd-yM-izM"/>
                     <constraint firstItem="cFG-Q1-6Rf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="Pin-oU-mog"/>
                     <constraint firstItem="cFG-Q1-6Rf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="YeR-F9-g30"/>

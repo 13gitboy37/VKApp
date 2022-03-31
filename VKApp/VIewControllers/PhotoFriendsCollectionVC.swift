@@ -14,8 +14,8 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
     var friendPhotos = [String]()
     
     var ownerID: Int = Int()
-    
-    var photoFriends: RealmUser? {
+    var photoFriends: RealmUser?
+    {
         didSet {
             DispatchQueue.main.async {
                 self.ownerID = self.photoFriends!.id
@@ -23,13 +23,15 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             }
         }
     }
-    
+//
     var photos: Results<RealmPhoto>?
+//    = try? RealmService.load(typeOf: RealmPhoto.self)
     var photosToken: NotificationToken?
 
     
     
     private let networkService = NetworkService()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +39,9 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             nibName: "PhotoFriendsCollectionCell",
             bundle: nil),
             forCellWithReuseIdentifier: "photoFriendsCollectionCell")
-        
-        photos = try? RealmService.load(typeOf: RealmPhoto.self).filter("ownerID == %@", ownerID )
+        guard
+            let photosFriends = photoFriends else { return }
+        self.ownerID = photosFriends.id
         
         networkService.getPhotos(ownerID: photoFriends?.id) { [weak self] result in
         switch result {
@@ -64,27 +67,12 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         photosToken = photos?.observe { [weak self] photosChanges in
             guard let self = self else { return }
             switch photosChanges {
-            case .initial(_):
+            case .initial(_), .update(_,
+                                      deletions: _,
+                                      insertions: _,
+                                      modifications: _):
+//                self.ownerID = self.photoFriends?.id ?? 0
                 self.collectionView.reloadData()
-            case let .update(
-                _,
-                deletions: deletions,
-                insertions: insertions,
-                modifications: modifications):
-                
-                let delRowsIndex = deletions.map { IndexPath(
-                    row: $0,
-                    section: 0) }
-                let insertRowsIndex = insertions.map { IndexPath(
-                    row: $0,
-                    section: 0)}
-                let modificationIndex = modifications.map { IndexPath(
-                    row: $0,
-                    section: 0)}
-                
-                self.collectionView.deleteItems(at: delRowsIndex)
-                self.collectionView.insertItems(at: insertRowsIndex)
-                self.collectionView.reloadItems(at: modificationIndex)
             case .error(let error):
                 print(error)
             }

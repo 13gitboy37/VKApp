@@ -40,7 +40,7 @@ final class VKLoginVC: UIViewController {
         comp.host = "oauth.vk.com"
         comp.path = "/authorize"
         comp.queryItems = [
-        URLQueryItem(name: "client_id", value: "8081714"),
+        URLQueryItem(name: "client_id", value: "8121782"),
         URLQueryItem(name: "display" , value: "mobile"),
         URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
         URLQueryItem(name: "scope", value: "336918"),
@@ -49,7 +49,7 @@ final class VKLoginVC: UIViewController {
         ]
         return comp
     }()
-    
+//    8081714
     override func viewDidLoad() {
         super.viewDidLoad()
         guard

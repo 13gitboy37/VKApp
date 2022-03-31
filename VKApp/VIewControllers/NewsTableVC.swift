@@ -19,6 +19,17 @@ class NewsTableVC: UITableViewController {
     "Local Hero"
     ]
     
+    let avaNews = [
+        "ava.jpg",
+        "Avatar2.jpg"
+    ]
+    
+    let imageNews = [
+        "https://upload.wikimedia.org/wikipedia/commons/2/23/Supreme-logo-newyork.png",
+        "https://besthqwallpapers.com/Uploads/19-11-2018/71930/thumb2-nissan-gt-r-tuning-r35-stance-supercars.jpg"
+    ]
+    
+    let cellSpacingHeight: CGFloat = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,15 +66,16 @@ class NewsTableVC: UITableViewController {
         return groupNews.count
     }
 
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+         cellSpacingHeight
+     }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard
             let cellHeader = tableView.dequeueReusableCell(withIdentifier: "headerCell", for: indexPath) as? HeaderCell
                 
-        //    let cellFooter = tableView.dequeueReusableCell(withIdentifier: "footerCell", for: indexPath) as? FooterCell
-                
-           // let cellText = tableView.dequeueReusableCell(withIdentifier: "Text News", for: indexPath) as? TextNewsCell
                 
      else { return UITableViewCell()}
         guard
@@ -78,76 +90,47 @@ class NewsTableVC: UITableViewController {
             let cellFooter = tableView.dequeueReusableCell(withIdentifier: "footerCell", for: indexPath) as? FooterCell
         else { return UITableViewCell()}
         
-    //MARK: Поправить после теста
+        
+        let backgroundColorCell = UIColor.gray.withAlphaComponent(0.1)
+        
         let currentGroupNews = groupNews[indexPath.section]
         let currentTextNews = textNews[indexPath.section]
+        let currentAvaNews = avaNews[indexPath.section]
+        let currentImageNews = imageNews[indexPath.section]
         
         if indexPath.row == 0 {
-        cellHeader.configureHeader(newsAvatar: UIImage(systemName: "lasso") ?? UIImage(), newsGroup: currentGroupNews)
+            
+            cellHeader.configureHeader(newsAvatar: UIImage(named: "\(currentAvaNews)") ?? UIImage(), newsGroup: currentGroupNews)
             cellHeader.selectionStyle = UITableViewCell.SelectionStyle.none
+            cellHeader.backgroundColor = backgroundColorCell
+            
             return cellHeader
         }
         else if indexPath.row == 1 {
+            
             cellTextNews.configureTextNews(textNews: currentTextNews)
+            cellTextNews.backgroundColor = backgroundColorCell
             cellTextNews.selectionStyle = UITableViewCell.SelectionStyle.none
+            
         return cellTextNews
         }
         else if indexPath.row == 2 {
-            cellImageNews.configureImageNews(imageNews: UIImage(named:"Avatar1.jpg") ?? UIImage())
+            
+            cellImageNews.configureImageNews(imageNews: currentImageNews)
             cellImageNews.selectionStyle = UITableViewCell.SelectionStyle.none
+            cellImageNews.backgroundColor = backgroundColorCell
+            
             return cellImageNews
         }
         else if indexPath.row == 3{
-            cellFooter.configureFooter(numOfViews: "280")
+            
+            cellFooter.configureFooter(numOfViews: "236")
             cellFooter.selectionStyle = UITableViewCell.SelectionStyle.none
+            cellFooter.backgroundColor = backgroundColorCell
+            
             return cellFooter
         }
+        
         return UITableViewCell()
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

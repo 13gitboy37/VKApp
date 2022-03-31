@@ -49,13 +49,12 @@ final class FriendsTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        networkService.getFriends() { [weak self] result in
+        networkService.getFriends() {  [weak self] result in
         switch result {
             case .success(let users):
             let realmUser = users.map { RealmUser(users: $0) }
                 do {
                    try RealmService.save(items: realmUser)
-                    self?.users = try RealmService.load(typeOf: RealmUser.self)
                 } catch {
                     print(error)
                 }
