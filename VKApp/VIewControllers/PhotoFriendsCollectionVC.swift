@@ -6,8 +6,32 @@
 //
 
 import UIKit
+import Kingfisher
+import RealmSwift
+import CoreMedia
 
 class PhotoFriendsCollectionVC: UICollectionViewController {
+    var friendPhotos = [String]()
+    
+    var ownerID: Int = Int()
+    var photoFriends: RealmUser?
+    {
+        didSet {
+            DispatchQueue.main.async {
+                self.ownerID = self.photoFriends!.id
+                self.collectionView.reloadData()
+            }
+        }
+    }
+//
+    var photos: Results<RealmPhoto>?
+//    = try? RealmService.load(typeOf: RealmPhoto.self)
+    var photosToken: NotificationToken?
+
+    
+    
+    private let networkService = NetworkService()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,17 +39,53 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             nibName: "PhotoFriendsCollectionCell",
             bundle: nil),
             forCellWithReuseIdentifier: "photoFriendsCollectionCell")
-        // Do any additional setup after loading the view.
+        guard
+            let photosFriends = photoFriends else { return }
+        self.ownerID = photosFriends.id
+        
+        networkService.getPhotos(ownerID: photoFriends?.id) { [weak self] result in
+        switch result {
+            case .success(let photos):
+            DispatchQueue.main.async {
+            let realmPhoto = photos.map { RealmPhoto(ownerID: self?.photoFriends?.id ?? 0, photos: $0) }
+                do {
+                try RealmService.save(items: realmPhoto)
+                    self?.photos = try RealmService.load(typeOf: RealmPhoto.self).filter("ownerID == %@", self?.photoFriends?.id)
+                } catch {
+                    print(error)
+                }
+            }
+            case .failure(let error):
+                print(error)
+        }
+    }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        photosToken = photos?.observe { [weak self] photosChanges in
+            guard let self = self else { return }
+            switch photosChanges {
+            case .initial(_), .update(_,
+                                      deletions: _,
+                                      insertions: _,
+                                      modifications: _):
+//                self.ownerID = self.photoFriends?.id ?? 0
+                self.collectionView.reloadData()
+            case .error(let error):
+                print(error)
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        photosToken?.invalidate()
     }
 
     /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
     */
 
     // MARK: UICollectionViewDataSource
@@ -33,11 +93,12 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 10
+      return photos?.count ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard
+       guard
+        let currentPhoto = photos?[indexPath.row],
             let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "photoFriendsCollectionCell",
             for: indexPath)
@@ -46,39 +107,25 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             return UICollectionViewCell()
         }
         
-            cell.configure(photoFr: UIImage(named: "Avatar1.jpg")) //systemName: "person.fill"
+        cell.configure(model: currentPhoto)
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
-    }
-    */
-    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let fullScreenPhotoVC = storyboard.instantiateViewController(withIdentifier: "FullScreenPhotoVC") as! FullScreenPhotoVC
+        fullScreenPhotoVC.indexPath = indexPath.row
+        fullScreenPhotoVC.photo = photos
+        fullScreenPhotoVC.modalPresentationStyle = .fullScreen
+        self.present(fullScreenPhotoVC, animated: true, completion: nil)
+        
+        
+       defer { collectionView.deselectItem(
+            at: indexPath,
+            animated: true)}
+             self.performSegue(withIdentifier: "goToFullPhoto", sender: nil)
+         } 
 }
+    
