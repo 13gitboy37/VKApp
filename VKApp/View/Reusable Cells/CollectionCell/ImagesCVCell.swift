@@ -6,15 +6,10 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ImagesCVCell: UICollectionViewCell {
     
-    @IBOutlet var ImageViewInCVCell: UIImageView!
+    @IBOutlet var imageNews: UIImageView!
     
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
 }

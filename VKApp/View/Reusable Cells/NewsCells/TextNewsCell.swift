@@ -14,4 +14,11 @@ class TextNewsCell: UITableViewCell {
     func configureTextNews (textNews: String) {
         self.textNews.text = textNews
     }
+    func configureTextNews (modelTextNews: NewsModel) {
+        self.textNews.text = modelTextNews.textNews
+    }
+    
+    func configureTextNews (modelTextNews: NewsItems) {
+        self.textNews.text = modelTextNews.text
+    }
 }

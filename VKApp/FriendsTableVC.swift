@@ -102,7 +102,7 @@ final class FriendsTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        friendsSortedDictionary[friendsSectionTitles[section]]!.count
+        friendsSortedDictionary[friendsSectionTitles[section]]?.count ?? 0
         
     }
 

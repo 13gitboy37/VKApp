@@ -7,6 +7,12 @@
 
 import UIKit
 
-struct NewsAva {
-    let 
+struct NewsImages {
+    let url: String
+}
+
+extension NewsImages: Codable {
+    enum CodingKeys: String, CodingKey{
+        case url = "url"
+    }
 }

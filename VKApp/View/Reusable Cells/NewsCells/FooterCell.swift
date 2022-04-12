@@ -14,20 +14,34 @@ class FooterCell: UITableViewCell {
     @IBOutlet var numOfViewsNews: UILabel!
     @IBOutlet var buttonRepostNews: UIButton!
     
+    var numOfLikes = Int()
+    var numOfRepost = Int()
+    var numOfComments = Int()
+    
+    func setNums() {
+        self.buttonLikeNews.setTitle("\(self.numOfLikes)", for: .normal)
+        self.buttonCommentNews.setTitle("\(self.numOfComments)", for: .normal)
+        self.buttonRepostNews.setTitle("\(self.numOfRepost)", for: .normal)
+    }
+   
     
     @IBAction func pressedLikeNews(_ sender: Any) {
-     if buttonLikeNews.titleLabel?.text == "0" {
+     if buttonLikeNews.titleLabel?.text == "\(numOfLikes)" {
         buttonLikeNews.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            buttonLikeNews.setTitle("1", for: .normal)
+            buttonLikeNews.setTitle("\(numOfLikes + 1)", for: .normal)
         }
             else {
                 buttonLikeNews.setImage(UIImage(systemName: "heart"), for: .normal)
-                buttonLikeNews.setTitle("0", for: .normal)
+                buttonLikeNews.setTitle("\(numOfLikes)", for: .normal)
             }
     }
      
-    func configureFooter(numOfViews: String) {
-        self.numOfViewsNews.text = numOfViews
+    func configureFooter(modelNumOfViews: NewsItems) {
+        numOfLikes = modelNumOfViews.likes.likesCount
+        numOfRepost = modelNumOfViews.reposts.repostsCount
+        numOfComments = modelNumOfViews.comments.commentsCount
+        self.numOfViewsNews.text = "\(modelNumOfViews.views?.viewsCount ?? 0)"
+        setNums()
     }
     
 }

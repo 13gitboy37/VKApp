@@ -115,7 +115,6 @@ else { return }
         do {
             let photosResponse = try JSONDecoder().decode(PhotosResponse.self, from: data)
             completion(.success(photosResponse.photos.items))
-//             print(userResponse)
         } catch {
             completion(.failure(error))
         }
@@ -153,4 +152,92 @@ else { return }
         }
             task.resume()
         }
+    
+    
+    func getNews (completion: @escaping (Result<[NewsItems], Error>) -> Void) {
+
+        urlConstructorForNews()
+    guard
+        let url = urlConstructor.url
+    else { return }
+        let task = mySession.dataTask(with: url) { data, response, error in
+            if let response = response as? HTTPURLResponse {
+                print(response.statusCode)
+            }
+            guard
+                error == nil,
+                let data = data
+            else { return }
+            do {
+                let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
+                completion(.success(newsResponse.news.items))
+                print(newsResponse)
+            } catch {
+                completion(.failure(error))
+                print(error)
+            }
+        }
+            task.resume()
+        }
+        
+    func getNewsProfiles (completion: @escaping (Result<[NewsProfiles], Error>) -> Void) {
+        urlConstructorForNews()
+    guard
+        let url = urlConstructor.url
+    else { return }
+        let task = mySession.dataTask(with: url) { data, response, error in
+            if let response = response as? HTTPURLResponse {
+                print(response.statusCode)
+            }
+            guard
+                error == nil,
+                let data = data
+            else { return }
+            do {
+                let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
+                completion(.success(newsResponse.news.profiles))
+                print(newsResponse)
+            } catch {
+                completion(.failure(error))
+                print(error)
+            }
+        }
+            task.resume()
+        }
+    
+    func getNewsGroups (completion: @escaping (Result<[NewsGroups], Error>) -> Void) {
+        urlConstructorForNews()
+    guard
+        let url = urlConstructor.url
+    else { return }
+        let task = mySession.dataTask(with: url) { data, response, error in
+            if let response = response as? HTTPURLResponse {
+                print(response.statusCode)
+            }
+            guard
+                error == nil,
+                let data = data
+            else { return }
+            do {
+                let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
+                completion(.success(newsResponse.news.groups))
+                print(newsResponse)
+            } catch {
+                completion(.failure(error))
+                print(error)
+            }
+        }
+            task.resume()
+        }
+        
+    func urlConstructorForNews() {
+        urlConstructor.path = "/method/newsfeed.get"
+            urlConstructor.queryItems = [
+                URLQueryItem(name: "access_token", value: UserSession.instance.token),
+                URLQueryItem(name: "v", value: "5.131"),
+                URLQueryItem(name: "filters", value: "post"),
+                URLQueryItem(name: "max_photos", value: "9"),
+                URLQueryItem(name: "count", value: "10")
+            ]
+    }
 }

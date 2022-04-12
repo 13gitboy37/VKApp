@@ -17,7 +17,9 @@ class ImageNewsCell: UITableViewCell {
         self.imageNews.image = imageNews
     }
     
-    func configureImageNews(imageNews: String) {
-        self.imageNews.kf.setImage(with: URL(string: imageNews))
+    func configureImageNews(modelImageNews: NewsModel) {
+        modelImageNews.imageNews?.forEach({ imageNews in
+            self.imageNews.kf.setImage(with: URL(string: imageNews))
+        })
     }
 }
