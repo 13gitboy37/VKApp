@@ -6,17 +6,25 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class GlobalGroupsTableVC: UITableViewController {
-
-    var groups = [
-        "News",
-        "New Rap",
-        "Fast Food Music",
-        "Trasher Magazine",
-        "CS: GO"
-    ]
+    @IBOutlet var searchBar: UISearchBar!
+   
+    var groups: Results<RealmSearchGroup>? = try? RealmService.load(typeOf: RealmSearchGroup.self) {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+       
     
+    private var timer = Timer()
+    
+    var searchGroups:[String]!
+   
+    private let networkService = NetworkService()
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -25,78 +33,74 @@ final class GlobalGroupsTableVC: UITableViewController {
             nibName: "GroupsCell",
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
+        
+        
     }
     // MARK: - Table view data source
-
+    
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+      groups?.count ?? 0
     }
     
     
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard
+         let currentGroup = groups?[indexPath.row],
          let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
      
-    let currentGroup = groups[indexPath.row]
-     
-     cell.configure(
-         emblem: UIImage(systemName: "\(indexPath.row).circle") ?? UIImage(),name: currentGroup)
+        cell.configure(model: currentGroup)
         return cell
     }
-        
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defer { tableView.deselectRow(
             at: indexPath,
             animated: true) }
-        performSegue(
+            performSegue(
             withIdentifier: "addGroup",
             sender: nil)
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
+//MARK: Realese UISearchBar
+ extension GlobalGroupsTableVC: UISearchBarDelegate {
+   
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+      
+            groups?.forEach({ deleteGroup in
+                do {
+                    let realm = try Realm()
+                    let currentDeleteGroup = try realm.objects(RealmSearchGroup.self).filter("id == %@", deleteGroup.id)
+                    try RealmService.delete(object: currentDeleteGroup)
+                } catch {
+                    print(error)
+                }
+            })
+            timer.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+                self.networkService.getSearchGroups(searchText: searchText.lowercased())
+                {[weak self] result in
+                    switch result {
+                    case .success(let groups):
+                        let realmGroup = groups.map { RealmSearchGroup(seatchGroupName: searchText, groups: $0)}
+                        DispatchQueue.main.async {
+                            do {
+                            try RealmService.save(items: realmGroup)
+                            self?.tableView.reloadData()
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    case .failure(let error):
+                        print(error)
+                      
+                    }
+                }
+            }
+          )
+  }
+ }
