@@ -77,10 +77,6 @@ final class NetworkService {
             do {
                 let groupsResponse = try JSONDecoder().decode(GroupsResponse.self, from: data)
                 completion(.success(groupsResponse.groups.items))
-          /*      let userResponse = try JSONDecoder().decode(
-                    UserResponse.self,
-                    from: data) */
-    
                 print(groupsResponse)
             } catch {
                 completion(.failure(error))

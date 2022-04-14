@@ -23,15 +23,11 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             }
         }
     }
-//
-    var photos: Results<RealmPhoto>?
-//    = try? RealmService.load(typeOf: RealmPhoto.self)
-    var photosToken: NotificationToken?
 
-    
+    var photos: Results<RealmPhoto>?
+    var photosToken: NotificationToken?
     
     private let networkService = NetworkService()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +67,6 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
                                       deletions: _,
                                       insertions: _,
                                       modifications: _):
-//                self.ownerID = self.photoFriends?.id ?? 0
                 self.collectionView.reloadData()
             case .error(let error):
                 print(error)

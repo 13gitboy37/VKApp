@@ -7,10 +7,19 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 final class PersonalGroupsTableVC: UITableViewController {
     
     private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self)
+//    {
+//        didSet{
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+//    }
+    
     private var groupsToken: NotificationToken?
 
 
@@ -18,8 +27,7 @@ final class PersonalGroupsTableVC: UITableViewController {
         guard
             segue.identifier == "addGroup",
             let allGroupsController = segue.source as? GlobalGroupsTableVC,
-            let groupIndexPath = allGroupsController.tableView.indexPathForSelectedRow//,
- //           !self.groups.contains(allGroupsController.groups[groupIndexPath.row])
+            let groupIndexPath = allGroupsController.tableView.indexPathForSelectedRow
         else { return }
        do {
            let currentGroup = allGroupsController.groups![groupIndexPath.row]
@@ -34,7 +42,14 @@ final class PersonalGroupsTableVC: UITableViewController {
        } catch {
            print(error)
        }
-    }
+   }
+       
+       private let operationQueue: OperationQueue = {
+           let operationQueue = OperationQueue()
+           operationQueue.name = "operationQueue"
+           operationQueue.qualityOfService = .utility
+           return operationQueue
+       }()
 
     private let networkService = NetworkService()
 
@@ -45,19 +60,35 @@ final class PersonalGroupsTableVC: UITableViewController {
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
 
-        networkService.getGroups() { [weak self] result in
-            switch result {
-            case .success(let groups):
-                let realmGroup = groups.map { RealmGroup(groups: $0)}
-                    do {
-                        try RealmService.save(items: realmGroup)
-                    } catch {
-                        print(error)
-                    }
-            case .failure(let error):
-                print(error)
-            }
-        }
+//        networkService.getGroups() { [weak self] result in
+//            switch result {
+//            case .success(let groups):
+//                let realmGroup = groups.map { RealmGroup(groups: $0)}
+//                    do {
+//                        try RealmService.save(items: realmGroup)
+//                    } catch {
+//                        print(error)
+//                    }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+        
+        let request = AF.request("https://api.vk.com//method/groups.get?access_token=\(UserSession.instance.token)&v=5.131&extended=1&fields=photo_100")
+        let getData = GetDataOperation(request: request)
+        let parseData = ParseData()
+        let realmSaveGroups = RealmSaveGroups(realmGroups: parseData.outputData)
+//        let realmLoadGroups = RealmLoadGroups(realmGroups: groups)
+        
+        parseData.addDependency(getData)
+        realmSaveGroups.addDependency(parseData)
+//        realmLoadGroups.addDependency(realmSaveGroups)
+        
+        operationQueue.addOperation(getData)
+        operationQueue.addOperation(parseData)
+        OperationQueue.main.addOperation(realmSaveGroups)
+//        OperationQueue.main.addOperation (realmLoadGroups)
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {

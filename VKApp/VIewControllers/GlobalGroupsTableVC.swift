@@ -76,7 +76,6 @@ final class GlobalGroupsTableVC: UITableViewController {
                     let realm = try Realm()
                     let currentDeleteGroup = try realm.objects(RealmSearchGroup.self).filter("id == %@", deleteGroup.id)
                     try RealmService.delete(object: currentDeleteGroup)
-//                    tableView.reloadData()
                 } catch {
                     print(error)
                 }
@@ -91,7 +90,6 @@ final class GlobalGroupsTableVC: UITableViewController {
                         DispatchQueue.main.async {
                             do {
                             try RealmService.save(items: realmGroup)
-//                            self?.groups = try RealmService.load(typeOf: RealmSearchGroup.self)
                             self?.tableView.reloadData()
                             } catch {
                                 print(error)

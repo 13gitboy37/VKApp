@@ -7,154 +7,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CEEAD62C-ECEE-4A4A-BE02-E267798A6A7D"
+            uuid = "0CF00364-8EB9-45A3-B4CF-39A0A6F0D99D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VKApp/VIewControllers/PersonalGroupsTableVC.swift"
+            filePath = "VKApp/Operation/ParseDataOperation.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "main()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0C4149E5-D072-4190-A1C4-A616DBA19B95"
+            uuid = "D281AAD6-9239-4BE4-BD49-51DD0B234F0C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+            filePath = "VKApp/Operation/ParseDataOperation.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "viewDidAppear(_:)"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "main()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "PhotoFriendsCollectionVC"
-            landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E - b2a9a59ff9075da3"
+                  uuid = "D281AAD6-9239-4BE4-BD49-51DD0B234F0C - 1ddba4565c38477b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photoFriends.getter : Swift.Optional&lt;VKApp.RealmUser&gt;"
+                  symbolName = "VKApp.ParseData.main() -&gt; ()"
                   moduleName = "VKApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/Operation/ParseDataOperation.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "88">
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "436">
                </Location>
                <Location
-                  uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E - 504f0e31a69989b7"
+                  uuid = "D281AAD6-9239-4BE4-BD49-51DD0B234F0C - 1ddba4565c38477b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photoFriends.setter : Swift.Optional&lt;VKApp.RealmUser&gt;"
+                  symbolName = "VKApp.ParseData.main() -&gt; ()"
                   moduleName = "VKApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/Operation/ParseDataOperation.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "112">
-               </Location>
-               <Location
-                  uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E - 4663931601bbf6a0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photoFriends.modify : Swift.Optional&lt;VKApp.RealmUser&gt;"
-                  moduleName = "VKApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E - 9b7ff588385e602f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photoFriends.modify : Swift.Optional&lt;VKApp.RealmUser&gt; with unmangled suffix &quot;.resume.0&quot;"
-                  moduleName = "VKApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E - 167005bcfc821b04"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.init(collectionViewLayout: __C.UICollectionViewLayout) -&gt; VKApp.PhotoFriendsCollectionVC"
-                  moduleName = "VKApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "172">
-               </Location>
-               <Location
-                  uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E - fad0b5b32c9cb283"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; VKApp.PhotoFriendsCollectionVC"
-                  moduleName = "VKApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "196">
-               </Location>
-               <Location
-                  uuid = "D5107C1C-2F73-4E86-9410-8F446D2F772E - 7021437ebdb8c598"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;VKApp.PhotoFriendsCollectionVC&gt;"
-                  moduleName = "VKApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "172">
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "516">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -162,122 +71,220 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8"
+            uuid = "49AE5677-E942-450D-AAEA-4C96BCA29919"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+            filePath = "VKApp/Service/RealmService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "save(items:configuration:update:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F5DBA411-CDD4-401C-B2F4-65609D44F469"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Service/RealmService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "load(typeOf:configuration:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C5E7DACB-D6E8-4F6D-BD0A-60500BA518AF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/RealmLoadGroups.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "main()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7ED3B553-D402-44AE-B744-FD461D885A38"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/RealmSaveGroups.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "main()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1229A0BD-BE42-4715-A067-D2ADEFA4F8EF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/GetDataOperation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "main()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DB953A3B-6B03-4858-9A2B-D161C993605D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/ParseDataOperation.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
             endingLineNumber = "27"
-            landmarkName = "PhotoFriendsCollectionVC"
+            landmarkName = "main()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4D3D62D0-F5E9-4D0F-B25D-F67854D7AD0F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/ParseDataOperation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "main()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F057C6B2-CA0A-40C2-AC50-019427CDE265"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/ParseDataOperation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "main()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A9FFDB27-73B0-4CF9-AF0B-9FABBBD82DC4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/ParseDataOperation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "ParseData"
             landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8 - f7e84a925b01413a"
+                  uuid = "A9FFDB27-73B0-4CF9-AF0B-9FABBBD82DC4 - 5d90d63c71b0768c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photos.getter : Swift.Optional&lt;RealmSwift.Results&lt;VKApp.RealmPhoto&gt;&gt;"
+                  symbolName = "VKApp.ParseData.outputData.getter : Swift.Array&lt;VKApp.GroupsItems&gt;"
                   moduleName = "VKApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/Operation/ParseDataOperation.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
                   offsetFromSymbolStart = "88">
                </Location>
                <Location
-                  uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8 - e54cf07e729cd9c6"
+                  uuid = "A9FFDB27-73B0-4CF9-AF0B-9FABBBD82DC4 - f45e403e5d635ec8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photos.setter : Swift.Optional&lt;RealmSwift.Results&lt;VKApp.RealmPhoto&gt;&gt;"
+                  symbolName = "VKApp.ParseData.outputData.setter : Swift.Array&lt;VKApp.GroupsItems&gt;"
                   moduleName = "VKApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/Operation/ParseDataOperation.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "108">
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "112">
                </Location>
                <Location
-                  uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8 - fbdd69b40caad75f"
+                  uuid = "A9FFDB27-73B0-4CF9-AF0B-9FABBBD82DC4 - ea6e6fd0f994089f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photos.modify : Swift.Optional&lt;RealmSwift.Results&lt;VKApp.RealmPhoto&gt;&gt;"
+                  symbolName = "VKApp.ParseData.outputData.modify : Swift.Array&lt;VKApp.GroupsItems&gt;"
                   moduleName = "VKApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/Operation/ParseDataOperation.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
-                  uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8 - e0b4a90641d402cf"
+                  uuid = "A9FFDB27-73B0-4CF9-AF0B-9FABBBD82DC4 - a1404ffe69a326b4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.photos.modify : Swift.Optional&lt;RealmSwift.Results&lt;VKApp.RealmPhoto&gt;&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  symbolName = "VKApp.ParseData.outputData.modify : Swift.Array&lt;VKApp.GroupsItems&gt; with unmangled suffix &quot;.resume.0&quot;"
                   moduleName = "VKApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/Operation/ParseDataOperation.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
                   offsetFromSymbolStart = "16">
                </Location>
                <Location
-                  uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8 - 167005bcfc821c5a"
+                  uuid = "A9FFDB27-73B0-4CF9-AF0B-9FABBBD82DC4 - b1eea82169e4b4e0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.init(collectionViewLayout: __C.UICollectionViewLayout) -&gt; VKApp.PhotoFriendsCollectionVC"
+                  symbolName = "VKApp.ParseData.init() -&gt; VKApp.ParseData"
                   moduleName = "VKApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/Operation/ParseDataOperation.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "196">
-               </Location>
-               <Location
-                  uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8 - fad0b5b32c9cb5dd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; VKApp.PhotoFriendsCollectionVC"
-                  moduleName = "VKApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "220">
-               </Location>
-               <Location
-                  uuid = "85CA33C5-33E4-4AB8-AB9D-2BDB5A5113B8 - 7021437ebdb8c2c6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VKApp.PhotoFriendsCollectionVC.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;VKApp.PhotoFriendsCollectionVC&gt;"
-                  moduleName = "VKApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "196">
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "48">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -285,32 +292,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "03FB0124-258A-447E-8FBA-F3D590C84A8E"
+            uuid = "B7638029-85A7-483F-B8C2-420C51176D99"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
+            filePath = "VKApp/Operation/AsyncOperation.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "collectionView(_:cellForItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "51A55032-8094-4577-A68F-4AE52AFF14F2"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VKApp/VIewControllers/PhotoFriendsCollectionVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "start()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
