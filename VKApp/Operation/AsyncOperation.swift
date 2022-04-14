@@ -10,9 +10,7 @@ import UIKit
 class AsyncOperation: Operation {
     enum State: String {
         case ready, executing, finished
-        fileprivate var keyPath: String {
-            return "is" + rawValue.capitalized
-        }
+        var keyPath: String { return "is" + rawValue.capitalized }
     }
     
     var state = State.ready {
@@ -27,19 +25,21 @@ class AsyncOperation: Operation {
     }
 
     override var isAsynchronous: Bool {
-        return true
+        true
     }
     
     override var isReady: Bool {
-        return super.isReady && state == .ready
+         super.isReady && state == .ready
     }
     
     override var isExecuting: Bool {
-        return super.isExecuting && state == .executing
+//        return super.isExecuting &&
+        state == .executing
     }
     
     override var isFinished: Bool {
-        return super.isFinished && state == .finished
+//        return super.isFinished &&
+        state == .finished
     }
     
     override func start() {

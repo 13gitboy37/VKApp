@@ -5,7 +5,7 @@
 //  Created by Никита Мошенцев on 13.04.2022.
 //
 
-import UIKit
+import Foundation
 import Alamofire
 
 class GetDataOperation: AsyncOperation {
@@ -23,8 +23,7 @@ class GetDataOperation: AsyncOperation {
         request.responseData(queue: DispatchQueue.global()) { [weak self] response in
             self?.data = response.data
             self?.state = .finished
-            print("Data loaded")
-        }
+        }        
     }
     
     init(request: DataRequest) {

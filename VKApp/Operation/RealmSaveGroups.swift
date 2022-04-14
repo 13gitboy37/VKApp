@@ -5,7 +5,7 @@
 //  Created by Никита Мошенцев on 13.04.2022.
 //
 
-import UIKit
+import Foundation
 import RealmSwift
 
 class RealmSaveGroups:Operation {
@@ -17,7 +17,7 @@ class RealmSaveGroups:Operation {
     }
     
     override func main(){
-        guard let parseData = dependencies.first as? ParseData else { return }
+        guard let parseData = dependencies.first as? ParseDataOperation else { return }
         do {
             let realmGroups = parseData.outputData.map{ RealmGroup(groups: $0) }
             try RealmService.save(items: realmGroups)

@@ -12,13 +12,6 @@ import Alamofire
 final class PersonalGroupsTableVC: UITableViewController {
     
     private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self)
-//    {
-//        didSet{
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
-//        }
-//    }
     
     private var groupsToken: NotificationToken?
 
@@ -62,7 +55,8 @@ final class PersonalGroupsTableVC: UITableViewController {
 
 //        networkService.getGroups() { [weak self] result in
 //            switch result {
-//            case .success(let groups):
+
+        //            case .success(let groups):
 //                let realmGroup = groups.map { RealmGroup(groups: $0)}
 //                    do {
 //                        try RealmService.save(items: realmGroup)
@@ -76,18 +70,20 @@ final class PersonalGroupsTableVC: UITableViewController {
         
         let request = AF.request("https://api.vk.com//method/groups.get?access_token=\(UserSession.instance.token)&v=5.131&extended=1&fields=photo_100")
         let getData = GetDataOperation(request: request)
-        let parseData = ParseData()
-        let realmSaveGroups = RealmSaveGroups(realmGroups: parseData.outputData)
-//        let realmLoadGroups = RealmLoadGroups(realmGroups: groups)
         
+        
+        let parseData = ParseDataOperation()
         parseData.addDependency(getData)
+        
+        
+        let realmSaveGroups = RealmSaveGroups(realmGroups: parseData.outputData)
         realmSaveGroups.addDependency(parseData)
-//        realmLoadGroups.addDependency(realmSaveGroups)
+        
+        
         
         operationQueue.addOperation(getData)
         operationQueue.addOperation(parseData)
         OperationQueue.main.addOperation(realmSaveGroups)
-//        OperationQueue.main.addOperation (realmLoadGroups)
         
     }
 
