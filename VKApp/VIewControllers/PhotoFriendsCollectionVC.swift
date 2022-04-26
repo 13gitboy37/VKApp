@@ -27,10 +27,13 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
     var photos: Results<RealmPhoto>?
     var photosToken: NotificationToken?
     
+    var photoService: PhotoService?
+    
     private let networkService = NetworkService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        photoService = PhotoService(container: collectionView)
         self.collectionView.register(UINib(
             nibName: "PhotoFriendsCollectionCell",
             bundle: nil),
@@ -53,9 +56,8 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             }
             case .failure(let error):
                 print(error)
+            }
         }
-    }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,13 +81,6 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         photosToken?.invalidate()
     }
 
-    /*
-    // MARK: - Navigation
-    */
-
-    // MARK: UICollectionViewDataSource
-
-
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
       return photos?.count ?? 0
@@ -102,11 +97,11 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             return UICollectionViewCell()
         }
         
-        cell.configure(model: currentPhoto)
+//        cell.configure(model: currentPhoto)
+        let image = photoService?.photo(atIndexPath: indexPath, byUrl: currentPhoto.urlPhoto)
+        cell.configure(photoFr: image)
         return cell
     }
-
-
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -115,7 +110,6 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         fullScreenPhotoVC.photo = photos
         fullScreenPhotoVC.modalPresentationStyle = .fullScreen
         self.present(fullScreenPhotoVC, animated: true, completion: nil)
-        
         
        defer { collectionView.deselectItem(
             at: indexPath,
