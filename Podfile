@@ -12,4 +12,7 @@ pod 'Alamofire', '~> 5.5'
 pod 'Kingfisher', '~> 7.2.0'
 
 pod 'RealmSwift', '~> 10'
+
+pod "PromiseKit", "~> 6.8"
+
 end

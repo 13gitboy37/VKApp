@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import RealmSwift
+import SystemConfiguration
 
 final class FriendsTableVC: UITableViewController {
 
@@ -49,25 +50,43 @@ final class FriendsTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        networkService.getFriends() {  [weak self] result in
-        switch result {
-            case .success(let users):
-            let realmUser = users.map { RealmUser(users: $0) }
-                do {
-                   try RealmService.save(items: realmUser)
-                } catch {
-                    print(error)
-                }
-//            }
-            case .failure(let error):
-                print(error)
-        }
-    }
+//        networkService.getFriends() {  [weak self] result in
+//        switch result {
+//            case .success(let users):
+//            let realmUser = users.map { RealmUser(users: $0) }
+//                do {
+//                   try RealmService.save(items: realmUser)
+//                } catch {
+//                    print(error)
+//                }
+////            }
+//            case .failure(let error):
+//                print(error)
+//        }
+//    }
         
         tableView.register(UINib(
             nibName: "FriendsCell",
             bundle: nil),
                            forCellReuseIdentifier: "friendCell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        networkService.getUrl().get ({ print($0)
+        })
+        .then(on: .global(), networkService.getData(_:))
+        .then(networkService.getParsedData(_:))
+        .done(on: .main) { friend in
+            let realmUser = friend.map { RealmUser(users: $0) }
+            do {
+                try RealmService.save(items: realmUser)
+            } catch {
+                print(error)
+            }
+        } .catch { error in
+            print(error)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

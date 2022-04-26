@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import PromiseKit
 
 final class NetworkService {
 
@@ -24,7 +25,7 @@ final class NetworkService {
         return constructor
     }()
 
-    func getFriends(completion: @escaping (Result<[UserItems],Error>) -> Void) {
+    func getFriends(completion: @escaping (Swift.Result<[UserItems],Error>) -> Void) {
             var constructor = self.urlConstructor
         constructor.path = "/method/friends.get"
         constructor.queryItems = [
@@ -55,7 +56,7 @@ final class NetworkService {
         }
 
 
-    func getGroups(completion: @escaping (Result<[GroupsItems],Error>) -> Void) {
+    func getGroups(completion: @escaping (Swift.Result<[GroupsItems],Error>) -> Void) {
     urlConstructor.path = "/method/groups.get"
         urlConstructor.queryItems = [
             URLQueryItem(name: "access_token", value: UserSession.instance.token),
@@ -87,7 +88,7 @@ final class NetworkService {
     
     
 
-    func getPhotos(ownerID: Int?, completion: @escaping (Result<[PhotosItems],Error>) -> Void) {
+    func getPhotos(ownerID: Int?, completion: @escaping (Swift.Result<[PhotosItems],Error>) -> Void) {
         var constructor = self.urlConstructor
     constructor.path = "/method/photos.get"
     constructor.queryItems = [
@@ -118,7 +119,7 @@ else { return }
         task.resume()
     }
     
-    func getSearchGroups(searchText: String, completion: @escaping (Result<[GroupsItems],Error>) -> Void) {
+    func getSearchGroups(searchText: String, completion: @escaping (Swift.Result<[GroupsItems],Error>) -> Void) {
     urlConstructor.path = "/method/groups.search"
         urlConstructor.queryItems = [
             URLQueryItem(name: "access_token", value: UserSession.instance.token),
@@ -150,7 +151,7 @@ else { return }
         }
     
     
-    func getNews (completion: @escaping (Result<[NewsItems], Error>) -> Void) {
+    func getNews (completion: @escaping (Swift.Result<[NewsItems], Error>) -> Void) {
 
         urlConstructorForNews()
     guard
@@ -176,7 +177,7 @@ else { return }
             task.resume()
         }
         
-    func getNewsProfiles (completion: @escaping (Result<[NewsProfiles], Error>) -> Void) {
+    func getNewsProfiles (completion: @escaping (Swift.Result<[NewsProfiles], Error>) -> Void) {
         urlConstructorForNews()
     guard
         let url = urlConstructor.url
@@ -201,7 +202,7 @@ else { return }
             task.resume()
         }
     
-    func getNewsGroups (completion: @escaping (Result<[NewsGroups], Error>) -> Void) {
+    func getNewsGroups (completion: @escaping (Swift.Result<[NewsGroups], Error>) -> Void) {
         urlConstructorForNews()
     guard
         let url = urlConstructor.url
@@ -236,4 +237,48 @@ else { return }
                 URLQueryItem(name: "count", value: "10")
             ]
     }
+    
+    func getUrl() -> Promise<URL> {
+        urlConstructor.path = "/method/friends.get"
+        urlConstructor.queryItems = [
+            URLQueryItem(name: "access_token", value: "\(UserSession.instance.token)"),
+            URLQueryItem(name: "v", value: "5.131"),
+            URLQueryItem(name: "fields", value: "photo_100")
+        ]
+        
+        return Promise { resolver in
+            guard let url = urlConstructor.url else {
+                resolver.reject(AppError.notCorrectURL)
+                return
+            }
+            resolver.fulfill(url)
+        }
+    }
+    
+    func getData(_ url: URL) -> Promise<Data> {
+        return Promise { resolver in
+            mySession.dataTask(with: url) { (data, response, error) in
+                guard let data = data else {
+                    resolver.reject(AppError.errorTask)
+                    return
+                }
+                resolver.fulfill(data)
+            }.resume()
+        }
+    }
+    
+    func getParsedData(_ data: Data) -> Promise<[UserItems]> {
+        return Promise { resolver in
+            do {
+                let response = try JSONDecoder().decode(UserResponse.self, from: data).users.items
+                resolver.fulfill(response)
+            } catch {
+                resolver.reject(AppError.failedToDecode)
+            }
+        }
+    }
+    
+//    func getRealmFriends() {
+//        
+//    }
 }

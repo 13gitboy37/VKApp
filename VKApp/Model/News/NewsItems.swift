@@ -9,7 +9,7 @@ import UIKit
 
 struct NewsItems {
     let sourceID: Int
-    let text: String
+    let text: String?
     let attachments: [NewsSizes]?
     let likes: NewsLikes
     let comments: NewsComments

@@ -27,7 +27,6 @@ class NewsTableVC: UITableViewController {
         }
     }
 
-
     var newsJSON = [NewsItems]() {
         didSet{
             DispatchQueue.main.async {
@@ -69,44 +68,41 @@ class NewsTableVC: UITableViewController {
             bundle: nil),
                            forCellReuseIdentifier: "imagesNewsCell")
         
-        DispatchQueue.global().async {
             self.networkService.getNews() { [weak self] result in
                 switch result {
                 case .success(let news):
+                    DispatchQueue.main.async {
                         self?.newsJSON = news
+                    }
                 case .failure(let error):
                     print(error)
                 }
             }
-        }
     
-        DispatchQueue.global().async {
             self.networkService.getNewsProfiles() { [weak self] result in
             switch result {
             case .success(let profiles):
+                DispatchQueue.main.async {
                     self?.profilesNews = profiles
+                }
             case .failure(let error):
                 print(error)
                 }
             }
-        }
-        
-        DispatchQueue.global().async {
+    
             self.networkService.getNewsGroups() { [weak self] result in
                 switch result {
                 case .success(let groups):
+                    DispatchQueue.main.async {
                         self?.groupsNews = groups
+                    }
                 case .failure(let error):
                     print(error)
                 }
             }
         }
-    }
-        
 
     // MARK: - Table view data source
-
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if self.newsJSON[section].attachments?.first?.photo != nil && self.newsJSON[section].text != "" {
@@ -126,11 +122,8 @@ class NewsTableVC: UITableViewController {
          cellSpacingHeight
      }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
-   
-        
         let currentNews = newsJSON[indexPath.section]
         
         var images = [String?]()
@@ -143,7 +136,6 @@ class NewsTableVC: UITableViewController {
             }
         })
         
-                 
         let backgroundColorCell = UIColor.gray.withAlphaComponent(0.1)
 
         switch indexPath.row {
