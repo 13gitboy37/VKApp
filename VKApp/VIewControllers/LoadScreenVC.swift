@@ -13,7 +13,6 @@ class LoadScreenVC: UIViewController {
     @IBOutlet var loadDot2: UIImageView!
     @IBOutlet var loadDot3: UIImageView!
     
-    
     override func viewDidAppear(_ animated: Bool) {
         let duration = 1.0
 
@@ -46,7 +45,6 @@ class LoadScreenVC: UIViewController {
             },
          completion: { isComplited in
              self.loadDot3.alpha = 0.9
-             
                    })
       
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

@@ -19,11 +19,8 @@ final class GlobalGroupsTableVC: UITableViewController {
         }
     }
        
-    
     private var timer = Timer()
-    
     var searchGroups:[String]!
-   
     private let networkService = NetworkService()
     // MARK: - Lifecycle
     
@@ -33,26 +30,26 @@ final class GlobalGroupsTableVC: UITableViewController {
             nibName: "GroupsCell",
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
-        
-        
     }
     // MARK: - Table view data source
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       groups?.count ?? 0
     }
     
-    
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard
-         let currentGroup = groups?[indexPath.row],
          let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
      
-        cell.configure(model: currentGroup)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard
+            let currentGroup = groups?[indexPath.row],
+            let cell = cell as? GroupsCell else { return }
+        
+        cell.configure(model: currentGroup)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -63,7 +60,6 @@ final class GlobalGroupsTableVC: UITableViewController {
             withIdentifier: "addGroup",
             sender: nil)
     }
-
 }
 
 //MARK: Realese UISearchBar
@@ -97,10 +93,8 @@ final class GlobalGroupsTableVC: UITableViewController {
                         }
                     case .failure(let error):
                         print(error)
-                      
                     }
                 }
-            }
-          )
-  }
+            })
+        }
  }

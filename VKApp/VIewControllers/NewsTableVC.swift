@@ -10,7 +10,6 @@ import UIKit
 class NewsTableVC: UITableViewController {
     
     var numRowInSection: Int = 0
-    
     var groupsNews = [NewsGroups]() {
         didSet{
             DispatchQueue.main.async {
@@ -18,7 +17,6 @@ class NewsTableVC: UITableViewController {
             }
         }
     }
-
     var profilesNews = [NewsProfiles]() {
         didSet{
             DispatchQueue.main.async {
@@ -26,7 +24,6 @@ class NewsTableVC: UITableViewController {
             }
         }
     }
-
     var newsJSON = [NewsItems]() {
         didSet{
             DispatchQueue.main.async {
@@ -34,7 +31,6 @@ class NewsTableVC: UITableViewController {
             }
         }
     }
-
     private let networkService = NetworkService()
     
     enum typeOfCell: Int {
@@ -43,6 +39,7 @@ class NewsTableVC: UITableViewController {
         case imageCell = 2
         case footerCell = 3
     }
+    
     
     let cellSpacingHeight: CGFloat = 0
     
@@ -174,17 +171,13 @@ class NewsTableVC: UITableViewController {
         return cellTextNews
                 
             } else {
-                
                 fallthrough
-
             }
             
         case typeOfCell.imageCell.rawValue:
             
             if indexPath.row == 2 && currentNews.text == "" {
-
                 fallthrough
-                
             } else if images.count != 0 {
 
                 guard
@@ -193,14 +186,11 @@ class NewsTableVC: UITableViewController {
 
                 cellImageNews.configure(images: images)
                                     
-
         cellImageNews.selectionStyle = UITableViewCell.SelectionStyle.none
         cellImageNews.backgroundColor = backgroundColorCell
-        
         return cellImageNews
                 
-            }
-            else {
+            } else {
                 fallthrough
             }
 

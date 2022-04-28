@@ -10,7 +10,6 @@ import UIKit
 class TextNewsCell: UITableViewCell {
     @IBOutlet var textNews: UILabel!
     
-    
     func configureTextNews (textNews: String) {
         self.textNews.text = textNews
     }
@@ -19,6 +18,7 @@ class TextNewsCell: UITableViewCell {
     }
     
     func configureTextNews (modelTextNews: NewsItems) {
+        self.textNews.numberOfLines = 0
         self.textNews.text = modelTextNews.text
     }
 }

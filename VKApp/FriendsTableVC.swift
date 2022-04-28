@@ -12,12 +12,12 @@ import SystemConfiguration
 
 final class FriendsTableVC: UITableViewController {
 
-    var friendsDictionary = [String: [RealmUser?]]()
-    var friendsSectionTitles = [String]()
-    var friendsSortedDictionary = [String: [RealmUser?]]()
-    var sortedUsers = [RealmUser?]()
+   private var friendsDictionary = [String: [RealmUser?]]()
+   private var friendsSectionTitles = [String]()
+   private var friendsSortedDictionary = [String: [RealmUser?]]()
+   private var sortedUsers = [RealmUser?]()
     
-    func SortFriend() {
+   private func SortFriend() {
         for user in self.users! where user.lastName != "" {
             self.friendsDictionary.removeAll()
             self.sortedUsers = self.users!.sorted()
@@ -49,21 +49,6 @@ final class FriendsTableVC: UITableViewController {
     // MARK: - Table view data source
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        networkService.getFriends() {  [weak self] result in
-//        switch result {
-//            case .success(let users):
-//            let realmUser = users.map { RealmUser(users: $0) }
-//                do {
-//                   try RealmService.save(items: realmUser)
-//                } catch {
-//                    print(error)
-//                }
-////            }
-//            case .failure(let error):
-//                print(error)
-//        }
-//    }
         
         tableView.register(UINib(
             nibName: "FriendsCell",
@@ -122,23 +107,26 @@ final class FriendsTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         friendsSortedDictionary[friendsSectionTitles[section]]?.count ?? 0
-        
     }
-
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
            let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as? FriendsCell
         else { return UITableViewCell() }
         
-    
-        let friendKey = friendsSectionTitles[indexPath.section]
-        if let friendValues = friendsDictionary[friendKey] {
-            let friendsInCell = friendValues[indexPath.row]
-            cell.configure(emblem:friendsInCell!.userPhoto,
-                           name: friendsInCell!.fullName)
-        }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard
+           let cell = cell as? FriendsCell
+        else { return }
+        let friendKey = friendsSectionTitles[indexPath.section]
+                if let friendValues = friendsDictionary[friendKey] {
+                    let friendsInCell = friendValues[indexPath.row]
+                    cell.configure(emblem:friendsInCell?.userPhoto ?? "",
+                                   name: friendsInCell?.fullName ?? "")
+                }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -174,7 +162,7 @@ final class FriendsTableVC: UITableViewController {
     
   override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-      header.tintColor = UIColor.gray.withAlphaComponent(0.05)
+      header.tintColor = UIColor.systemGray6
     }
 }
 

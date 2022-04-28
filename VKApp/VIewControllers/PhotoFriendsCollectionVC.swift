@@ -82,13 +82,11 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
     }
 
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-      return photos?.count ?? 0
+      photos?.count ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        guard
-        let currentPhoto = photos?[indexPath.row],
             let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "photoFriendsCollectionCell",
             for: indexPath)
@@ -96,11 +94,15 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
         else {
             return UICollectionViewCell()
         }
-        
-//        cell.configure(model: currentPhoto)
+        return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard
+            let currentPhoto = photos?[indexPath.row],
+            let cell = cell as? PhotoFriendsCollectionCell else { return }
         let image = photoService?.photo(atIndexPath: indexPath, byUrl: currentPhoto.urlPhoto)
         cell.configure(photoFr: image)
-        return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -31,7 +31,6 @@ final class VKLoginVC: UIViewController {
                 }
             }
         }
-        
     }
     
     private var urlComponents: URLComponents = {
@@ -49,7 +48,7 @@ final class VKLoginVC: UIViewController {
         ]
         return comp
     }()
-//    8081714
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         guard
@@ -59,7 +58,6 @@ final class VKLoginVC: UIViewController {
     }
     
 }
-
 
 extension VKLoginVC: WKNavigationDelegate{
     func webView(

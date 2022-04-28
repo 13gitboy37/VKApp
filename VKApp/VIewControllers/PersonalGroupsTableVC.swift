@@ -12,9 +12,7 @@ import Alamofire
 final class PersonalGroupsTableVC: UITableViewController {
     
     private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self)
-    
     private var groupsToken: NotificationToken?
-
 
    @IBAction func addGroup(segue: UIStoryboardSegue) {
         guard
@@ -52,34 +50,15 @@ final class PersonalGroupsTableVC: UITableViewController {
             nibName: "GroupsCell",
             bundle: nil),
                            forCellReuseIdentifier: "groupsCell")
-
-//        networkService.getGroups() { [weak self] result in
-//            switch result {
-
-        //            case .success(let groups):
-//                let realmGroup = groups.map { RealmGroup(groups: $0)}
-//                    do {
-//                        try RealmService.save(items: realmGroup)
-//                    } catch {
-//                        print(error)
-//                    }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
         
         let request = AF.request("https://api.vk.com//method/groups.get?access_token=\(UserSession.instance.token)&v=5.131&extended=1&fields=photo_100")
         let getData = GetDataOperation(request: request)
         
-        
         let parseData = ParseDataOperation()
         parseData.addDependency(getData)
         
-        
         let realmSaveGroups = RealmSaveGroups(realmGroups: parseData.outputData)
         realmSaveGroups.addDependency(parseData)
-        
-        
         
         operationQueue.addOperation(getData)
         operationQueue.addOperation(parseData)
@@ -117,13 +96,18 @@ final class PersonalGroupsTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      guard
-            let currentGroup = groups?[indexPath.item],
             let cell = tableView.dequeueReusableCell(withIdentifier: "groupsCell", for: indexPath) as? GroupsCell
      else { return UITableViewCell() }
 
-        cell.configure(model: currentGroup)
         return cell
-
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard
+               let currentGroup = groups?[indexPath.item],
+               let cell = cell as? GroupsCell else { return }
+        
+        cell.configure(model: currentGroup)
     }
 
     // Override to support editing the table view.
