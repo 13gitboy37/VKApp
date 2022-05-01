@@ -22,18 +22,14 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
             else {
                 buttonLike.setImage(UIImage(systemName: "heart"), for: .normal)
                 animateDislikeButton()
-  //              buttonLike.setTitle("0", for: .normal)
             }
     }
-    
-    
     
     func configure(photoFr: UIImage?) {
         self.photoFriend.image = photoFr
         
     }
     
-    // config with model
     func configure(model: PhotosItems) {
         self.photoFriend.kf.setImage(with: URL(string: model.sizes.last!.urlPhoto), placeholder: UIImage(systemName: "person.fill"))
     }
@@ -41,7 +37,6 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
     func configure(model: RealmPhoto) {
         self.photoFriend.kf.setImage(with: URL(string: model.urlPhoto), placeholder: UIImage(systemName: "person.fill"))
     }
-    
     
     func animateLikeButton() {
         UIView.transition(
@@ -61,6 +56,5 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
             animations: {
                 self.buttonLike.setTitle("0", for: .normal)
             })
-    }
-    
+        }    
 }

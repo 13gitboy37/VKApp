@@ -17,24 +17,46 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOE-yx-gJP">
-                        <rect key="frame" x="16" y="11" width="288" height="128"/>
-                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                        <rect key="frame" x="10" y="0.0" width="310" height="120"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IBM-Iy-dGG">
+                        <rect key="frame" x="0.0" y="121" width="320" height="28"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain">
+                            <attributedString key="attributedTitle">
+                                <fragment content="Показать больше...">
+                                    <attributes>
+                                        <font key="NSFont" size="17" name="Helvetica"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="pressedShowMore:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gP7-v9-Wp4"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="gOE-yx-gJP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="DD1-a4-n2F"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="gOE-yx-gJP" secondAttribute="bottom" id="Rxj-YP-gqu"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="gOE-yx-gJP" secondAttribute="trailing" id="YqG-du-T9I"/>
-                    <constraint firstItem="gOE-yx-gJP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="zDQ-g5-Ycu"/>
+                    <constraint firstAttribute="trailing" secondItem="gOE-yx-gJP" secondAttribute="trailing" id="9t4-Yc-VMo"/>
+                    <constraint firstItem="IBM-Iy-dGG" firstAttribute="top" secondItem="gOE-yx-gJP" secondAttribute="bottom" constant="1" id="FuV-J9-XVd"/>
+                    <constraint firstAttribute="trailing" secondItem="IBM-Iy-dGG" secondAttribute="trailing" id="JLv-ds-H5d"/>
+                    <constraint firstItem="gOE-yx-gJP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Q9Y-qp-Kyr"/>
+                    <constraint firstItem="gOE-yx-gJP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Qzi-av-FhQ"/>
+                    <constraint firstAttribute="bottom" secondItem="gOE-yx-gJP" secondAttribute="bottom" constant="30" id="mCy-f2-8em"/>
+                    <constraint firstAttribute="bottom" secondItem="IBM-Iy-dGG" secondAttribute="bottom" constant="1" id="tBE-El-Jzg"/>
+                    <constraint firstItem="IBM-Iy-dGG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="yRd-Z5-3fC"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="showMore" destination="IBM-Iy-dGG" id="p8U-BW-uIj"/>
                 <outlet property="textNews" destination="gOE-yx-gJP" id="7u8-7Q-23R"/>
             </connections>
-            <point key="canvasLocation" x="139" y="79"/>
+            <point key="canvasLocation" x="137.68115942028987" y="78.348214285714278"/>
         </tableViewCell>
     </objects>
 </document>

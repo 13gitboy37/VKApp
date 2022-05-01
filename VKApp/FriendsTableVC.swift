@@ -18,12 +18,12 @@ final class FriendsTableVC: UITableViewController {
    private var sortedUsers = [RealmUser?]()
     
    private func SortFriend() {
-        for user in self.users! where user.lastName != "" {
+       for user in self.users! where user.lastName != "" {
             self.friendsDictionary.removeAll()
             self.sortedUsers = self.users!.sorted()
 
             for friend in self.sortedUsers.indices {
-            let friendKey = String(self.sortedUsers[friend]!.lastName.prefix(1))
+                let friendKey = String(self.sortedUsers[friend]?.lastName.prefix(1) ?? "")
             if var friendValues = self.friendsDictionary[friendKey] {
                 if self.sortedUsers[friend]!.firstName != "DELETED" {
                 friendValues.append(self.sortedUsers[friend]!)
@@ -162,7 +162,7 @@ final class FriendsTableVC: UITableViewController {
     
   override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-      header.tintColor = UIColor.systemGray6
+      header.tintColor = .systemGray6
     }
 }
 

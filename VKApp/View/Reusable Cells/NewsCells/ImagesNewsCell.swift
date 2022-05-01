@@ -10,8 +10,6 @@ import Kingfisher
 
 class ImagesNewsCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    
-    
     var image = [String?]() {
         didSet {
             DispatchQueue.main.async {
@@ -22,13 +20,10 @@ class ImagesNewsCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     
 
     @IBOutlet var CollectionView: UICollectionView!
-    
+
     @IBOutlet var aspect31: NSLayoutConstraint!
-    
     @IBOutlet var aspect11: NSLayoutConstraint!
-    
     @IBOutlet var aspect21: NSLayoutConstraint!
-    
     @IBOutlet var aspect32: NSLayoutConstraint!
     
     var numberOfItems = CGFloat()
@@ -48,13 +43,11 @@ class ImagesNewsCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
                         forCellWithReuseIdentifier: "imagesCell")
     }
     
-    
     //MARK: CollectionView DataSource
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        return image.count
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard

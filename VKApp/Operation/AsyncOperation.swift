@@ -33,12 +33,10 @@ class AsyncOperation: Operation {
     }
     
     override var isExecuting: Bool {
-//        return super.isExecuting &&
         state == .executing
     }
     
     override var isFinished: Bool {
-//        return super.isFinished &&
         state == .finished
     }
     

@@ -12,8 +12,6 @@ class ParseDataOperation: AsyncOperation {
     private(set) var outputData = [GroupsItems]()
     private var decoder = JSONDecoder()
     
-
-    
     override func main() {
         guard let getDataOperation = dependencies.first(where: { $0 is GetDataOperation}) as? GetDataOperation,
               let data = getDataOperation.data else {

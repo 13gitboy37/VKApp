@@ -15,7 +15,6 @@ struct NewsModel {
     let numOfNews: Int
 }
 
-
 struct News {
     let items: [NewsItems]
     let groups: [NewsGroups]

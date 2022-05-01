@@ -12,7 +12,6 @@ class ImageNewsCell: UITableViewCell {
     
     @IBOutlet var imageNews: UIImageView!
   
-    
     func configureImageNews(imageNews: UIImage) {
         self.imageNews.image = imageNews
     }

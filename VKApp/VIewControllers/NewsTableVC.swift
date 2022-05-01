@@ -8,7 +8,7 @@
 import UIKit
 
 class NewsTableVC: UITableViewController {
-    
+   
     var numRowInSection: Int = 0
     var groupsNews = [NewsGroups]() {
         didSet{
@@ -31,6 +31,14 @@ class NewsTableVC: UITableViewController {
             }
         }
     }
+    
+    var indexPathInTextCell = IndexPath()
+    
+    var isPressed = false {
+        didSet{
+            reloadRows(indexPath: indexPathInTextCell)
+        }
+    }
     private let networkService = NetworkService()
     
     enum typeOfCell: Int {
@@ -40,8 +48,14 @@ class NewsTableVC: UITableViewController {
         case footerCell = 3
     }
     
-    
     let cellSpacingHeight: CGFloat = 0
+    
+    func reloadRows(indexPath: IndexPath) {
+//        DispatchQueue.main.async {
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//            self.tableView.reloadData()
+//        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,7 +178,7 @@ class NewsTableVC: UITableViewController {
                     let cellTextNews = tableView.dequeueReusableCell(withIdentifier: "textNewsCell", for: indexPath) as? TextNewsCell
                 else { return UITableViewCell()}
                 
-            cellTextNews.configureTextNews(modelTextNews: currentNews)
+            cellTextNews.configureTextNews(modelTextNews: currentNews, indexPath: indexPath)
             cellTextNews.backgroundColor = backgroundColorCell
             cellTextNews.selectionStyle = UITableViewCell.SelectionStyle.none
             
@@ -209,4 +223,18 @@ class NewsTableVC: UITableViewController {
             return UITableViewCell()
         }
     }
+    
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print(1)
+//        tableView.reloadRows(at: [indexPath], with: .none)
+//    }
 }
+
+extension NewsTableVC: ShowMoreDelegate {
+    func pressShowMore(at indexPath: IndexPath) {
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+}
+/*
+ VKApp[21234:559189] [TableView] Warning once only: UITableView was told to layout its visible cells and other contents without being in the view hierarchy (the table view or one of its superviews has not been added to a window). This may cause bugs by forcing views inside the table view to load and perform layout without accurate information (e.g. table view bounds, trait collection, layout margins, safe area insets, etc), and will also cause unnecessary performance overhead due to extra layout passes. Make a symbolic breakpoint at UITableViewAlertForLayoutOutsideViewHierarchy to catch this in the debugger and see what caused this to occur, so you can avoid this action altogether if possible, or defer it until the table view has been added to a window. Table view: <UITableView: 0x13301b200; frame = (0 0; 0 0); clipsToBounds = YES; autoresize = W+H; gestureRecognizers = <NSArray: 0x60000169eb20>; layer = <CALayer: 0x6000018ca180>; contentOffset: {0, 0}; contentSize: {0, 1496}; adjustedContentInset: {0, 0, 0, 0}; dataSource: <_UIFilteredDataSource: 0x6000016a4ea0>>
+ */

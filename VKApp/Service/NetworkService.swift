@@ -25,35 +25,35 @@ final class NetworkService {
         return constructor
     }()
 
-    func getFriends(completion: @escaping (Swift.Result<[UserItems],Error>) -> Void) {
-            var constructor = self.urlConstructor
-        constructor.path = "/method/friends.get"
-        constructor.queryItems = [
-            URLQueryItem(name: "access_token", value: "\(UserSession.instance.token)"),
-            URLQueryItem(name: "v", value: "5.131"),
-            URLQueryItem(name: "fields", value: "photo_100")
-        ]
-    guard
-        let url = constructor.url
-    else { return }
-            let task = self.mySession.dataTask(with: url) { data, response, error in
-            if let response = response as? HTTPURLResponse {
-                print(response.statusCode)
-            }
-            guard
-                error == nil,
-                let data = data
-            else { return }
-            do {
-                let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
-                completion(.success(userResponse.users.items))
-//                print(userResponse)
-            } catch {
-                completion(.failure(error))
-            }
-        }
-            task.resume()
-        }
+//    func getFriends(completion: @escaping (Swift.Result<[UserItems],Error>) -> Void) {
+//            var constructor = self.urlConstructor
+//        constructor.path = "/method/friends.get"
+//        constructor.queryItems = [
+//            URLQueryItem(name: "access_token", value: "\(UserSession.instance.token)"),
+//            URLQueryItem(name: "v", value: "5.131"),
+//            URLQueryItem(name: "fields", value: "photo_100")
+//        ]
+//    guard
+//        let url = constructor.url
+//    else { return }
+//            let task = self.mySession.dataTask(with: url) { data, response, error in
+//            if let response = response as? HTTPURLResponse {
+//                print(response.statusCode)
+//            }
+//            guard
+//                error == nil,
+//                let data = data
+//            else { return }
+//            do {
+//                let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
+//                completion(.success(userResponse.users.items))
+////                print(userResponse)
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }
+//            task.resume()
+//        }
 
 
     func getGroups(completion: @escaping (Swift.Result<[GroupsItems],Error>) -> Void) {
@@ -152,7 +152,6 @@ else { return }
     
     
     func getNews (completion: @escaping (Swift.Result<[NewsItems], Error>) -> Void) {
-
         urlConstructorForNews()
     guard
         let url = urlConstructor.url
@@ -168,7 +167,7 @@ else { return }
             do {
                 let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
                 completion(.success(newsResponse.news.items))
-                print(newsResponse)
+//                print(newsResponse)
             } catch {
                 completion(.failure(error))
                 print(error)
@@ -184,7 +183,7 @@ else { return }
     else { return }
         let task = mySession.dataTask(with: url) { data, response, error in
             if let response = response as? HTTPURLResponse {
-                print(response.statusCode)
+//                print(response.statusCode)
             }
             guard
                 error == nil,
@@ -193,7 +192,7 @@ else { return }
             do {
                 let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
                 completion(.success(newsResponse.news.profiles))
-                print(newsResponse)
+//                print(newsResponse)
             } catch {
                 completion(.failure(error))
                 print(error)
@@ -218,7 +217,7 @@ else { return }
             do {
                 let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
                 completion(.success(newsResponse.news.groups))
-                print(newsResponse)
+//                print(newsResponse)
             } catch {
                 completion(.failure(error))
                 print(error)
@@ -277,8 +276,4 @@ else { return }
             }
         }
     }
-    
-//    func getRealmFriends() {
-//        
-//    }
 }

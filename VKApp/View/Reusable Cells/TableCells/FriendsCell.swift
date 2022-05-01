@@ -10,7 +10,6 @@ import Kingfisher
 
 class FriendsCell: UITableViewCell {
     
-
     @IBOutlet var friendsName: UILabel!
     @IBOutlet var friendsEmblem: UIImageView!
     @IBInspectable var cornerRadius: CGFloat = 0.0 {
@@ -42,15 +41,12 @@ class FriendsCell: UITableViewCell {
             } completion: { _ in
                 self.friendsEmblem.transform = .identity
         }
-       
     }
-    
- //config wit model
+   
     func configure(model: UserItems) {
         self.friendsName.text = model.lastName + " " + model.firstName
         self.friendsEmblem.kf.setImage(with: URL(string: model.userPhoto))
     }
-
 
     func configure(model: RealmUser) {
         self.friendsName.text = model.lastName + " " + model.firstName

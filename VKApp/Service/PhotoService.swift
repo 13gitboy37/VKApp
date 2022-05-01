@@ -26,8 +26,9 @@ class PhotoService {
     private static let pathName: String = {
         let pathName = "images"
         
-        guard let cachesDirectroy = FileManager.default.urls(for: .cachesDirectory,
-                                                            in: .userDomainMask).first else { return pathName}
+        guard let cachesDirectroy = FileManager.default.urls(
+                                                for: .cachesDirectory,
+                                                in: .userDomainMask).first else { return pathName}
         let url = cachesDirectroy.appendingPathComponent(pathName, isDirectory: true)
         if !FileManager.default.fileExists(atPath: url.path) {
             try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)

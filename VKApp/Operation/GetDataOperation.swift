@@ -10,7 +10,6 @@ import Alamofire
 
 class GetDataOperation: AsyncOperation {
     
-    
     override func cancel() {
         request.cancel()
         super.cancel()

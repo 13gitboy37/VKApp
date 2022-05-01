@@ -17,7 +17,6 @@ extension NewsLikes: Codable {
     }
 }
 
-
 struct NewsComments {
     let commentsCount: Int
 }
@@ -27,7 +26,6 @@ extension NewsComments: Codable {
         case commentsCount = "count"
     }
 }
-
 
 struct NewsReposts {
     let repostsCount: Int

@@ -30,14 +30,11 @@ final class PushAnimation: NSObject, UIViewControllerAnimatedTransitioning {
         destination.view.transform = CGAffineTransform(
             rotationAngle:  -.pi / 2)
         
-        
-        
         UIView.animateKeyframes(
             withDuration: animateTime,
             delay: 0.0,
             options: .calculationModePaced) {
      
-                
                 UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.75) {
                     let rotation = CGAffineTransform(
                         rotationAngle: .pi / 2)
@@ -56,7 +53,6 @@ final class PushAnimation: NSObject, UIViewControllerAnimatedTransitioning {
                 transitionContext.completeTransition(isComplete && !transitionContext.transitionWasCancelled)
             }
     }
-    
 }
 
 final class PopAnimation: NSObject, UIViewControllerAnimatedTransitioning {

@@ -21,7 +21,6 @@ final class RealmService {
             }
         }
     
-    
     class func load<T:Object>(typeOf: T.Type, configuration: Realm.Configuration = deleteIfMigration) throws -> Results<T> {
         let realm = try Realm(configuration: configuration)
         return realm.objects(T.self)

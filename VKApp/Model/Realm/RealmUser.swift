@@ -8,7 +8,6 @@
 import Foundation
 import RealmSwift
 
-
 class RealmUser: Object {
     @Persisted(primaryKey: true) var id: Int = Int()
     @Persisted var firstName: String = ""
@@ -31,12 +30,3 @@ extension RealmUser {
 extension RealmUser: Comparable {
         static func < (lhs: RealmUser, rhs: RealmUser) -> Bool { lhs.lastName < rhs.lastName }
 }
-
-
-/*
- let firstName: String
- let lastName: String
- let userPhoto: String
- let id: Int
- var fullName: String {lastName + " " + firstName}
- */
