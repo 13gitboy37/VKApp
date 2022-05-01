@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "16B243F0-CB20-45CB-8E5E-5ADCBE9741AD"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C5E7DACB-D6E8-4F6D-BD0A-60500BA518AF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/Operation/RealmLoadGroups.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "main()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "029CB06E-8039-44F0-B9CD-8140127010C3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/VIewControllers/NewsTableVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "pressShowMore(at:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VKApp/VIewControllers/NewsTableVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "isPressed"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86 - 4f7710051a83dd12"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VKApp.NewsTableVC.isPressed.getter : Swift.Bool"
+                  moduleName = "VKApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/NewsTableVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86 - 49a24b3da7f13526"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VKApp.NewsTableVC.isPressed.setter : Swift.Bool"
+                  moduleName = "VKApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/NewsTableVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "120">
+               </Location>
+               <Location
+                  uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86 - 6f7c4905c925b311"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VKApp.NewsTableVC.isPressed.modify : Swift.Bool"
+                  moduleName = "VKApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/NewsTableVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86 - 5137bef73d86a926"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VKApp.NewsTableVC.isPressed.modify : Swift.Bool with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "VKApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/NewsTableVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86 - 7dbefa3a6fb3552b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VKApp.NewsTableVC.init(style: __C.UITableViewStyle) -&gt; VKApp.NewsTableVC"
+                  moduleName = "VKApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/NewsTableVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "288">
+               </Location>
+               <Location
+                  uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86 - b0a8508496f5644"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VKApp.NewsTableVC.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; VKApp.NewsTableVC"
+                  moduleName = "VKApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/NewsTableVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "312">
+               </Location>
+               <Location
+                  uuid = "0BEAE6B3-BBBC-4F6B-8C6A-75DCEBEFDC86 - 25611565db1cb56d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VKApp.NewsTableVC.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;VKApp.NewsTableVC&gt;"
+                  moduleName = "VKApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nikitamosencev/Documents/GeekBrains/VKApp/VKApp/VIewControllers/NewsTableVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "288">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
