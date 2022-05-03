@@ -24,38 +24,7 @@ final class NetworkService {
         constructor.host = "api.vk.com"
         return constructor
     }()
-
-//    func getFriends(completion: @escaping (Swift.Result<[UserItems],Error>) -> Void) {
-//            var constructor = self.urlConstructor
-//        constructor.path = "/method/friends.get"
-//        constructor.queryItems = [
-//            URLQueryItem(name: "access_token", value: "\(UserSession.instance.token)"),
-//            URLQueryItem(name: "v", value: "5.131"),
-//            URLQueryItem(name: "fields", value: "photo_100")
-//        ]
-//    guard
-//        let url = constructor.url
-//    else { return }
-//            let task = self.mySession.dataTask(with: url) { data, response, error in
-//            if let response = response as? HTTPURLResponse {
-//                print(response.statusCode)
-//            }
-//            guard
-//                error == nil,
-//                let data = data
-//            else { return }
-//            do {
-//                let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
-//                completion(.success(userResponse.users.items))
-////                print(userResponse)
-//            } catch {
-//                completion(.failure(error))
-//            }
-//        }
-//            task.resume()
-//        }
-
-
+    
     func getGroups(completion: @escaping (Swift.Result<[GroupsItems],Error>) -> Void) {
     urlConstructor.path = "/method/groups.get"
         urlConstructor.queryItems = [
@@ -85,8 +54,6 @@ final class NetworkService {
         }
             task.resume()
         }
-    
-    
 
     func getPhotos(ownerID: Int?, completion: @escaping (Swift.Result<[PhotosItems],Error>) -> Void) {
         var constructor = self.urlConstructor
@@ -125,7 +92,7 @@ else { return }
             URLQueryItem(name: "access_token", value: UserSession.instance.token),
             URLQueryItem(name: "v", value: "5.131"),
             URLQueryItem(name: "sort", value: "6"),
-            URLQueryItem(name: "count", value: "10"),
+            URLQueryItem(name: "count", value: "20"),
             URLQueryItem(name: "q", value: searchText)
         ]
     guard
@@ -150,93 +117,85 @@ else { return }
             task.resume()
         }
     
-    
-    func getNews (completion: @escaping (Swift.Result<[NewsItems], Error>) -> Void) {
-        urlConstructorForNews()
-    guard
-        let url = urlConstructor.url
-    else { return }
-        let task = mySession.dataTask(with: url) { data, response, error in
-            if let response = response as? HTTPURLResponse {
-                print(response.statusCode)
-            }
-            guard
-                error == nil,
-                let data = data
-            else { return }
-            do {
-                let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
-                completion(.success(newsResponse.news.items))
-//                print(newsResponse)
-            } catch {
-                completion(.failure(error))
-                print(error)
-            }
-        }
-            task.resume()
-        }
-        
-    func getNewsProfiles (completion: @escaping (Swift.Result<[NewsProfiles], Error>) -> Void) {
-        urlConstructorForNews()
-    guard
-        let url = urlConstructor.url
-    else { return }
-        let task = mySession.dataTask(with: url) { data, response, error in
-            if let response = response as? HTTPURLResponse {
-//                print(response.statusCode)
-            }
-            guard
-                error == nil,
-                let data = data
-            else { return }
-            do {
-                let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
-                completion(.success(newsResponse.news.profiles))
-//                print(newsResponse)
-            } catch {
-                completion(.failure(error))
-                print(error)
-            }
-        }
-            task.resume()
-        }
-    
-    func getNewsGroups (completion: @escaping (Swift.Result<[NewsGroups], Error>) -> Void) {
-        urlConstructorForNews()
-    guard
-        let url = urlConstructor.url
-    else { return }
-        let task = mySession.dataTask(with: url) { data, response, error in
-            if let response = response as? HTTPURLResponse {
-                print(response.statusCode)
-            }
-            guard
-                error == nil,
-                let data = data
-            else { return }
-            do {
-                let newsResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
-                completion(.success(newsResponse.news.groups))
-//                print(newsResponse)
-            } catch {
-                completion(.failure(error))
-                print(error)
-            }
-        }
-            task.resume()
-        }
-        
     func urlConstructorForNews() {
-        urlConstructor.path = "/method/newsfeed.get"
-            urlConstructor.queryItems = [
-                URLQueryItem(name: "access_token", value: UserSession.instance.token),
-                URLQueryItem(name: "v", value: "5.131"),
-                URLQueryItem(name: "filters", value: "post"),
-                URLQueryItem(name: "max_photos", value: "9"),
-                URLQueryItem(name: "count", value: "10")
-            ]
+        
     }
     
+    func getNews(completion: @escaping ([NewsItems]) -> Void, onError: @escaping (Error) -> Void) {
+
+            urlConstructor.path = "/method/newsfeed.get"
+                urlConstructor.queryItems = [
+                    URLQueryItem(name: "access_token", value: UserSession.instance.token),
+                    URLQueryItem(name: "v", value: "5.131"),
+                    URLQueryItem(name: "filters", value: "post"),
+    //            URLQueryItem(name: "start_from", value: "next_from"),
+                    URLQueryItem(name: "max_photos", value: "9"),
+                    URLQueryItem(name: "count", value: "10")
+                ]
+        guard let url = urlConstructor.url else { return }
+        let task = mySession.dataTask(with: url) { data, response, error in
+            
+            if error != nil {
+                onError(AppError.errorTask)
+            }
+            
+            guard let data = data else {
+                onError(AppError.noDataProvided)
+                return
+            }
+            guard var news = try? JSONDecoder().decode(NewsResponse.self, from: data).news.items else {
+                onError(AppError.failedToDecode)
+                return
+            }
+            guard let profiles = try? JSONDecoder().decode(NewsResponse.self, from: data).news.profiles else {
+                onError(AppError.failedToDecode)
+                print("Error profiles")
+                return
+            }
+            guard let groups = try? JSONDecoder().decode(NewsResponse.self, from: data).news.groups else {
+                onError(AppError.failedToDecode)
+                print("Error groups")
+                return
+            }
+            for i in 0..<news.count {
+                if news[i].sourceID < 0{
+                    let group = groups.first(where: { $0.id == -news[i].sourceID })
+                    news[i].avatarURL = group?.photo
+                    news[i].creatorName = group?.name
+                } else {
+                    let profile = profiles.first(where: { $0.id == news[i].sourceID })
+                    news[i].avatarURL = profile?.photo
+                    news[i].creatorName = (profile?.firstName ?? "") + (profile?.lastName ?? "")
+                }
+            }
+            DispatchQueue.main.async {
+                completion(news)
+            }
+        }
+        task.resume()
+        }
+        
+    func getNews(_ items: News) -> Promise<[NewsItems]> {
+        return Promise<[NewsItems]> { resolver in
+            var news = items.items
+            let groups = items.groups
+            let profiles = items.profiles
+
+            for i in 0..<news.count {
+                if news[i].sourceID < 0 {
+                    let group = groups.first(where: { $0.id == -news[i].sourceID })
+                    news[i].avatarURL = group?.photo
+                    news[i].creatorName = group?.name
+                } else {
+                    let profile = profiles.first(where: { $0.id == news[i].sourceID })
+                    news[i].avatarURL = profile?.photo
+                    news[i].creatorName = (profile?.firstName ?? "") + (profile?.lastName ?? "")
+                }
+            }
+            resolver.fulfill(news)
+        }
+    }
+
     func getUrl() -> Promise<URL> {
         urlConstructor.path = "/method/friends.get"
         urlConstructor.queryItems = [
@@ -270,6 +229,89 @@ else { return }
         return Promise { resolver in
             do {
                 let response = try JSONDecoder().decode(UserResponse.self, from: data).users.items
+                resolver.fulfill(response)
+            } catch {
+                resolver.reject(AppError.failedToDecode)
+            }
+        }
+    }
+    
+    func getUrlNews() -> Promise<URL> {
+        urlConstructor.path = "/method/newsfeed.get"
+
+        urlConstructor.queryItems = [
+            URLQueryItem(name: "filters", value: "post"),
+            URLQueryItem(name: "count", value: "20"),
+            URLQueryItem(name: "access_token", value: UserSession.instance.token),
+            URLQueryItem(name: "v", value: "5.131"),
+        ]
+
+        return Promise  { resolver in
+            guard let url = urlConstructor.url else {
+                resolver.reject(AppError.notCorrectURL)
+                return
+            }
+            resolver.fulfill(url)
+        }
+    }
+    
+    func getUrlNewsInfinity(_ nextFrom: String) -> Promise<URL> {
+        urlConstructor.path = "/method/newsfeed.get"
+
+        urlConstructor.queryItems = [
+            URLQueryItem(name: "filters", value: "post"),
+            URLQueryItem(name: "start_from", value: nextFrom),
+            URLQueryItem(name: "count", value: "20"),
+            URLQueryItem(name: "access_token", value: UserSession.instance.token),
+            URLQueryItem(name: "v", value: "5.131"),
+        ]
+
+        return Promise  { resolver in
+            guard let url = urlConstructor.url else {
+                resolver.reject(AppError.notCorrectURL)
+                return
+            }
+            resolver.fulfill(url)
+        }
+    }
+
+    func getUrlWithTime(_ timeInterval1970: String) -> Promise<URL> {
+        urlConstructor.path = "/method/newsfeed.get"
+
+        urlConstructor.queryItems = [
+            URLQueryItem(name: "filters", value: "post"),
+            URLQueryItem(name: "start_from", value: "next_from"),
+            URLQueryItem(name: "start_time", value: timeInterval1970),
+            URLQueryItem(name: "count", value: "10"),
+            URLQueryItem(name: "access_token", value: UserSession.instance.token),
+            URLQueryItem(name: "v", value: "5.131"),
+        ]
+
+        return Promise  { resolver in
+            guard let url = urlConstructor.url else {
+                resolver.reject(AppError.notCorrectURL)
+                return
+            }
+            resolver.fulfill(url)
+        }
+    }
+
+    func getDataNews(_ url: URL) -> Promise<Data> {
+        return Promise { resolver in
+            mySession.dataTask(with: url) {  (data, response, error) in
+                guard let data = data else {
+                    resolver.reject(AppError.errorTask)
+                    return
+                }
+                resolver.fulfill(data)
+            }.resume()
+        }
+    }
+
+    func getParsedDataNews(_ data: Data) -> Promise<News> {
+        return Promise  { resolver in
+            do {
+                let response = try JSONDecoder().decode(NewsResponse.self, from: data).news
                 resolver.fulfill(response)
             } catch {
                 resolver.reject(AppError.failedToDecode)

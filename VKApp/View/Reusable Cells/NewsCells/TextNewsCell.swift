@@ -15,6 +15,7 @@ class TextNewsCell: UITableViewCell {
     private var indexPath = IndexPath()
     var isPressed = false
     var source = NewsTableVC()
+    var delegate: ShowMoreDelegate?
     
     @IBAction func pressedShowMore(_ sender: Any) {
         if showMore.titleLabel?.text == "Показать больше..." {
@@ -23,17 +24,15 @@ class TextNewsCell: UITableViewCell {
             isPressed = true
             source.indexPathInTextCell = self.indexPath
             source.isPressed = self.isPressed
-//            delegate?.pressShowMore(at: indexPath)
-//            source.reloadRows(indexPath: indexPath)
+            isPressed.toggle()
         } else {
             textNews.numberOfLines = 4
             showMore.setTitle("Показать больше...", for: .normal)
-            isPressed = true
+            isPressed = false
             source.indexPathInTextCell = self.indexPath
             source.isPressed = self.isPressed
-//                source.reloadRows(indexPath: indexPath)
             }
-        isPressed = false
+                delegate?.pressShowMore(at: indexPath)
     }
     
     func configureTextNews (modelTextNews: NewsItems, indexPath: IndexPath) {

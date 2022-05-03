@@ -18,6 +18,7 @@ class ImagesNewsCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         }
     }
     
+    var height: CGFloat = 1.0
 
     @IBOutlet var CollectionView: UICollectionView!
 
@@ -63,6 +64,7 @@ class ImagesNewsCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     func configureLayout() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width
+        let heightImage = CGFloat(height)
         aspect11.isActive = false
         aspect21.isActive = false
         aspect31.isActive = false
@@ -74,8 +76,8 @@ class ImagesNewsCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         
         switch numberOfItems {
         case 1:
-            aspect11.isActive = true
-            layout.itemSize = CGSize(width: width, height: width)
+            CollectionView.frame.size.height = width * heightImage
+            layout.itemSize = CGSize(width: width, height: width * heightImage)
         case 2:
             aspect21.isActive = true
             layout.itemSize = CGSize(width: width / numberOfItems, height: width / numberOfItems)
@@ -98,7 +100,8 @@ class ImagesNewsCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         CollectionView.reloadData()
     }
     
-    func configure(images: [String?]) {
+    func configure(images: [String?], aspectRatio: CGFloat) {
         self.image = images
+        self.height = aspectRatio
     }
 }

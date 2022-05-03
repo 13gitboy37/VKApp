@@ -33,4 +33,8 @@ class HeaderCell: UITableViewCell {
         self.newsAvatarImage.kf.setImage(with: URL(string: "\(modelHeader.photo)"))
         self.newsName.text = modelHeader.lastName + " " + modelHeader.firstName
     }
+    func configureHeader(modelHeader: NewsItems) {
+        self.newsAvatarImage.kf.setImage(with: URL(string: "\(modelHeader.avatarURL ?? "")"))
+        self.newsName.text = modelHeader.creatorName
+    }
 }

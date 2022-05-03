@@ -18,15 +18,16 @@ final class FriendsTableVC: UITableViewController {
    private var sortedUsers = [RealmUser?]()
     
    private func SortFriend() {
-       for user in self.users! where user.lastName != "" {
+       guard let users = self.users else { return }
+       for user in users where user.lastName != "" {
             self.friendsDictionary.removeAll()
             self.sortedUsers = self.users!.sorted()
 
             for friend in self.sortedUsers.indices {
                 let friendKey = String(self.sortedUsers[friend]?.lastName.prefix(1) ?? "")
             if var friendValues = self.friendsDictionary[friendKey] {
-                if self.sortedUsers[friend]!.firstName != "DELETED" {
-                friendValues.append(self.sortedUsers[friend]!)
+                if self.sortedUsers[friend]?.firstName != "DELETED" {
+                friendValues.append(self.sortedUsers[friend])
                 self.friendsDictionary[friendKey] = friendValues
                 }
             } else {

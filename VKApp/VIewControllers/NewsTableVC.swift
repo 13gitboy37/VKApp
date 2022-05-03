@@ -9,30 +9,19 @@ import UIKit
 
 class NewsTableVC: UITableViewController {
    
-    var numRowInSection: Int = 0
-    var groupsNews = [NewsGroups]() {
-        didSet{
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    var profilesNews = [NewsProfiles]() {
-        didSet{
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    var newsJSON = [NewsItems]() {
-        didSet{
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
+    private var numRowInSection: Int = 0
+
+    private var newsJSON = [NewsItems]()
     
     var indexPathInTextCell = IndexPath()
+    private let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
+        return dateFormatter
+    }()
+    private var lastDateString: String?
+    var nextFrom = ""
+    var isLoading = false
     
     var isPressed = false {
         didSet{
@@ -48,17 +37,57 @@ class NewsTableVC: UITableViewController {
         case footerCell = 3
     }
     
-    let cellSpacingHeight: CGFloat = 0
+   private let cellSpacingHeight: CGFloat = 0
     
     func reloadRows(indexPath: IndexPath) {
-//        DispatchQueue.main.async {
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//            self.tableView.reloadData()
-//        }
+        self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
+    fileprivate func setupRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
+        tableView.refreshControl?.tintColor = .blue
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+            }
+    
+        @objc func refreshNews() {
+            guard let date = lastDateString else {
+                tableView.refreshControl?.endRefreshing()
+                return
+            }
+            networkService.getUrlWithTime(date)
+                .get({ url in
+                    print(url)
+                })
+                .then(on: DispatchQueue.global(), networkService.getDataNews(_:))
+                .then(on: DispatchQueue.global(), networkService.getParsedDataNews(_:))
+                .then(on: .global(), networkService.getNews(_:))
+                .done(on: .main) { [weak self] news in
+                    guard let self = self else { return }
+                    print(news.count)
+                        if news[0].date != self.newsJSON[0].date &&
+                           news[0].creatorName != self.newsJSON[0].creatorName &&
+                            news[0].text != self.newsJSON[0].text {
+                        let indexSet = IndexSet(integersIn: self.newsJSON.count..<self.newsJSON.count + news.count)
+                        self.newsJSON.insert(contentsOf: news, at: 0)
+// плохо отрабатывает insertSection, вставляет секцию с предыдущей новостью
+//                        self.tableView.insertSections(indexSet, with: .automatic)
+                        self.tableView.reloadData()
+                        self.lastDateString = String(news.first?.date ?? 0)
+                        }
+                }.ensure { [weak self] in
+                    self?.tableView.refreshControl?.endRefreshing()
+                }.catch { error in
+                    print(error)
+                }
+        }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.prefetchDataSource = self
+        
         tableView.register(UINib(
             nibName: "HeaderCell",
             bundle: nil),
@@ -78,52 +107,33 @@ class NewsTableVC: UITableViewController {
             nibName: "ImagesNewsCell",
             bundle: nil),
                            forCellReuseIdentifier: "imagesNewsCell")
-        
-            self.networkService.getNews() { [weak self] result in
-                switch result {
-                case .success(let news):
-                    DispatchQueue.main.async {
-                        self?.newsJSON = news
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
-    
-            self.networkService.getNewsProfiles() { [weak self] result in
-            switch result {
-            case .success(let profiles):
-                DispatchQueue.main.async {
-                    self?.profilesNews = profiles
-                }
-            case .failure(let error):
-                print(error)
-                }
-            }
-    
-            self.networkService.getNewsGroups() { [weak self] result in
-                switch result {
-                case .success(let groups):
-                    DispatchQueue.main.async {
-                        self?.groupsNews = groups
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
         }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupRefreshControl()
+        networkService.getUrlNews()
+            .get ({ url in
+                print(url)
+            })
+            .then(on: DispatchQueue.global(), networkService.getDataNews(_:))
+            .then(on: .global(), networkService.getParsedDataNews(_:))
+            .get({
+                self.nextFrom = $0.nextFrom ?? ""
+            })
+            .then(on: .global(), networkService.getNews(_:))
+            .done(on: .main) { [weak self] news in
+                self?.newsJSON = news
+                self?.tableView.reloadData()
+                self?.lastDateString = String(news.first?.date ?? 0)
+            } .catch { error in
+                print(error)
+            }
+    }
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if self.newsJSON[section].attachments?.first?.photo != nil && self.newsJSON[section].text != "" {
-            self.numRowInSection = 4
-            return numRowInSection
-        } else {
-            self.numRowInSection = 3
-            return numRowInSection
-        }
-}
+        4
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return newsJSON.count
@@ -133,80 +143,71 @@ class NewsTableVC: UITableViewController {
          cellSpacingHeight
      }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case typeOfCell.headerCell.rawValue:
+            return UITableView.automaticDimension
+        case typeOfCell.textCell.rawValue:
+            if newsJSON[indexPath.section].text == "" {
+            return 0
+        }
+            return UITableView.automaticDimension
+        case typeOfCell.imageCell.rawValue:
+            guard let url = newsJSON[indexPath.section].photosURL,
+                  !url.isEmpty else { return 0 }
+            if url.count == 1 {
+            let width = view.frame.width
+            let post = newsJSON[indexPath.section]
+            let cellHeight = width * post.aspectRatio
+            return cellHeight
+            } else {
+                return UITableView.automaticDimension
+            }
+        case typeOfCell.footerCell.rawValue:
+            return UITableView.automaticDimension
+        default: return 0
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let currentNews = newsJSON[indexPath.section]
-        
-        var images = [String?]()
-        images.removeAll()
-        
-        currentNews.attachments?.forEach({ index in
-            if index.photo != nil {
-                guard let currentImage = index.photo?.sizes.last?.url else {return}
-                images.append(currentImage)
-            }
-        })
         
         let backgroundColorCell = UIColor.gray.withAlphaComponent(0.1)
 
         switch indexPath.row {
             
         case typeOfCell.headerCell.rawValue:
-            guard
-                let cellHeader = tableView.dequeueReusableCell(withIdentifier: "headerCell", for: indexPath) as? HeaderCell
+            guard let cellHeader = tableView.dequeueReusableCell(withIdentifier: "headerCell", for: indexPath) as? HeaderCell
          else { return UITableViewCell()}
             
-            if currentNews.sourceID > 0 {
-                for newsProfile in self.profilesNews where currentNews.sourceID == newsProfile.id {
-                    cellHeader.configureHeaderForProfiles(modelHeader: newsProfile)
-                }
-            } else {
-                for newsGroup in self.groupsNews where abs(currentNews.sourceID) == newsGroup.id {
-                    cellHeader.configureHeaderForGroups(modelHeader: newsGroup)
-                }
-            }
-            
+            cellHeader.configureHeader(modelHeader: currentNews)
             cellHeader.selectionStyle = UITableViewCell.SelectionStyle.none
             cellHeader.backgroundColor = backgroundColorCell
-            
             return cellHeader
             
         case typeOfCell.textCell.rawValue:
-            
-            if currentNews.text != "" {
-                guard
-                    let cellTextNews = tableView.dequeueReusableCell(withIdentifier: "textNewsCell", for: indexPath) as? TextNewsCell
+                guard let cellTextNews = tableView.dequeueReusableCell(withIdentifier: "textNewsCell", for: indexPath) as? TextNewsCell
                 else { return UITableViewCell()}
                 
             cellTextNews.configureTextNews(modelTextNews: currentNews, indexPath: indexPath)
+                cellTextNews.delegate = self
             cellTextNews.backgroundColor = backgroundColorCell
             cellTextNews.selectionStyle = UITableViewCell.SelectionStyle.none
             
         return cellTextNews
-                
-            } else {
-                fallthrough
-            }
+            
             
         case typeOfCell.imageCell.rawValue:
-            
-            if indexPath.row == 2 && currentNews.text == "" {
-                fallthrough
-            } else if images.count != 0 {
-
                 guard
                     let cellImageNews = tableView.dequeueReusableCell(withIdentifier: "imagesNewsCell", for: indexPath) as? ImagesNewsCell
                 else { return UITableViewCell() }
 
-                cellImageNews.configure(images: images)
+            cellImageNews.configure(images: currentNews.photosURL ?? [""], aspectRatio: currentNews.aspectRatio)
                                     
         cellImageNews.selectionStyle = UITableViewCell.SelectionStyle.none
         cellImageNews.backgroundColor = backgroundColorCell
         return cellImageNews
-                
-            } else {
-                fallthrough
-            }
 
         case typeOfCell.footerCell.rawValue:
             guard
@@ -223,18 +224,42 @@ class NewsTableVC: UITableViewController {
             return UITableViewCell()
         }
     }
-    
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print(1)
-//        tableView.reloadRows(at: [indexPath], with: .none)
-//    }
 }
 
 extension NewsTableVC: ShowMoreDelegate {
     func pressShowMore(at indexPath: IndexPath) {
-        self.tableView.reloadRows(at: [indexPath], with: .fade)
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 }
-/*
- VKApp[21234:559189] [TableView] Warning once only: UITableView was told to layout its visible cells and other contents without being in the view hierarchy (the table view or one of its superviews has not been added to a window). This may cause bugs by forcing views inside the table view to load and perform layout without accurate information (e.g. table view bounds, trait collection, layout margins, safe area insets, etc), and will also cause unnecessary performance overhead due to extra layout passes. Make a symbolic breakpoint at UITableViewAlertForLayoutOutsideViewHierarchy to catch this in the debugger and see what caused this to occur, so you can avoid this action altogether if possible, or defer it until the table view has been added to a window. Table view: <UITableView: 0x13301b200; frame = (0 0; 0 0); clipsToBounds = YES; autoresize = W+H; gestureRecognizers = <NSArray: 0x60000169eb20>; layer = <CALayer: 0x6000018ca180>; contentOffset: {0, 0}; contentSize: {0, 1496}; adjustedContentInset: {0, 0, 0, 0}; dataSource: <_UIFilteredDataSource: 0x6000016a4ea0>>
- */
+
+extension NewsTableVC: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let maxSection = indexPaths.map({ $0.section }).max() else { return }
+        
+        if maxSection > newsJSON.count - 3,
+           !isLoading {
+            isLoading = true
+            networkService.getUrlNewsInfinity(nextFrom)
+                .get ({ url in
+                    print(url)
+                })
+                .then(on: .global(), networkService.getDataNews(_:))
+                .then(on: .global(), networkService.getParsedDataNews(_:))
+                .get({
+                    self.nextFrom = $0.nextFrom ?? ""
+                })
+                .then(on: .global(), networkService.getNews(_:))
+                .done(on: .main) { [weak self] news in
+                    guard let self = self else { return }
+                    let indexSet = IndexSet(integersIn: self.newsJSON.count..<self.newsJSON.count + news.count)
+                    self.newsJSON.append(contentsOf: news)
+                    self.tableView.insertSections(indexSet, with: .automatic)
+                }.ensure {
+                    self.isLoading = false
+                } .catch { error in
+                    print(error)
+                }
+        }
+    }
+}

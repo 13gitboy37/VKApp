@@ -19,6 +19,7 @@ struct News {
     let items: [NewsItems]
     let groups: [NewsGroups]
     let profiles: [NewsProfiles]
+    let nextFrom: String?
 }
 
 extension News: Codable {
@@ -26,5 +27,6 @@ extension News: Codable {
             case items = "items"
             case groups = "groups"
             case profiles = "profiles"
+            case nextFrom = "next_from"
     }
 }
