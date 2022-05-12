@@ -19,20 +19,6 @@ class HeaderCell: UITableViewCell {
         }
     }
     
-    func configureHeader(newsAvatar: String, newsGroup: String) {
-        self.newsAvatarImage.kf.setImage(with: URL(string: "\(newsAvatar)"))
-        self.newsName.text = newsGroup
-    }
-    
-    func configureHeaderForGroups(modelHeader: NewsGroups) {
-        self.newsAvatarImage.kf.setImage(with: URL(string: "\(modelHeader.photo)"))
-        self.newsName.text = modelHeader.name
-    }
-    
-    func configureHeaderForProfiles(modelHeader: NewsProfiles) {
-        self.newsAvatarImage.kf.setImage(with: URL(string: "\(modelHeader.photo)"))
-        self.newsName.text = modelHeader.lastName + " " + modelHeader.firstName
-    }
     func configureHeader(modelHeader: NewsItems) {
         self.newsAvatarImage.kf.setImage(with: URL(string: "\(modelHeader.avatarURL ?? "")"))
         self.newsName.text = modelHeader.creatorName

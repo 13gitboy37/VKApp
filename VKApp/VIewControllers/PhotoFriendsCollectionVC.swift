@@ -49,7 +49,7 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             let realmPhoto = photos.map { RealmPhoto(ownerID: self?.photoFriends?.id ?? 0, photos: $0) }
                 do {
                 try RealmService.save(items: realmPhoto)
-                    self?.photos = try RealmService.load(typeOf: RealmPhoto.self).filter("ownerID == %@", self?.photoFriends?.id)
+                    self?.photos = try RealmService.load(typeOf: RealmPhoto.self).filter("ownerID == %@", self?.photoFriends?.id ?? "")
                 } catch {
                     print(error)
                 }

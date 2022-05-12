@@ -70,7 +70,7 @@ final class GlobalGroupsTableVC: UITableViewController {
             groups?.forEach({ deleteGroup in
                 do {
                     let realm = try Realm()
-                    let currentDeleteGroup = try realm.objects(RealmSearchGroup.self).filter("id == %@", deleteGroup.id)
+                    let currentDeleteGroup = realm.objects(RealmSearchGroup.self).filter("id == %@", deleteGroup.id)
                     try RealmService.delete(object: currentDeleteGroup)
                 } catch {
                     print(error)
@@ -79,7 +79,7 @@ final class GlobalGroupsTableVC: UITableViewController {
             timer.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
                 self.networkService.getSearchGroups(searchText: searchText.lowercased())
-                {[weak self] result in
+                { [weak self] result in
                     switch result {
                     case .success(let groups):
                         let realmGroup = groups.map { RealmSearchGroup(seatchGroupName: searchText, groups: $0)}

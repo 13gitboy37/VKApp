@@ -11,7 +11,7 @@ import Alamofire
 
 final class PersonalGroupsTableVC: UITableViewController {
     
-    private  var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self)
+    private var groups: Results<RealmGroup>? = try? RealmService.load(typeOf: RealmGroup.self)
     private var groupsToken: NotificationToken?
 
    @IBAction func addGroup(segue: UIStoryboardSegue) {
@@ -63,7 +63,6 @@ final class PersonalGroupsTableVC: UITableViewController {
         operationQueue.addOperation(getData)
         operationQueue.addOperation(parseData)
         OperationQueue.main.addOperation(realmSaveGroups)
-        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -110,7 +109,6 @@ final class PersonalGroupsTableVC: UITableViewController {
         cell.configure(model: currentGroup)
     }
 
-    // Override to support editing the table view.
     override func tableView(
         _ tableView: UITableView,
         commit editingStyle: UITableViewCell.EditingStyle,
@@ -119,7 +117,7 @@ final class PersonalGroupsTableVC: UITableViewController {
             let deleteGroup = self.groups![indexPath.row]
         do {
             let realm = try Realm()
-            let currentDeleteGroup = try realm.objects(RealmGroup.self).filter("id == %@", deleteGroup.id)
+            let currentDeleteGroup = realm.objects(RealmGroup.self).filter("id == %@", deleteGroup.id)
             try? RealmService.delete(object: currentDeleteGroup)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
         } catch {

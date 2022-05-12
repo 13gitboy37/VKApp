@@ -189,7 +189,7 @@ else { return }
                 } else {
                     let profile = profiles.first(where: { $0.id == news[i].sourceID })
                     news[i].avatarURL = profile?.photo
-                    news[i].creatorName = (profile?.firstName ?? "") + (profile?.lastName ?? "")
+                    news[i].creatorName = (profile?.firstName ?? "") + " " + (profile?.lastName ?? "")
                 }
             }
             resolver.fulfill(news)

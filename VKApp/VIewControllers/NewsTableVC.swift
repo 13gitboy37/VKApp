@@ -14,14 +14,15 @@ class NewsTableVC: UITableViewController {
     private var newsJSON = [NewsItems]()
     
     var indexPathInTextCell = IndexPath()
+    
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
         return dateFormatter
     }()
     private var lastDateString: String?
-    var nextFrom = ""
-    var isLoading = false
+    private var nextFrom = ""
+    private var isLoading = false
     
     var isPressed = false {
         didSet{
@@ -39,49 +40,6 @@ class NewsTableVC: UITableViewController {
     
    private let cellSpacingHeight: CGFloat = 0
     
-    func reloadRows(indexPath: IndexPath) {
-        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
-    fileprivate func setupRefreshControl() {
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
-        tableView.refreshControl?.tintColor = .blue
-        tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
-            }
-    
-        @objc func refreshNews() {
-            guard let date = lastDateString else {
-                tableView.refreshControl?.endRefreshing()
-                return
-            }
-            networkService.getUrlWithTime(date)
-                .get({ url in
-                    print(url)
-                })
-                .then(on: DispatchQueue.global(), networkService.getDataNews(_:))
-                .then(on: DispatchQueue.global(), networkService.getParsedDataNews(_:))
-                .then(on: .global(), networkService.getNews(_:))
-                .done(on: .main) { [weak self] news in
-                    guard let self = self else { return }
-                    print(news.count)
-                        if news[0].date != self.newsJSON[0].date &&
-                           news[0].creatorName != self.newsJSON[0].creatorName &&
-                            news[0].text != self.newsJSON[0].text {
-                        let indexSet = IndexSet(integersIn: self.newsJSON.count..<self.newsJSON.count + news.count)
-                        self.newsJSON.insert(contentsOf: news, at: 0)
-// плохо отрабатывает insertSection, вставляет секцию с предыдущей новостью
-//                        self.tableView.insertSections(indexSet, with: .automatic)
-                        self.tableView.reloadData()
-                        self.lastDateString = String(news.first?.date ?? 0)
-                        }
-                }.ensure { [weak self] in
-                    self?.tableView.refreshControl?.endRefreshing()
-                }.catch { error in
-                    print(error)
-                }
-        }
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -108,6 +66,52 @@ class NewsTableVC: UITableViewController {
             bundle: nil),
                            forCellReuseIdentifier: "imagesNewsCell")
         }
+    
+    private func reloadRows(indexPath: IndexPath) {
+         self.tableView.reloadRows(at: [indexPath], with: .automatic)
+     }
+    
+    fileprivate func setupRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.attributedTitle = NSAttributedString(string: "Обновление...")
+        tableView.refreshControl?.tintColor = .blue
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+            }
+    
+    @objc func refreshNews() {
+        guard let date = lastDateString else {
+            tableView.refreshControl?.endRefreshing()
+            return
+        }
+        networkService.getUrlWithTime(date)
+            .get({ url in
+                print(url)
+            })
+            .then(on: DispatchQueue.global(), networkService.getDataNews(_:))
+            .then(on: DispatchQueue.global(), networkService.getParsedDataNews(_:))
+            .then(on: .global(), networkService.getNews(_:))
+            .done(on: .main) { [weak self] news in
+                guard let self = self else { return }
+                print(news.count)
+                    if news[0].date != self.newsJSON[0].date &&
+                       news[0].creatorName != self.newsJSON[0].creatorName &&
+                        news[0].text != self.newsJSON[0].text {
+                    self.newsJSON.insert(contentsOf: news, at: 0)
+                    self.tableView.reloadData()
+                    self.lastDateString = String(news.first?.date ?? 0)
+                    }
+            }.ensure { [weak self] in
+                self?.tableView.refreshControl?.endRefreshing()
+            }.catch { error in
+                print(error)
+            }
+    }
+    
+    private func cellStyle(cell: UITableViewCell) {
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.backgroundColor = UIColor.systemGray6
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupRefreshControl()
@@ -172,8 +176,6 @@ class NewsTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let currentNews = newsJSON[indexPath.section]
-        
-        let backgroundColorCell = UIColor.gray.withAlphaComponent(0.1)
 
         switch indexPath.row {
             
@@ -182,8 +184,7 @@ class NewsTableVC: UITableViewController {
          else { return UITableViewCell()}
             
             cellHeader.configureHeader(modelHeader: currentNews)
-            cellHeader.selectionStyle = UITableViewCell.SelectionStyle.none
-            cellHeader.backgroundColor = backgroundColorCell
+            cellStyle(cell: cellHeader)
             return cellHeader
             
         case typeOfCell.textCell.rawValue:
@@ -191,12 +192,10 @@ class NewsTableVC: UITableViewController {
                 else { return UITableViewCell()}
                 
             cellTextNews.configureTextNews(modelTextNews: currentNews, indexPath: indexPath)
-                cellTextNews.delegate = self
-            cellTextNews.backgroundColor = backgroundColorCell
-            cellTextNews.selectionStyle = UITableViewCell.SelectionStyle.none
+            cellTextNews.delegate = self
+            cellStyle(cell: cellTextNews)
             
         return cellTextNews
-            
             
         case typeOfCell.imageCell.rawValue:
                 guard
@@ -204,9 +203,7 @@ class NewsTableVC: UITableViewController {
                 else { return UITableViewCell() }
 
             cellImageNews.configure(images: currentNews.photosURL ?? [""], aspectRatio: currentNews.aspectRatio)
-                                    
-        cellImageNews.selectionStyle = UITableViewCell.SelectionStyle.none
-        cellImageNews.backgroundColor = backgroundColorCell
+            cellStyle(cell: cellImageNews)
         return cellImageNews
 
         case typeOfCell.footerCell.rawValue:
@@ -215,8 +212,7 @@ class NewsTableVC: UITableViewController {
             else { return UITableViewCell()}
             
             cellFooter.configureFooter(modelNumOfViews: currentNews)
-            cellFooter.selectionStyle = UITableViewCell.SelectionStyle.none
-            cellFooter.backgroundColor = backgroundColorCell
+            cellStyle(cell: cellFooter)
             
         return cellFooter
             

@@ -40,9 +40,9 @@ class FullScreenPhotoVC: UIViewController {
     var indexPath = Int()
     var fullScreenPhotos = [String]()
     
-    var leftIndex = Int()
-    var centralIndex = Int()
-    var rightIndex = Int()
+   private var leftIndex = Int()
+   private var centralIndex = Int()
+   private var rightIndex = Int()
     
     
     @IBOutlet var leftImageView: UIImageView!
