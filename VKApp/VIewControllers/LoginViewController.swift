@@ -9,20 +9,13 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    
-    
     @IBOutlet var usernameTextField: UITextField!
     
     @IBOutlet var passwordTextField: UITextField!
     
     @IBOutlet var scrollView: UIScrollView!
     
-    @IBAction func loginButtonPressed(_ sender: Any) {
-     //   print(usernameTextField.text)
-     //   print(passwordTextField.text)
-        
-        
-    }
+    @IBAction func loginButtonPressed(_ sender: Any) { }
     
     @IBAction func unwindToMain(unwindSegue: UIStoryboardSegue) { }
     
@@ -33,20 +26,6 @@ class LoginViewController: UIViewController {
                 UITapGestureRecognizer(
                     target: self,
                     action: #selector(hideKeyboard)))
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +55,6 @@ class LoginViewController: UIViewController {
             object: nil)
         navigationController?.navigationBar.isHidden = false
     }
-    
     
     @objc func keyboardWasShown(notification: Notification) {
         let info = notification.userInfo! as NSDictionary
@@ -128,9 +106,9 @@ class LoginViewController: UIViewController {
             }
         default:
             return false
+        }
     }
-    }
-    
+
     private func checkUser() -> Bool {
         usernameTextField.text == "1" && passwordTextField.text == "1"
     }
