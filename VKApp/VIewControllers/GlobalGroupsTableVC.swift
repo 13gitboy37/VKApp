@@ -18,6 +18,9 @@ final class GlobalGroupsTableVC: UITableViewController {
             }
         }
     }
+    
+    private let viewModelFactory = GroupViewModelFactory()
+    private var viewModels: [GroupViewModel] = []
        
     private var timer = Timer()
     var searchGroups:[String]!
@@ -33,7 +36,8 @@ final class GlobalGroupsTableVC: UITableViewController {
     }
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      groups?.count ?? 0
+//      groups?.count ?? 0
+        viewModels.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -45,11 +49,9 @@ final class GlobalGroupsTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard
-            let currentGroup = groups?[indexPath.row],
-            let cell = cell as? GroupsCell else { return }
+        guard let cell = cell as? GroupsCell else { return }
         
-        cell.configure(model: currentGroup)
+        cell.configure(model: viewModels[indexPath.row])
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -83,6 +85,7 @@ final class GlobalGroupsTableVC: UITableViewController {
                     switch result {
                     case .success(let groups):
                         let realmGroup = groups.map { RealmSearchGroup(seatchGroupName: searchText, groups: $0)}
+                        self?.viewModels = self?.viewModelFactory.constructViewModels(from: realmGroup) ?? []
                         DispatchQueue.main.async {
                             do {
                             try RealmService.save(items: realmGroup)

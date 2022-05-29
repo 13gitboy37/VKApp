@@ -16,7 +16,6 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
     @IBAction func pressedLike(_ sender: Any) {
         if buttonLike.titleLabel?.text == "0" {
         buttonLike.setImage(UIImage(systemName: "heart.fill"), for: .normal)
- //           buttonLike.setTitle("1", for: .normal)
             animateLikeButton()
         }
             else {
@@ -28,14 +27,6 @@ final class PhotoFriendsCollectionCell: UICollectionViewCell {
     func configure(photoFr: UIImage?) {
         self.photoFriend.image = photoFr
         
-    }
-    
-    func configure(model: PhotosItems) {
-        self.photoFriend.kf.setImage(with: URL(string: model.sizes.last!.urlPhoto), placeholder: UIImage(systemName: "person.fill"))
-    }
-    
-    func configure(model: RealmPhoto) {
-        self.photoFriend.kf.setImage(with: URL(string: model.urlPhoto), placeholder: UIImage(systemName: "person.fill"))
     }
     
     func animateLikeButton() {
