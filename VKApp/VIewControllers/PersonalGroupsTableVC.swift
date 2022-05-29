@@ -21,7 +21,8 @@ final class PersonalGroupsTableVC: UITableViewController {
             let groupIndexPath = allGroupsController.tableView.indexPathForSelectedRow
         else { return }
        do {
-           let currentGroup = allGroupsController.groups![groupIndexPath.row]
+           guard let currentGroup = allGroupsController.groups?[groupIndexPath.row]
+            else { return }
            let realm = try Realm()
            realm.beginWrite()
                let currentAddGroup = RealmGroup()
@@ -114,7 +115,7 @@ final class PersonalGroupsTableVC: UITableViewController {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let deleteGroup = self.groups![indexPath.row]
+            guard let deleteGroup = self.groups?[indexPath.row] else { return }
         do {
             let realm = try Realm()
             let currentDeleteGroup = realm.objects(RealmGroup.self).filter("id == %@", deleteGroup.id)

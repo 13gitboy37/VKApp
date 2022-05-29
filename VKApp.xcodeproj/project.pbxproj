@@ -62,6 +62,8 @@
 		AFBAA37F27E215CC00AA971A /* RealmPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA37E27E215CC00AA971A /* RealmPhoto.swift */; };
 		AFBAA38127E2318E00AA971A /* RealmSearchGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA38027E2318E00AA971A /* RealmSearchGroup.swift */; };
 		AFBE43EA281DB55A003EB7BF /* ShowMoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBE43E9281DB55A003EB7BF /* ShowMoreDelegate.swift */; };
+		AFD05F0A284298E50034796C /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD05F09284298E50034796C /* UIColorExtension.swift */; };
+		AFD05F1028436A030034796C /* GroupsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD05F0F28436A030034796C /* GroupsViewModel.swift */; };
 		AFD12BAF27C3BF24008DB361 /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD12BAE27C3BF24008DB361 /* Groups.swift */; };
 		AFD12BB127C3BF59008DB361 /* GroupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD12BB027C3BF59008DB361 /* GroupsResponse.swift */; };
 		AFD12BB327C3BF66008DB361 /* GroupsItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD12BB227C3BF66008DB361 /* GroupsItems.swift */; };
@@ -139,6 +141,8 @@
 		AFBAA37E27E215CC00AA971A /* RealmPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPhoto.swift; sourceTree = "<group>"; };
 		AFBAA38027E2318E00AA971A /* RealmSearchGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSearchGroup.swift; sourceTree = "<group>"; };
 		AFBE43E9281DB55A003EB7BF /* ShowMoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoreDelegate.swift; sourceTree = "<group>"; };
+		AFD05F09284298E50034796C /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		AFD05F0F28436A030034796C /* GroupsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModel.swift; sourceTree = "<group>"; };
 		AFD12BAE27C3BF24008DB361 /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
 		AFD12BB027C3BF59008DB361 /* GroupsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsResponse.swift; sourceTree = "<group>"; };
 		AFD12BB227C3BF66008DB361 /* GroupsItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsItems.swift; sourceTree = "<group>"; };
@@ -247,8 +251,10 @@
 		AF81627627A82C17000881E5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				AFD05F0E284369E40034796C /* Factory */,
 				AF81627727A82C43000881E5 /* SetAnchorPoint.swift */,
 				AFBE43E9281DB55A003EB7BF /* ShowMoreDelegate.swift */,
+				AFD05F09284298E50034796C /* UIColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -336,6 +342,14 @@
 				AF36C6CB2801D0160074EBB0 /* RealmNewsPhoto.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		AFD05F0E284369E40034796C /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				AFD05F0F28436A030034796C /* GroupsViewModel.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		AFD47BF327C133270001E042 /* User */ = {
@@ -609,6 +623,7 @@
 				AF90C1B728082F8600403D1D /* RealmLoadGroups.swift in Sources */,
 				AFBAA37B27E0D3F400AA971A /* RealmGroup.swift in Sources */,
 				AF2E99502798833A00021F75 /* TextNewsCell.swift in Sources */,
+				AFD05F0A284298E50034796C /* UIColorExtension.swift in Sources */,
 				AFE2B6072800576D00CCC19D /* NewsImages.swift in Sources */,
 				AFA274EC27CA75E90085CE5C /* PhotosSizes.swift in Sources */,
 				AF5B67B82773B8E1008A52F2 /* PhotoFriendsCollectionVC.swift in Sources */,
@@ -618,6 +633,7 @@
 				AFBAA37627DF6BE800AA971A /* RealmService.swift in Sources */,
 				AF1F8E8027763CDD0054DB80 /* FriendsCell.swift in Sources */,
 				AFA274EA27CA29240085CE5C /* PhotosItems.swift in Sources */,
+				AFD05F1028436A030034796C /* GroupsViewModel.swift in Sources */,
 				AF90C1B12807087100403D1D /* GetDataOperation.swift in Sources */,
 				AFE3C11B27BE664F00DE57CE /* NetworkService.swift in Sources */,
 				AF9E538A2778A74000A3851B /* User.swift in Sources */,

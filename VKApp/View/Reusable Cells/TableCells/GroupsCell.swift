@@ -18,12 +18,6 @@ final class GroupsCell: UITableViewCell {
         }
     }
     
-    func configure(
-        emblem: UIImage,
-        name: String) {
-            self.groupsEmblem.image = emblem
-            self.groupsName.text = name
-        }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         animateImage()
         super.touchesBegan(touches, with: event)
@@ -42,15 +36,15 @@ final class GroupsCell: UITableViewCell {
         
     }
     
-    func configure(model: GroupsItems) {
-        self.groupsName.text = model.name
-        self.groupsEmblem.kf.setImage(with: URL(string: model.groupsPhoto), placeholder: UIImage(systemName: "rectangle.3.group.bubble.left"))
-    }
-    
     // Configure for personal groups
     func configure(model: RealmGroup) {
         self.groupsName.text = model.name
         self.groupsEmblem.kf.setImage(with: URL(string: model.groupsPhoto))
+    }
+    
+    func configure(model: GroupViewModel) {
+        self.groupsName.text = model.groupText
+        self.groupsEmblem.kf.setImage(with: URL(string: model.iconGroupImage))
     }
     
     // Configure for search groups

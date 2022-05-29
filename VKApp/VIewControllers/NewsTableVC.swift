@@ -109,7 +109,7 @@ class NewsTableVC: UITableViewController {
     
     private func cellStyle(cell: UITableViewCell) {
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.backgroundColor = UIColor.systemGray6
+        cell.backgroundColor = .brandGrey
     }
     
     override func viewWillAppear(_ animated: Bool) {

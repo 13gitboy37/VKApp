@@ -163,7 +163,7 @@ final class FriendsTableVC: UITableViewController {
     
   override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-      header.tintColor = .systemGray6
+      header.tintColor = .brandGrey
     }
 }
 
