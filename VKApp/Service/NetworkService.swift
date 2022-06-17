@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 import PromiseKit
 
-final class NetworkService {
+final class NetworkService: NetworkServiceInterface {
 
     lazy var mySession = URLSession(configuration: configuration)
     let configuration: URLSessionConfiguration = {
@@ -128,7 +128,6 @@ else { return }
                     URLQueryItem(name: "access_token", value: UserSession.instance.token),
                     URLQueryItem(name: "v", value: "5.131"),
                     URLQueryItem(name: "filters", value: "post"),
-    //            URLQueryItem(name: "start_from", value: "next_from"),
                     URLQueryItem(name: "max_photos", value: "9"),
                     URLQueryItem(name: "count", value: "10")
                 ]
@@ -317,5 +316,31 @@ else { return }
                 resolver.reject(AppError.failedToDecode)
             }
         }
+    }
+}
+
+//MARK: - Protocol for Proxy
+protocol NetworkServiceInterface {
+    func getPhotos(ownerID: Int?, completion: @escaping (Swift.Result<[PhotosItems],Error>) -> Void)
+    
+    func getSearchGroups(searchText: String, completion: @escaping (Swift.Result<[GroupsItems],Error>) -> Void)
+}
+
+//MARK: - Class Proxy
+
+class NetworkServiceProxy: NetworkServiceInterface {
+    let networkService: NetworkService
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
+    func getPhotos(ownerID: Int?, completion: @escaping (Swift.Result<[PhotosItems], Error>) -> Void) {
+        self.networkService.getPhotos(ownerID: ownerID, completion: completion)
+        print("used Network Service method getPhotos")
+    }
+    
+    func getSearchGroups(searchText: String, completion: @escaping (Swift.Result<[GroupsItems],Error>) -> Void) {
+        self.networkService.getSearchGroups(searchText: searchText, completion: completion)
+        print("used Network Service method getSearchGroup")
     }
 }

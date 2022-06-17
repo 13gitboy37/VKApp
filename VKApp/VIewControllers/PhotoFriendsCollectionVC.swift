@@ -42,7 +42,9 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             let photosFriends = photoFriends else { return }
         self.ownerID = photosFriends.id
         
-        networkService.getPhotos(ownerID: photoFriends?.id) { [weak self] result in
+        let networkServiceProxy = NetworkServiceProxy(networkService: networkService)
+        
+        networkServiceProxy.getPhotos(ownerID: photoFriends?.id) { [weak self] result in
         switch result {
             case .success(let photos):
             DispatchQueue.main.async {
