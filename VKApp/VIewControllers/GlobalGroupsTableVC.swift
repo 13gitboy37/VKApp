@@ -66,9 +66,9 @@ final class GlobalGroupsTableVC: UITableViewController {
 
 //MARK: Realese UISearchBar
  extension GlobalGroupsTableVC: UISearchBarDelegate {
-   
+     
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-      
+      let networkServiceProxy = NetworkServiceProxy(networkService: networkService)
             groups?.forEach({ deleteGroup in
                 do {
                     let realm = try Realm()
@@ -80,7 +80,7 @@ final class GlobalGroupsTableVC: UITableViewController {
             })
             timer.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
-                self.networkService.getSearchGroups(searchText: searchText.lowercased())
+                networkServiceProxy.getSearchGroups(searchText: searchText.lowercased())
                 { [weak self] result in
                     switch result {
                     case .success(let groups):
