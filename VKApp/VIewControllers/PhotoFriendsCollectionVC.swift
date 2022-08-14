@@ -119,6 +119,20 @@ class PhotoFriendsCollectionVC: UICollectionViewController {
             at: indexPath,
             animated: true)}
              self.performSegue(withIdentifier: "goToFullPhoto", sender: nil)
-         } 
+         }
 }
     
+extension PhotoFriendsCollectionVC: UICollectionViewDelegateFlowLayout {
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: (UIScreen.main.bounds.width / 3) - 6, height: (UIScreen.main.bounds.width / 3))
+    }
+    
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+    
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 3, bottom: 3, right: 0)
+    }
+}

@@ -36,7 +36,6 @@ final class GlobalGroupsTableVC: UITableViewController {
     }
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//      groups?.count ?? 0
         viewModels.count
     }
     
