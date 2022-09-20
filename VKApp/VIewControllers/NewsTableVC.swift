@@ -20,6 +20,7 @@ class NewsTableVC: UITableViewController {
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
         return dateFormatter
     }()
+    
     private var lastDateString: String?
     private var nextFrom = ""
     private var isLoading = false

@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yOZ-oZ-Jl5">
-                                <rect key="frame" x="94.5" y="100" width="31.5" height="27"/>
+                                <rect key="frame" x="91.5" y="101" width="31.5" height="22"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="0" image="heart" catalog="system">
                                     <color key="titleColor" systemColor="linkColor"/>
@@ -37,14 +37,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="cca-s1-UEj" secondAttribute="trailing" id="D96-eG-CKX"/>
-                            <constraint firstAttribute="trailing" secondItem="yOZ-oZ-Jl5" secondAttribute="trailing" constant="2" id="I5K-4M-qYf"/>
+                            <constraint firstAttribute="trailing" secondItem="yOZ-oZ-Jl5" secondAttribute="trailing" constant="5" id="I5K-4M-qYf"/>
                             <constraint firstAttribute="bottom" secondItem="cca-s1-UEj" secondAttribute="bottom" id="Jj3-GH-0Qx"/>
                             <constraint firstItem="cca-s1-UEj" firstAttribute="leading" secondItem="Xat-bl-mNC" secondAttribute="leading" id="JqR-hW-e4b"/>
-                            <constraint firstAttribute="bottom" secondItem="yOZ-oZ-Jl5" secondAttribute="bottom" constant="1" id="V16-fG-iIg"/>
-                            <constraint firstAttribute="height" constant="128" id="Xe1-gb-4Ro"/>
+                            <constraint firstAttribute="bottom" secondItem="yOZ-oZ-Jl5" secondAttribute="bottom" constant="5" id="V16-fG-iIg"/>
                             <constraint firstAttribute="trailing" secondItem="yOZ-oZ-Jl5" secondAttribute="trailing" priority="999" id="a8c-vg-9AE"/>
-                            <constraint firstItem="yOZ-oZ-Jl5" firstAttribute="top" secondItem="Xat-bl-mNC" secondAttribute="top" constant="100" id="ihQ-EY-mbw"/>
-                            <constraint firstAttribute="width" secondItem="Xat-bl-mNC" secondAttribute="height" id="lEF-HA-Awz"/>
                             <constraint firstItem="cca-s1-UEj" firstAttribute="top" secondItem="Xat-bl-mNC" secondAttribute="top" id="yz1-we-xi9"/>
                         </constraints>
                     </view>
@@ -62,7 +59,7 @@
                 <outlet property="buttonLike" destination="yOZ-oZ-Jl5" id="hi7-JX-iPG"/>
                 <outlet property="photoFriend" destination="cca-s1-UEj" id="88a-mW-ZMM"/>
             </connections>
-            <point key="canvasLocation" x="218.11594202898553" y="75.334821428571431"/>
+            <point key="canvasLocation" x="217.39130434782609" y="75"/>
         </collectionViewCell>
     </objects>
     <resources>

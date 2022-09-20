@@ -117,10 +117,6 @@ else { return }
             task.resume()
         }
     
-    func urlConstructorForNews() {
-        
-    }
-    
     func getNews(completion: @escaping ([NewsItems]) -> Void, onError: @escaping (Error) -> Void) {
 
             urlConstructor.path = "/method/newsfeed.get"
